@@ -194,8 +194,8 @@ private struct CloseKeyboardButton: View {
                         .tracking(Tokens.cozyTracking)
                 }
                 .foregroundColor(.black)
-                .padding(.horizontal, 14)
-                .padding(.vertical, Tokens.space8)
+                .padding(.horizontal, Tokens.space16)
+                .frame(height: Tokens.chipSize)
                 .background(
                     Capsule()
                         .fill(.white)

@@ -11,7 +11,7 @@ struct SearchBarView: View {
     @State private var searchText: String = ""
 
     @Namespace private var searchAnimation
-    private let spring = Animation.spring(response: 0.3, dampingFraction: 0.8)
+    private let spring = Animation.spring(response: 0.25, dampingFraction: 0.75)
 
     var body: some View {
         VStack(spacing: 0) {
