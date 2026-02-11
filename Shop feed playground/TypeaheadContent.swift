@@ -2,8 +2,6 @@
 //  TypeaheadContent.swift
 //  Shop feed playground
 //
-//  Created by Luke Dupont on 2/11/26.
-//
 
 import SwiftUI
 
@@ -34,42 +32,41 @@ struct TypeaheadContent: View {
             VStack(alignment: .leading, spacing: 0) {
                 // Suggestion pills
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 8) {
+                    HStack(spacing: Tokens.space8) {
                         ForEach(0..<suggestions.count, id: \.self) { i in
                             HStack(spacing: 6) {
                                 Image(systemName: "arrow.up.left")
-                                    .font(.system(size: 12, weight: .medium))
-                                    .foregroundColor(.black.opacity(0.4))
+                                    .font(.system(size: Tokens.captionSize, weight: .medium))
+                                    .foregroundColor(Tokens.textPlaceholder)
 
                                 Text(suggestions[i].0)
-                                    .font(.system(size: 14, weight: .medium))
-                                    .tracking(-0.2)
-                                    .foregroundColor(.black)
+                                    .font(.system(size: Tokens.bodySmSize, weight: .medium))
+                                    .tracking(Tokens.cozyTracking)
+                                    .foregroundColor(Tokens.textPrimary)
                                     .lineLimit(1)
 
                                 Text(suggestions[i].1)
-                                    .font(.system(size: 14))
+                                    .font(.system(size: Tokens.bodySmSize))
                             }
-                            .padding(.horizontal, 12)
+                            .padding(.horizontal, Tokens.space12)
                             .frame(height: 36)
                             .background(
-                                Capsule()
-                                    .fill(Color.black.opacity(0.04))
+                                Capsule().fill(Tokens.overlayDark04)
                             )
                         }
                     }
-                    .padding(.horizontal, 16)
+                    .padding(.horizontal, Tokens.space16)
                 }
-                .padding(.top, 16)
+                .padding(.top, Tokens.space16)
 
                 // Recents header
                 Text("Recents")
-                    .font(.system(size: 18, weight: .semibold))
-                    .tracking(-0.5)
-                    .foregroundColor(.black)
-                    .padding(.horizontal, 16)
-                    .padding(.top, 24)
-                    .padding(.bottom, 8)
+                    .font(.system(size: Tokens.subtitleSize, weight: .semibold))
+                    .tracking(Tokens.bodyTracking)
+                    .foregroundColor(Tokens.textPrimary)
+                    .padding(.horizontal, Tokens.space16)
+                    .padding(.top, Tokens.space24)
+                    .padding(.bottom, Tokens.space8)
 
                 // Recent search items
                 VStack(spacing: 0) {
@@ -82,7 +79,7 @@ struct TypeaheadContent: View {
                     }
                 }
             }
-            .padding(.bottom, 16)
+            .padding(.bottom, Tokens.space16)
         }
     }
 }
@@ -95,38 +92,36 @@ private struct RecentSearchRow: View {
     let color: Color
 
     var body: some View {
-        HStack(spacing: 12) {
-            // Thumbnail
+        HStack(spacing: Tokens.space12) {
             ZStack {
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                RoundedRectangle(cornerRadius: Tokens.radius12, style: .continuous)
                     .fill(color.opacity(0.2))
                     .frame(width: 40, height: 40)
                     .rotationEffect(.degrees(4))
 
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                RoundedRectangle(cornerRadius: Tokens.radius12, style: .continuous)
                     .fill(color)
                     .frame(width: 40, height: 40)
                     .rotationEffect(.degrees(-3))
             }
             .frame(width: 44, height: 44)
 
-            // Text
             VStack(alignment: .leading, spacing: 1) {
                 Text(title)
-                    .font(.system(size: 14, weight: .medium))
-                    .tracking(-0.2)
-                    .foregroundColor(.black)
+                    .font(.system(size: Tokens.bodySmSize, weight: .medium))
+                    .tracking(Tokens.cozyTracking)
+                    .foregroundColor(Tokens.textPrimary)
                     .lineLimit(1)
 
                 Text(time)
-                    .font(.system(size: 12, weight: .regular))
-                    .tracking(-0.2)
-                    .foregroundColor(.black.opacity(0.4))
+                    .font(.system(size: Tokens.captionSize, weight: .regular))
+                    .tracking(Tokens.cozyTracking)
+                    .foregroundColor(Tokens.textPlaceholder)
             }
 
             Spacer()
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 8)
+        .padding(.horizontal, Tokens.space16)
+        .padding(.vertical, Tokens.space8)
     }
 }

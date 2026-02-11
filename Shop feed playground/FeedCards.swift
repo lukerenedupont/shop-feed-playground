@@ -2,8 +2,6 @@
 //  FeedCards.swift
 //  Shop feed playground
 //
-//  Created by Luke Dupont on 2/11/26.
-//
 
 import SwiftUI
 
@@ -23,19 +21,19 @@ struct FeedView: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 0) {
                 // Spacer for search bar
-                Color.clear.frame(height: 54)
+                Color.clear.frame(height: Tokens.searchBarTopOffset)
 
                 // Filter chips
                 FilterChipsView()
 
                 // Cards — snap targets
-                LazyVStack(spacing: 8) {
-                ForEach(0..<cardColors.count, id: \.self) { i in
-                    RoundedRectangle(cornerRadius: 28, style: .continuous)
-                        .fill(cardColors[i])
-                        .frame(height: 644)
-                        .padding(.horizontal, 8)
-                }
+                LazyVStack(spacing: Tokens.space8) {
+                    ForEach(0..<cardColors.count, id: \.self) { i in
+                        RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
+                            .fill(cardColors[i])
+                            .frame(height: Tokens.cardHeight)
+                            .padding(.horizontal, Tokens.cardPadding)
+                    }
                 }
                 .scrollTargetLayout()
             }

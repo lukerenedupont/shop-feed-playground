@@ -2,7 +2,7 @@
 //  SearchContent.swift
 //  Shop feed playground
 //
-//  Created by Luke Dupont on 2/11/26.
+//  Search page content sections.
 //
 
 import SwiftUI
@@ -14,32 +14,29 @@ struct SectionHeader: View {
     var showArrow: Bool = true
 
     var body: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: Tokens.space4) {
             Text(title)
-                .font(.system(size: 18, weight: .semibold))
-                .tracking(-0.5)
-                .lineSpacing(20 - 18)
-                .foregroundColor(.black)
+                .font(.system(size: Tokens.subtitleSize, weight: .semibold))
+                .tracking(Tokens.bodyTracking)
+                .lineSpacing(Tokens.lineHeightSubtitle - Tokens.subtitleSize)
+                .foregroundColor(Tokens.textPrimary)
 
             if showArrow {
                 Image(systemName: "chevron.right")
                     .font(.system(size: 10, weight: .bold))
-                    .foregroundColor(.black)
-                    .frame(width: 16, height: 16)
-                    .padding(2)
-                    .background(
-                        Circle()
-                            .fill(Color(hex: 0xF2F4F5))
-                    )
+                    .foregroundColor(Tokens.textPrimary)
+                    .frame(width: Tokens.iconSmall, height: Tokens.iconSmall)
+                    .padding(Tokens.space2)
+                    .background(Circle().fill(Tokens.fillSecondary))
             }
 
             Spacer()
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, Tokens.space16)
     }
 }
 
-// MARK: - Keep Shopping Section
+// MARK: - Keep Shopping
 
 struct KeepShoppingSection: View {
     private let items: [(String, String, Color)] = [
@@ -49,51 +46,49 @@ struct KeepShoppingSection: View {
     ]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: Tokens.space12) {
             SectionHeader(title: "Keep shopping")
 
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 8) {
+                HStack(spacing: Tokens.space8) {
                     ForEach(0..<items.count, id: \.self) { i in
                         VStack(alignment: .leading, spacing: 0) {
-                            // Image area
-                            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
                                 .fill(items[i].2)
                                 .frame(width: 172.5, height: 148)
                                 .overlay(
-                                    RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                        .stroke(Color(red: 5/255, green: 41/255, blue: 77/255).opacity(0.1), lineWidth: 0.5)
+                                    RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
+                                        .stroke(Tokens.imageBorder, lineWidth: 0.5)
                                 )
-                                .shadow(color: .black.opacity(0.06), radius: 4, x: 0, y: 2)
+                                .shadow(color: Tokens.shadowColorS, radius: Tokens.shadowRadiusS, x: 0, y: Tokens.shadowYS)
 
-                            // Content
                             VStack(alignment: .leading, spacing: 0) {
                                 Text(items[i].0)
-                                    .font(.system(size: 14, weight: .semibold))
-                                    .tracking(-0.2)
+                                    .font(.system(size: Tokens.bodySmSize, weight: .semibold))
+                                    .tracking(Tokens.cozyTracking)
                                     .lineLimit(1)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(Tokens.textPrimary)
 
                                 Text(items[i].1)
-                                    .font(.system(size: 12, weight: .regular))
-                                    .tracking(-0.2)
+                                    .font(.system(size: Tokens.captionSize, weight: .regular))
+                                    .tracking(Tokens.cozyTracking)
                                     .lineLimit(1)
-                                    .foregroundColor(.black.opacity(0.75))
+                                    .foregroundColor(Tokens.textSecondary)
                             }
-                            .padding(.horizontal, 4)
-                            .padding(.vertical, 8)
+                            .padding(.horizontal, Tokens.space4)
+                            .padding(.vertical, Tokens.space8)
                         }
                         .frame(width: 172.5)
                     }
                 }
-                .padding(.horizontal, 16)
+                .padding(.horizontal, Tokens.space16)
             }
         }
-        .padding(.bottom, 8)
+        .padding(.bottom, Tokens.space8)
     }
 }
 
-// MARK: - Recent Searches Section
+// MARK: - Recent Searches
 
 struct RecentSearchesSection: View {
     private let searches: [(String, String, Color)] = [
@@ -105,83 +100,80 @@ struct RecentSearchesSection: View {
     ]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: Tokens.space12) {
             SectionHeader(title: "Recent searches")
 
-            // Flowing wrap layout
             ScrollView(.horizontal, showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack(spacing: 8) {
+                VStack(alignment: .leading, spacing: Tokens.space8) {
+                    HStack(spacing: Tokens.space8) {
                         ForEach(0..<3, id: \.self) { i in
                             recentSearchItem(searches[i])
                         }
                     }
-                    HStack(spacing: 8) {
+                    HStack(spacing: Tokens.space8) {
                         ForEach(3..<searches.count, id: \.self) { i in
                             recentSearchItem(searches[i])
                         }
                     }
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 4)
+                .padding(.horizontal, Tokens.space16)
+                .padding(.vertical, Tokens.space4)
             }
             .scrollClipDisabled()
         }
-        .padding(.bottom, 8)
+        .padding(.bottom, Tokens.space8)
     }
 
     private func recentSearchItem(_ item: (String, String, Color)) -> some View {
-        HStack(spacing: 8) {
+        HStack(spacing: Tokens.space8) {
             // Stacked gallery thumbnails
             ZStack {
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                RoundedRectangle(cornerRadius: Tokens.radius12, style: .continuous)
                     .fill(item.2.opacity(0.3))
                     .frame(width: 40, height: 40)
                     .rotationEffect(.degrees(4))
-                    .shadow(color: .black.opacity(0.06), radius: 4, x: 0, y: 2)
+                    .shadow(color: Tokens.shadowColorS, radius: Tokens.shadowRadiusS, x: 0, y: Tokens.shadowYS)
 
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                RoundedRectangle(cornerRadius: Tokens.radius12, style: .continuous)
                     .fill(item.2)
                     .frame(width: 40, height: 40)
                     .rotationEffect(.degrees(-3))
                     .overlay(
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .stroke(Color(red: 5/255, green: 41/255, blue: 77/255).opacity(0.1), lineWidth: 0.5)
+                        RoundedRectangle(cornerRadius: Tokens.radius12, style: .continuous)
+                            .stroke(Tokens.imageBorder, lineWidth: 0.5)
                     )
-                    .shadow(color: .black.opacity(0.06), radius: 4, x: 0, y: 2)
+                    .shadow(color: Tokens.shadowColorS, radius: Tokens.shadowRadiusS, x: 0, y: Tokens.shadowYS)
             }
             .frame(width: 42, height: 42)
 
-            // Content
             VStack(alignment: .leading, spacing: 0) {
                 Text(item.0)
-                    .font(.system(size: 12, weight: .medium))
-                    .tracking(-0.2)
-                    .foregroundColor(.black)
+                    .font(.system(size: Tokens.captionSize, weight: .medium))
+                    .tracking(Tokens.cozyTracking)
+                    .foregroundColor(Tokens.textPrimary)
                     .lineLimit(1)
 
                 Text(item.1)
-                    .font(.system(size: 10, weight: .regular))
-                    .tracking(-0.2)
-                    .lineSpacing(13 - 10)
-                    .foregroundColor(.black.opacity(0.56))
+                    .font(.system(size: Tokens.badgeSize, weight: .regular))
+                    .tracking(Tokens.cozyTracking)
+                    .foregroundColor(Tokens.textTertiary)
             }
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 6)
+        .padding(.horizontal, Tokens.space12)
+        .padding(.vertical, Tokens.space6)
         .background(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
+            RoundedRectangle(cornerRadius: Tokens.radius16, style: .continuous)
                 .fill(.white)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 16, style: .continuous)
-                        .stroke(Color(red: 5/255, green: 41/255, blue: 77/255).opacity(0.1), lineWidth: 0.5)
+                    RoundedRectangle(cornerRadius: Tokens.radius16, style: .continuous)
+                        .stroke(Tokens.imageBorder, lineWidth: 0.5)
                 )
-                .shadow(color: .black.opacity(0.06), radius: 4, x: 0, y: 2)
+                .shadow(color: Tokens.shadowColorS, radius: Tokens.shadowRadiusS, x: 0, y: Tokens.shadowYS)
         )
     }
 }
 
-// MARK: - For You Section
+// MARK: - For You
 
 struct ForYouSection: View {
     private let brands: [(String, String, Color, Bool)] = [
@@ -192,50 +184,47 @@ struct ForYouSection: View {
     ]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: Tokens.space12) {
             SectionHeader(title: "For you")
 
             LazyVGrid(
-                columns: [
-                    GridItem(.flexible(), spacing: 8),
-                    GridItem(.flexible(), spacing: 8),
-                ],
-                spacing: 8
+                columns: [GridItem(.flexible(), spacing: Tokens.space8), GridItem(.flexible(), spacing: Tokens.space8)],
+                spacing: Tokens.space8
             ) {
                 ForEach(0..<brands.count, id: \.self) { i in
                     VStack(alignment: .leading, spacing: 6) {
-                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
                             .fill(brands[i].2)
                             .aspectRatio(1, contentMode: .fit)
                             .overlay(
                                 Text(brands[i].0)
-                                    .font(.system(size: 14, weight: .bold))
+                                    .font(.system(size: Tokens.bodySmSize, weight: .bold))
                                     .foregroundColor(brands[i].3 ? .white : .black)
                                     .multilineTextAlignment(.center)
-                                    .padding(16)
+                                    .padding(Tokens.space16)
                             )
                             .overlay(
-                                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                    .stroke(Color(red: 5/255, green: 41/255, blue: 77/255).opacity(0.1), lineWidth: 0.5)
+                                RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
+                                    .stroke(Tokens.imageBorder, lineWidth: 0.5)
                             )
-                            .shadow(color: .black.opacity(0.06), radius: 4, x: 0, y: 2)
+                            .shadow(color: Tokens.shadowColorS, radius: Tokens.shadowRadiusS, x: 0, y: Tokens.shadowYS)
 
                         Text(brands[i].0)
-                            .font(.system(size: 14, weight: .semibold))
-                            .tracking(-0.2)
-                            .foregroundColor(.black)
+                            .font(.system(size: Tokens.bodySmSize, weight: .semibold))
+                            .tracking(Tokens.cozyTracking)
+                            .foregroundColor(Tokens.textPrimary)
                             .lineLimit(1)
 
                         Text(brands[i].1)
-                            .font(.system(size: 12, weight: .regular))
-                            .tracking(-0.2)
-                            .foregroundColor(.black.opacity(0.75))
+                            .font(.system(size: Tokens.captionSize, weight: .regular))
+                            .tracking(Tokens.cozyTracking)
+                            .foregroundColor(Tokens.textSecondary)
                     }
                 }
             }
-            .padding(.horizontal, 16)
+            .padding(.horizontal, Tokens.space16)
         }
-        .padding(.bottom, 8)
+        .padding(.bottom, Tokens.space8)
     }
 }
 
@@ -243,30 +232,30 @@ struct ForYouSection: View {
 
 struct RefreshBannerSection: View {
     var body: some View {
-        VStack(spacing: 4) {
+        VStack(spacing: Tokens.space4) {
             Text("Refresh your bedroom")
                 .font(.system(size: 22, weight: .bold))
-                .tracking(-0.5)
-                .foregroundColor(.black)
+                .tracking(Tokens.bodyTracking)
+                .foregroundColor(Tokens.textPrimary)
 
             Text("Thoughtfully designed for everyday")
-                .font(.system(size: 14, weight: .regular))
-                .tracking(-0.2)
-                .foregroundColor(.black.opacity(0.56))
+                .font(.system(size: Tokens.bodySmSize, weight: .regular))
+                .tracking(Tokens.cozyTracking)
+                .foregroundColor(Tokens.textTertiary)
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 32)
-        .padding(.horizontal, 16)
+        .padding(.vertical, Tokens.space32)
+        .padding(.horizontal, Tokens.space16)
         .background(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
+            RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
                 .fill(Color(hex: 0xF0EDE8))
         )
-        .padding(.horizontal, 16)
-        .padding(.top, 24)
+        .padding(.horizontal, Tokens.space16)
+        .padding(.top, Tokens.space24)
     }
 }
 
-// MARK: - New & Back in Stock Section
+// MARK: - New & Back in Stock
 
 struct NewBackInStockSection: View {
     private let products: [(String, String, String, Color)] = [
@@ -275,52 +264,52 @@ struct NewBackInStockSection: View {
     ]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: Tokens.space12) {
             SectionHeader(title: "New & back in stock")
 
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 8) {
+                HStack(spacing: Tokens.space8) {
                     ForEach(0..<products.count, id: \.self) { i in
                         VStack(alignment: .leading, spacing: 0) {
-                            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
                                 .fill(products[i].3)
                                 .frame(width: 190, height: 190)
                                 .overlay(
-                                    RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                        .stroke(Color(red: 5/255, green: 41/255, blue: 77/255).opacity(0.1), lineWidth: 0.5)
+                                    RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
+                                        .stroke(Tokens.imageBorder, lineWidth: 0.5)
                                 )
-                                .shadow(color: .black.opacity(0.06), radius: 4, x: 0, y: 2)
+                                .shadow(color: Tokens.shadowColorS, radius: Tokens.shadowRadiusS, x: 0, y: Tokens.shadowYS)
 
-                            VStack(alignment: .leading, spacing: 2) {
+                            VStack(alignment: .leading, spacing: Tokens.space2) {
                                 Text(products[i].0)
-                                    .font(.system(size: 12, weight: .regular))
-                                    .tracking(-0.2)
-                                    .foregroundColor(.black.opacity(0.75))
+                                    .font(.system(size: Tokens.captionSize, weight: .regular))
+                                    .tracking(Tokens.cozyTracking)
+                                    .foregroundColor(Tokens.textSecondary)
 
                                 Text(products[i].1)
-                                    .font(.system(size: 14, weight: .semibold))
-                                    .tracking(-0.2)
-                                    .foregroundColor(.black)
+                                    .font(.system(size: Tokens.bodySmSize, weight: .semibold))
+                                    .tracking(Tokens.cozyTracking)
+                                    .foregroundColor(Tokens.textPrimary)
 
                                 Text(products[i].2)
-                                    .font(.system(size: 14, weight: .bold))
-                                    .tracking(-0.2)
-                                    .foregroundColor(.black)
+                                    .font(.system(size: Tokens.bodySmSize, weight: .bold))
+                                    .tracking(Tokens.cozyTracking)
+                                    .foregroundColor(Tokens.textPrimary)
                             }
-                            .padding(.horizontal, 4)
-                            .padding(.vertical, 8)
+                            .padding(.horizontal, Tokens.space4)
+                            .padding(.vertical, Tokens.space8)
                         }
                         .frame(width: 190)
                     }
                 }
-                .padding(.horizontal, 16)
+                .padding(.horizontal, Tokens.space16)
             }
         }
-        .padding(.bottom, 8)
+        .padding(.bottom, Tokens.space8)
     }
 }
 
-// MARK: - Explore Beauty Section
+// MARK: - Explore Beauty
 
 struct ExploreBeautySection: View {
     private let categories: [(String, Color)] = [
@@ -331,37 +320,34 @@ struct ExploreBeautySection: View {
     ]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: Tokens.space12) {
             SectionHeader(title: "Explore beauty")
 
             LazyVGrid(
-                columns: [
-                    GridItem(.flexible(), spacing: 8),
-                    GridItem(.flexible(), spacing: 8),
-                ],
-                spacing: 8
+                columns: [GridItem(.flexible(), spacing: Tokens.space8), GridItem(.flexible(), spacing: Tokens.space8)],
+                spacing: Tokens.space8
             ) {
                 ForEach(0..<categories.count, id: \.self) { i in
                     Text(categories[i].0)
-                        .font(.system(size: 14, weight: .semibold))
-                        .tracking(-0.2)
+                        .font(.system(size: Tokens.bodySmSize, weight: .semibold))
+                        .tracking(Tokens.cozyTracking)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(16)
+                        .padding(Tokens.space16)
                         .frame(height: 99)
                         .background(
-                            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
                                 .fill(categories[i].1)
                         )
                 }
             }
-            .padding(.horizontal, 16)
+            .padding(.horizontal, Tokens.space16)
         }
-        .padding(.bottom, 8)
+        .padding(.bottom, Tokens.space8)
     }
 }
 
-// MARK: - Everything on Shop Section
+// MARK: - Everything on Shop
 
 struct EverythingOnShopSection: View {
     private let categories: [(String, Color)] = [
@@ -376,51 +362,48 @@ struct EverythingOnShopSection: View {
     ]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: Tokens.space12) {
             SectionHeader(title: "Everything on Shop", showArrow: false)
 
             LazyVGrid(
-                columns: [
-                    GridItem(.flexible(), spacing: 12),
-                    GridItem(.flexible(), spacing: 12),
-                ],
-                spacing: 12
+                columns: [GridItem(.flexible(), spacing: Tokens.space12), GridItem(.flexible(), spacing: Tokens.space12)],
+                spacing: Tokens.space12
             ) {
                 ForEach(0..<categories.count, id: \.self) { i in
                     VStack(spacing: 0) {
-                        RoundedRectangle(cornerRadius: 16, style: .continuous)
+                        RoundedRectangle(cornerRadius: Tokens.radius16, style: .continuous)
                             .fill(categories[i].1)
                             .frame(height: 80)
 
                         Text(categories[i].0)
-                            .font(.system(size: 14, weight: .semibold))
-                            .tracking(-0.2)
-                            .foregroundColor(.black)
-                            .padding(.top, 8)
+                            .font(.system(size: Tokens.bodySmSize, weight: .semibold))
+                            .tracking(Tokens.cozyTracking)
+                            .foregroundColor(Tokens.textPrimary)
+                            .padding(.top, Tokens.space8)
                     }
                 }
             }
-            .padding(.horizontal, 16)
+            .padding(.horizontal, Tokens.space16)
 
             // More button
             HStack {
                 Spacer()
                 Text("More")
-                    .font(.system(size: 16, weight: .semibold))
-                    .tracking(-0.5)
-                    .foregroundColor(.black)
+                    .font(.system(size: Tokens.bodySize, weight: .semibold))
+                    .tracking(Tokens.bodyTracking)
+                    .foregroundColor(Tokens.textPrimary)
                 Image(systemName: "chevron.down")
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundColor(.black)
+                    .font(.system(size: Tokens.captionSize, weight: .semibold))
+                    .foregroundColor(Tokens.textPrimary)
                 Spacer()
             }
-            .padding(.vertical, 10)
+            .padding(.vertical, Tokens.space10)
             .background(
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color(hex: 0xF2F4F5))
+                RoundedRectangle(cornerRadius: Tokens.radius12, style: .continuous)
+                    .fill(Tokens.fillSecondary)
             )
-            .padding(.horizontal, 16)
+            .padding(.horizontal, Tokens.space16)
         }
-        .padding(.bottom, 8)
+        .padding(.bottom, Tokens.space8)
     }
 }
