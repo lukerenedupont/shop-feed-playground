@@ -63,13 +63,7 @@ private extension ContentView {
         case 1:
             SearchPageContent()
         default:
-            VStack {
-                Spacer()
-                Text("Orders")
-                    .font(.system(size: Tokens.space24, weight: .semibold))
-                    .foregroundColor(Tokens.textPlaceholder)
-                Spacer()
-            }
+            OrdersPageContent()
         }
     }
 
@@ -237,6 +231,7 @@ struct SearchPageContent: View {
                     .padding(.vertical, Tokens.space8)
                 }
                 .scrollClipDisabled()
+                .padding(.bottom, 25)
 
                 VStack(spacing: Tokens.space24) {
                     KeepShoppingSection()
