@@ -2,12 +2,12 @@
 //  SearchContent.swift
 //  Shop feed playground
 //
-//  Search page content sections.
+//  Search page content sections. Each section is self-contained.
 //
 
 import SwiftUI
 
-// MARK: - Section Header
+// MARK: - Section Header (shared)
 
 struct SectionHeader: View {
     let title: String
@@ -39,10 +39,17 @@ struct SectionHeader: View {
 // MARK: - Keep Shopping
 
 struct KeepShoppingSection: View {
-    private let items: [(String, String, Color)] = [
-        ("Warm ambient lighting", "Rug & Weave, MoMA", Color(hex: 0xD4C4A8)),
-        ("Brew at home", "Eight Ounce, Fellow, Hario", Color(hex: 0xE8DED0)),
-        ("Pantry to table", "kinto, Areaware, Great Jones", Color(hex: 0xC4D8E0)),
+    private struct Item: Identifiable {
+        let id = UUID()
+        let title: String
+        let brands: String
+        let color: Color
+    }
+
+    private let items: [Item] = [
+        .init(title: "Warm ambient lighting", brands: "Rug & Weave, MoMA", color: Color(hex: 0xD4C4A8)),
+        .init(title: "Brew at home", brands: "Eight Ounce, Fellow, Hario", color: Color(hex: 0xE8DED0)),
+        .init(title: "Pantry to table", brands: "kinto, Areaware, Great Jones", color: Color(hex: 0xC4D8E0)),
     ]
 
     var body: some View {
@@ -51,25 +58,21 @@ struct KeepShoppingSection: View {
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: Tokens.space8) {
-                    ForEach(0..<items.count, id: \.self) { i in
+                    ForEach(items) { item in
                         VStack(alignment: .leading, spacing: 0) {
                             RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
-                                .fill(items[i].2)
+                                .fill(item.color)
                                 .frame(width: 172.5, height: 148)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
-                                        .stroke(Tokens.imageBorder, lineWidth: 0.5)
-                                )
-                                .shadow(color: Tokens.shadowColorS, radius: Tokens.shadowRadiusS, x: 0, y: Tokens.shadowYS)
+                                .smallCardStyle()
 
                             VStack(alignment: .leading, spacing: 0) {
-                                Text(items[i].0)
+                                Text(item.title)
                                     .font(.system(size: Tokens.bodySmSize, weight: .semibold))
                                     .tracking(Tokens.cozyTracking)
                                     .lineLimit(1)
                                     .foregroundColor(Tokens.textPrimary)
 
-                                Text(items[i].1)
+                                Text(item.brands)
                                     .font(.system(size: Tokens.captionSize, weight: .regular))
                                     .tracking(Tokens.cozyTracking)
                                     .lineLimit(1)
@@ -91,12 +94,19 @@ struct KeepShoppingSection: View {
 // MARK: - Recent Searches
 
 struct RecentSearchesSection: View {
-    private let searches: [(String, String, Color)] = [
-        ("running shoes", "Just now", Color(hex: 0xC4C0B6)),
-        ("Summer trip", "1 hour ago", Color(hex: 0x5588CC)),
-        ("Back to school shopping", "June 4", Color(hex: 0xA0A0A0)),
-        ("ANAGRAM teddy fur vest", "June 3", Color(hex: 0x8B6040)),
-        ("Espresso setup under $3k", "June 3", Color(hex: 0x4A4A4A)),
+    private struct SearchItem: Identifiable {
+        let id = UUID()
+        let query: String
+        let time: String
+        let color: Color
+    }
+
+    private let searches: [SearchItem] = [
+        .init(query: "running shoes", time: "Just now", color: Color(hex: 0xC4C0B6)),
+        .init(query: "Summer trip", time: "1 hour ago", color: Color(hex: 0x5588CC)),
+        .init(query: "Back to school shopping", time: "June 4", color: Color(hex: 0xA0A0A0)),
+        .init(query: "ANAGRAM teddy fur vest", time: "June 3", color: Color(hex: 0x8B6040)),
+        .init(query: "Espresso setup under $3k", time: "June 3", color: Color(hex: 0x4A4A4A)),
     ]
 
     var body: some View {
@@ -106,13 +116,13 @@ struct RecentSearchesSection: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 VStack(alignment: .leading, spacing: Tokens.space8) {
                     HStack(spacing: Tokens.space8) {
-                        ForEach(0..<3, id: \.self) { i in
-                            recentSearchItem(searches[i])
+                        ForEach(searches.prefix(3)) { item in
+                            recentSearchItem(item)
                         }
                     }
                     HStack(spacing: Tokens.space8) {
-                        ForEach(3..<searches.count, id: \.self) { i in
-                            recentSearchItem(searches[i])
+                        ForEach(searches.dropFirst(3)) { item in
+                            recentSearchItem(item)
                         }
                     }
                 }
@@ -130,8 +140,7 @@ struct RecentSearchesSection: View {
             .frame(width: 40, height: 40)
             .overlay(
                 RoundedRectangle(cornerRadius: Tokens.radius12, style: .continuous)
-                    .fill(color)
-                    .padding(4)
+                    .fill(color).padding(4)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: Tokens.radius12, style: .continuous)
@@ -141,23 +150,22 @@ struct RecentSearchesSection: View {
             .shadow(color: Tokens.shadowColorS, radius: Tokens.shadowRadiusS, x: 0, y: Tokens.shadowYS)
     }
 
-    private func recentSearchItem(_ item: (String, String, Color)) -> some View {
+    private func recentSearchItem(_ item: SearchItem) -> some View {
         HStack(spacing: Tokens.space8) {
-            // Stacked gallery thumbnails
             ZStack {
-                galleryThumb(item.2.opacity(0.5), rotation: 4)
-                galleryThumb(item.2, rotation: -3)
+                galleryThumb(item.color.opacity(0.5), rotation: 4)
+                galleryThumb(item.color, rotation: -3)
             }
             .frame(width: 42, height: 42)
 
             VStack(alignment: .leading, spacing: 0) {
-                Text(item.0)
+                Text(item.query)
                     .font(.system(size: Tokens.captionSize, weight: .medium))
                     .tracking(Tokens.cozyTracking)
                     .foregroundColor(Tokens.textPrimary)
                     .lineLimit(1)
 
-                Text(item.1)
+                Text(item.time)
                     .font(.system(size: Tokens.badgeSize, weight: .regular))
                     .tracking(Tokens.cozyTracking)
                     .foregroundColor(Tokens.textTertiary)
@@ -168,11 +176,7 @@ struct RecentSearchesSection: View {
         .background(
             RoundedRectangle(cornerRadius: Tokens.radius16, style: .continuous)
                 .fill(.white)
-                .overlay(
-                    RoundedRectangle(cornerRadius: Tokens.radius16, style: .continuous)
-                        .stroke(Tokens.imageBorder, lineWidth: 0.5)
-                )
-                .shadow(color: Tokens.shadowColorS, radius: Tokens.shadowRadiusS, x: 0, y: Tokens.shadowYS)
+                .smallCardStyle(radius: Tokens.radius16)
         )
     }
 }
@@ -180,11 +184,20 @@ struct RecentSearchesSection: View {
 // MARK: - For You
 
 struct ForYouSection: View {
-    private let brands: [(name: String, rating: String, bgColor: Color, productColor: Color, isDark: Bool)] = [
-        ("VERONICA BEARD", "4.7 ★ (948)", Color(hex: 0x5A6A5A), Color(hex: 0xF0EDE8), true),
-        ("Sea, New York", "4.7 ★ (948)", Color(hex: 0x8A9A7A), Color(hex: 0xF5F0E8), true),
-        ("LESET", "4.7 ★ (948)", Color(hex: 0x6A8AAA), Color(hex: 0xF0EDE8), true),
-        ("KHAITE", "4.7 ★ (948)", Color(hex: 0xF5F0E8), Color(hex: 0xFFFFFF), false),
+    private struct Brand: Identifiable {
+        let id = UUID()
+        let name: String
+        let rating: String
+        let bgColor: Color
+        let productColor: Color
+        let isDark: Bool
+    }
+
+    private let brands: [Brand] = [
+        .init(name: "VERONICA BEARD", rating: "4.7 ★ (948)", bgColor: Color(hex: 0x5A6A5A), productColor: Color(hex: 0xF0EDE8), isDark: true),
+        .init(name: "Sea, New York", rating: "4.7 ★ (948)", bgColor: Color(hex: 0x8A9A7A), productColor: Color(hex: 0xF5F0E8), isDark: true),
+        .init(name: "LESET", rating: "4.7 ★ (948)", bgColor: Color(hex: 0x6A8AAA), productColor: Color(hex: 0xF0EDE8), isDark: true),
+        .init(name: "KHAITE", rating: "4.7 ★ (948)", bgColor: Color(hex: 0xF5F0E8), productColor: Color(hex: 0xFFFFFF), isDark: false),
     ]
 
     var body: some View {
@@ -195,17 +208,13 @@ struct ForYouSection: View {
                 columns: [GridItem(.flexible(), spacing: Tokens.space8), GridItem(.flexible(), spacing: Tokens.space8)],
                 spacing: Tokens.space8
             ) {
-                ForEach(0..<brands.count, id: \.self) { i in
-                    let brand = brands[i]
+                ForEach(brands) { brand in
                     let textColor: Color = brand.isDark ? .white : .black
 
                     ZStack {
-                        // Background
-                        RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
-                            .fill(brand.bgColor)
+                        RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous).fill(brand.bgColor)
 
                         VStack(spacing: Tokens.space8) {
-                            // Brand name at top
                             Text(brand.name)
                                 .font(.system(size: Tokens.bodySmSize, weight: .bold))
                                 .tracking(Tokens.cozyTracking)
@@ -213,19 +222,16 @@ struct ForYouSection: View {
                                 .lineLimit(1)
                                 .padding(.top, Tokens.space16)
 
-                            // Product image placeholder
                             RoundedRectangle(cornerRadius: Tokens.radius16, style: .continuous)
                                 .fill(brand.productColor)
                                 .frame(width: 110, height: 110)
                                 .shadow(color: Tokens.shadowColorS, radius: Tokens.shadowRadiusS, x: 0, y: Tokens.shadowYS)
 
-                            // Merchant name
                             Text(brand.name.capitalized.components(separatedBy: " ").prefix(2).joined(separator: " "))
                                 .font(.system(size: Tokens.captionSize, weight: .semibold))
                                 .tracking(Tokens.cozyTracking)
                                 .foregroundColor(textColor)
 
-                            // Rating
                             Text(brand.rating)
                                 .font(.system(size: Tokens.captionSize, weight: .regular))
                                 .tracking(Tokens.cozyTracking)
@@ -236,11 +242,7 @@ struct ForYouSection: View {
                     }
                     .aspectRatio(176.5 / 235.6, contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
-                            .stroke(Tokens.imageBorder, lineWidth: 0.5)
-                    )
-                    .shadow(color: Tokens.shadowColorS, radius: Tokens.shadowRadiusS, x: 0, y: Tokens.shadowYS)
+                    .smallCardStyle()
                 }
             }
             .padding(.horizontal, Tokens.space16)
@@ -252,45 +254,40 @@ struct ForYouSection: View {
 // MARK: - Refresh Banner
 
 struct RefreshBannerSection: View {
-    private let tiles: [(String, String, Color)] = [
-        ("Refresh your bedroom", "Thoughtfully designed for everyday", Color(hex: 0x5A5C58)),
-        ("Ready to host", "Everything for the perfect night in", Color(hex: 0x0E141A)),
-        ("Cozy season is here", "Warmth in every detail", Color(hex: 0x6B7DA7)),
+    private struct Tile: Identifiable {
+        let id = UUID()
+        let title: String
+        let subtitle: String
+        let color: Color
+    }
+
+    private let tiles: [Tile] = [
+        .init(title: "Refresh your bedroom", subtitle: "Thoughtfully designed for everyday", color: Color(hex: 0x5A5C58)),
+        .init(title: "Ready to host", subtitle: "Everything for the perfect night in", color: Color(hex: 0x0E141A)),
+        .init(title: "Cozy season is here", subtitle: "Warmth in every detail", color: Color(hex: 0x6B7DA7)),
     ]
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: Tokens.space8) {
-                ForEach(0..<tiles.count, id: \.self) { i in
+                ForEach(tiles) { tile in
                     ZStack(alignment: .bottom) {
-                        // Background
-                        RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
-                            .fill(tiles[i].2)
+                        RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous).fill(tile.color)
+                        LinearGradient(colors: [.clear, tile.color], startPoint: .top, endPoint: .bottom)
+                            .clipShape(RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous))
 
-                        // Gradient overlay
-                        LinearGradient(
-                            colors: [.clear, tiles[i].2],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                        .clipShape(RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous))
-
-                        // Content
                         HStack(alignment: .bottom) {
                             VStack(alignment: .leading, spacing: 5) {
-                                Text(tiles[i].0)
+                                Text(tile.title)
                                     .font(.system(size: 20, weight: .semibold))
                                     .tracking(-1.0)
                                     .foregroundColor(.white)
-
-                                Text(tiles[i].1)
+                                Text(tile.subtitle)
                                     .font(.system(size: Tokens.captionSize, weight: .medium))
                                     .tracking(Tokens.cozyTracking)
                                     .foregroundColor(.white.opacity(0.75))
                             }
-
                             Spacer()
-
                             Image(systemName: "arrow.right")
                                 .font(.system(size: 12, weight: .semibold))
                                 .foregroundColor(.black)
@@ -300,12 +297,7 @@ struct RefreshBannerSection: View {
                         .padding(Tokens.space20)
                     }
                     .frame(width: 361, height: 203)
-                    .shadow(
-                        color: Tokens.shadowColor,
-                        radius: Tokens.shadowRadius,
-                        x: 0,
-                        y: Tokens.shadowY
-                    )
+                    .shadow(color: Tokens.shadowColor, radius: Tokens.shadowRadius, x: 0, y: Tokens.shadowY)
                 }
             }
             .padding(.horizontal, Tokens.space16)
@@ -318,9 +310,17 @@ struct RefreshBannerSection: View {
 // MARK: - New & Back in Stock
 
 struct NewBackInStockSection: View {
-    private let products: [(String, String, String, Color)] = [
-        ("Merchant Name", "Product Name", "$56.00", Color(hex: 0xE8DED0)),
-        ("Merchant Name", "Product Name", "$56.00", Color(hex: 0xF0EDE8)),
+    private struct Product: Identifiable {
+        let id = UUID()
+        let merchant: String
+        let name: String
+        let price: String
+        let color: Color
+    }
+
+    private let products: [Product] = [
+        .init(merchant: "Merchant Name", name: "Product Name", price: "$56.00", color: Color(hex: 0xE8DED0)),
+        .init(merchant: "Merchant Name", name: "Product Name", price: "$56.00", color: Color(hex: 0xF0EDE8)),
     ]
 
     var body: some View {
@@ -329,29 +329,23 @@ struct NewBackInStockSection: View {
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: Tokens.space8) {
-                    ForEach(0..<products.count, id: \.self) { i in
+                    ForEach(products) { product in
                         VStack(alignment: .leading, spacing: 0) {
                             RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
-                                .fill(products[i].3)
+                                .fill(product.color)
                                 .frame(width: 190, height: 190)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
-                                        .stroke(Tokens.imageBorder, lineWidth: 0.5)
-                                )
-                                .shadow(color: Tokens.shadowColorS, radius: Tokens.shadowRadiusS, x: 0, y: Tokens.shadowYS)
+                                .smallCardStyle()
 
                             VStack(alignment: .leading, spacing: Tokens.space2) {
-                                Text(products[i].0)
+                                Text(product.merchant)
                                     .font(.system(size: Tokens.captionSize, weight: .regular))
                                     .tracking(Tokens.cozyTracking)
                                     .foregroundColor(Tokens.textSecondary)
-
-                                Text(products[i].1)
+                                Text(product.name)
                                     .font(.system(size: Tokens.bodySmSize, weight: .semibold))
                                     .tracking(Tokens.cozyTracking)
                                     .foregroundColor(Tokens.textPrimary)
-
-                                Text(products[i].2)
+                                Text(product.price)
                                     .font(.system(size: Tokens.bodySmSize, weight: .bold))
                                     .tracking(Tokens.cozyTracking)
                                     .foregroundColor(Tokens.textPrimary)
@@ -372,11 +366,18 @@ struct NewBackInStockSection: View {
 // MARK: - Explore Beauty
 
 struct ExploreBeautySection: View {
-    private let categories: [(String, Color, Color)] = [
-        ("Toners", Color(hex: 0xC4868A), Color(hex: 0xA06A6E)),
-        ("Foundation & concealers", Color(hex: 0xAA8468), Color(hex: 0x8A6A50)),
-        ("Highlighters & luminizers", Color(hex: 0xB09A80), Color(hex: 0x8A7A64)),
-        ("Masks & peels", Color(hex: 0x9A8878), Color(hex: 0x7A6858)),
+    private struct Category: Identifiable {
+        let id = UUID()
+        let name: String
+        let colorA: Color
+        let colorB: Color
+    }
+
+    private let categories: [Category] = [
+        .init(name: "Toners", colorA: Color(hex: 0xC4868A), colorB: Color(hex: 0xA06A6E)),
+        .init(name: "Foundation & concealers", colorA: Color(hex: 0xAA8468), colorB: Color(hex: 0x8A6A50)),
+        .init(name: "Highlighters & luminizers", colorA: Color(hex: 0xB09A80), colorB: Color(hex: 0x8A7A64)),
+        .init(name: "Masks & peels", colorA: Color(hex: 0x9A8878), colorB: Color(hex: 0x7A6858)),
     ]
 
     var body: some View {
@@ -387,8 +388,8 @@ struct ExploreBeautySection: View {
                 columns: [GridItem(.flexible(), spacing: Tokens.space8), GridItem(.flexible(), spacing: Tokens.space8)],
                 spacing: Tokens.space8
             ) {
-                ForEach(0..<categories.count, id: \.self) { i in
-                    Text(categories[i].0)
+                ForEach(categories) { cat in
+                    Text(cat.name)
                         .font(.system(size: Tokens.bodySize, weight: .semibold))
                         .tracking(Tokens.bodyTracking)
                         .multilineTextAlignment(.center)
@@ -398,13 +399,7 @@ struct ExploreBeautySection: View {
                         .frame(height: 99)
                         .background(
                             RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
-                                .fill(
-                                    LinearGradient(
-                                        colors: [categories[i].1, categories[i].2],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
+                                .fill(LinearGradient(colors: [cat.colorA, cat.colorB], startPoint: .topLeading, endPoint: .bottomTrailing))
                         )
                         .clipShape(RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous))
                         .shadow(color: Tokens.shadowColor, radius: 6, x: 0, y: Tokens.shadowY)
@@ -419,15 +414,22 @@ struct ExploreBeautySection: View {
 // MARK: - Everything on Shop
 
 struct EverythingOnShopSection: View {
-    private let categories: [(String, Color, Color)] = [
-        ("Women", Color(hex: 0x1A5A3A), Color(hex: 0x2A6A4A)),
-        ("Men", Color(hex: 0xD4613A), Color(hex: 0xE47A4A)),
-        ("Home", Color(hex: 0xC4A87C), Color(hex: 0xB09868)),
-        ("Beauty", Color(hex: 0x7A3A20), Color(hex: 0x8A4A30)),
-        ("Baby & toddler", Color(hex: 0xC4AA78), Color(hex: 0xB09A68)),
-        ("Fitness & nutrition", Color(hex: 0x8A9AAA), Color(hex: 0x7A8A9A)),
-        ("Food & drinks", Color(hex: 0x8A6A40), Color(hex: 0x7A5A30)),
-        ("Accessories", Color(hex: 0x9AAA20), Color(hex: 0x8A9A10)),
+    private struct Category: Identifiable {
+        let id = UUID()
+        let name: String
+        let colorA: Color
+        let colorB: Color
+    }
+
+    private let categories: [Category] = [
+        .init(name: "Women", colorA: Color(hex: 0x1A5A3A), colorB: Color(hex: 0x2A6A4A)),
+        .init(name: "Men", colorA: Color(hex: 0xD4613A), colorB: Color(hex: 0xE47A4A)),
+        .init(name: "Home", colorA: Color(hex: 0xC4A87C), colorB: Color(hex: 0xB09868)),
+        .init(name: "Beauty", colorA: Color(hex: 0x7A3A20), colorB: Color(hex: 0x8A4A30)),
+        .init(name: "Baby & toddler", colorA: Color(hex: 0xC4AA78), colorB: Color(hex: 0xB09A68)),
+        .init(name: "Fitness & nutrition", colorA: Color(hex: 0x8A9AAA), colorB: Color(hex: 0x7A8A9A)),
+        .init(name: "Food & drinks", colorA: Color(hex: 0x8A6A40), colorB: Color(hex: 0x7A5A30)),
+        .init(name: "Accessories", colorA: Color(hex: 0x9AAA20), colorB: Color(hex: 0x8A9A10)),
     ]
 
     var body: some View {
@@ -438,8 +440,8 @@ struct EverythingOnShopSection: View {
                 columns: [GridItem(.flexible(), spacing: Tokens.space12), GridItem(.flexible(), spacing: Tokens.space12)],
                 spacing: Tokens.space12
             ) {
-                ForEach(0..<categories.count, id: \.self) { i in
-                    Text(categories[i].0)
+                ForEach(categories) { cat in
+                    Text(cat.name)
                         .font(.system(size: Tokens.bodySmSize, weight: .semibold))
                         .tracking(Tokens.cozyTracking)
                         .foregroundColor(.white)
@@ -447,13 +449,7 @@ struct EverythingOnShopSection: View {
                         .frame(height: 80)
                         .background(
                             RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
-                                .fill(
-                                    LinearGradient(
-                                        colors: [categories[i].1, categories[i].2],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                )
+                                .fill(LinearGradient(colors: [cat.colorA, cat.colorB], startPoint: .leading, endPoint: .trailing))
                         )
                         .clipShape(RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous))
                 }
@@ -473,11 +469,7 @@ struct EverythingOnShopSection: View {
             .background(
                 RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
                     .fill(.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
-                            .stroke(Tokens.imageBorder, lineWidth: 0.5)
-                    )
-                    .shadow(color: Tokens.shadowColorS, radius: Tokens.shadowRadiusS, x: 0, y: Tokens.shadowYS)
+                    .smallCardStyle(radius: Tokens.radiusCard)
             )
             .padding(.horizontal, Tokens.space16)
         }

@@ -45,20 +45,7 @@ struct BottomNavBar: View {
                 }
             }
             .padding(Tokens.space6)
-            .background(
-                Capsule()
-                    .fill(Tokens.overlayLight75)
-                    .overlay(
-                        Capsule()
-                            .stroke(Color.white.opacity(0.75), lineWidth: 0.5)
-                    )
-                    .shadow(
-                        color: Tokens.shadowColor400,
-                        radius: Tokens.shadowRadiusL,
-                        x: 0,
-                        y: Tokens.shadowYL
-                    )
-            )
+            .glassEffect(.regular, in: .capsule)
         }
         .padding(.horizontal, Tokens.space20)
         .padding(.top, Tokens.space16)

@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  Shop feed playground
 //
-//  Created by Luke Dupont on 2/11/26.
+//  Root view — orchestrates tabs, search bar, and bottom nav.
 //
 
 import SwiftUI
@@ -16,26 +16,18 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            // Background
             Tokens.bg.ignoresSafeArea()
 
-            // Page content
             pageContent
-
-            // Decorative gradient
             decorativeGradient
 
-            // Search focused overlay
             if isSearchFocused {
                 Tokens.bg
                     .ignoresSafeArea()
                     .transition(.opacity)
             }
 
-            // Search bar + typeahead
             searchLayer
-
-            // Bottom controls
             bottomControls
         }
         .onChange(of: isSearchFocused) { _, focused in
@@ -58,12 +50,9 @@ private extension ContentView {
     @ViewBuilder
     var pageContent: some View {
         switch selectedTab {
-        case 0:
-            FeedView()
-        case 1:
-            SearchPageContent()
-        default:
-            OrdersPageContent()
+        case 0:  FeedView()
+        case 1:  SearchPageContent()
+        default: OrdersPageContent()
         }
     }
 
@@ -162,7 +151,7 @@ private extension ContentView {
             VStack {
                 Spacer()
                 CloseKeyboardButton {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                    withAnimation(Tokens.springSnappy) {
                         isSearchFocused = false
                     }
                 }
@@ -198,53 +187,6 @@ private struct CloseKeyboardButton: View {
             }
             .padding(.trailing, Tokens.space16)
             .padding(.bottom, Tokens.space8)
-        }
-    }
-}
-
-// MARK: - Search Page Content
-
-struct SearchPageContent: View {
-    private let categories: [(String, Color)] = [
-        ("Women", Color(hex: 0xC4956A)),
-        ("Men", Color(hex: 0xD4714A)),
-        ("Beauty", Color(hex: 0xC47840)),
-        ("Home", Color(hex: 0x9BAA7E)),
-        ("Food & drinks", Color(hex: 0xD48B5A)),
-        ("Baby & toddler", Color(hex: 0xE8B090)),
-        ("Towels", Color(hex: 0x8BAABC)),
-        ("Household appliances", Color(hex: 0xA09880)),
-    ]
-
-    var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack(spacing: 0) {
-                Color.clear.frame(height: Tokens.searchBarTopOffset)
-
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: Tokens.space4) {
-                        ForEach(0..<categories.count, id: \.self) { i in
-                            CategoryChip(label: categories[i].0, color: categories[i].1)
-                        }
-                    }
-                    .padding(.horizontal, Tokens.space16)
-                    .padding(.vertical, Tokens.space8)
-                }
-                .scrollClipDisabled()
-                .padding(.bottom, 25)
-
-                VStack(spacing: Tokens.space24) {
-                    KeepShoppingSection()
-                    RecentSearchesSection()
-                    ForYouSection()
-                    RefreshBannerSection()
-                    NewBackInStockSection()
-                    ExploreBeautySection()
-                    EverythingOnShopSection()
-                }
-
-                Color.clear.frame(height: 120)
-            }
         }
     }
 }

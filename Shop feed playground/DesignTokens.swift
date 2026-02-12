@@ -2,7 +2,7 @@
 //  DesignTokens.swift
 //  Shop feed playground
 //
-//  Figma design tokens — shared across all views.
+//  Figma design tokens + shared view modifiers — used across all views.
 //
 
 import SwiftUI
@@ -23,6 +23,7 @@ enum Tokens {
     static let chipFill = Color.white.opacity(0.85)
     static let imageBorder = Color(red: 5 / 255, green: 41 / 255, blue: 77 / 255).opacity(0.1)
     static let fillSecondary = Color(hex: 0xF2F4F5)
+    static let progressPurple = Color(hex: 0x5433EB)
 
     // MARK: Gradient
 
@@ -83,9 +84,16 @@ enum Tokens {
 
     static let chipSize: CGFloat = 40
     static let iconSmall: CGFloat = 16
+    static let cardWidth: CGFloat = 377
     static let cardHeight: CGFloat = 644
     static let cardPadding: CGFloat = 8
     static let searchBarTopOffset: CGFloat = 54
+
+    // MARK: Animations
+
+    static let springDefault = Animation.spring(response: 0.4, dampingFraction: 0.8)
+    static let springSnappy = Animation.spring(response: 0.25, dampingFraction: 0.75)
+    static let springDrag = Animation.spring(response: 0.3, dampingFraction: 0.7)
 }
 
 // MARK: - Color Hex Helper
@@ -97,6 +105,69 @@ extension Color {
             green: Double((hex >> 8) & 0xFF) / 255.0,
             blue: Double(hex & 0xFF) / 255.0,
             opacity: opacity
+        )
+    }
+}
+
+// MARK: - Shared View Modifiers
+
+/// Standard white card background with border and shadow (used by order cards, product tiles, etc.)
+struct CardBackground: ViewModifier {
+    var radius: CGFloat = Tokens.radiusCard
+
+    func body(content: Content) -> some View {
+        content
+            .background(
+                RoundedRectangle(cornerRadius: radius, style: .continuous)
+                    .fill(.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: radius, style: .continuous)
+                            .stroke(Tokens.imageBorder, lineWidth: 0.5)
+                    )
+                    .shadow(color: Tokens.shadowColor, radius: Tokens.shadowRadius, x: 0, y: Tokens.shadowY)
+            )
+    }
+}
+
+/// Small shadow card style (for product tiles, thumbnails)
+struct SmallCardBackground: ViewModifier {
+    var radius: CGFloat = Tokens.radius20
+
+    func body(content: Content) -> some View {
+        content
+            .overlay(
+                RoundedRectangle(cornerRadius: radius, style: .continuous)
+                    .stroke(Tokens.imageBorder, lineWidth: 0.5)
+            )
+            .shadow(color: Tokens.shadowColorS, radius: Tokens.shadowRadiusS, x: 0, y: Tokens.shadowYS)
+    }
+}
+
+extension View {
+    func cardStyle(radius: CGFloat = Tokens.radiusCard) -> some View {
+        modifier(CardBackground(radius: radius))
+    }
+
+    func smallCardStyle(radius: CGFloat = Tokens.radius20) -> some View {
+        modifier(SmallCardBackground(radius: radius))
+    }
+}
+
+// MARK: - Color Interpolation
+
+extension Color {
+    /// Linearly interpolate between two colors. `frac` 0 = self, 1 = other.
+    func interpolate(to other: Color, fraction frac: CGFloat) -> Color {
+        let cA = UIColor(self)
+        let cB = UIColor(other)
+        var rA: CGFloat = 0, gA: CGFloat = 0, bA: CGFloat = 0, aA: CGFloat = 0
+        var rB: CGFloat = 0, gB: CGFloat = 0, bB: CGFloat = 0, aB: CGFloat = 0
+        cA.getRed(&rA, green: &gA, blue: &bA, alpha: &aA)
+        cB.getRed(&rB, green: &gB, blue: &bB, alpha: &aB)
+        return Color(
+            red: Double(rA + (rB - rA) * frac),
+            green: Double(gA + (gB - gA) * frac),
+            blue: Double(bA + (bB - bA) * frac)
         )
     }
 }

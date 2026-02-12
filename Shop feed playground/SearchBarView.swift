@@ -96,14 +96,16 @@ struct SearchBarView: View {
         }
         .opacity(isSearchFocused ? 1.0 : 0.75)
         .background(
-            RoundedRectangle(cornerRadius: Tokens.radius28, style: .continuous)
-                .fill(isSearchFocused ? .white : Tokens.overlayLight75)
-                .shadow(
-                    color: Tokens.shadowColor,
-                    radius: Tokens.shadowRadius,
-                    x: 0,
-                    y: Tokens.shadowY
-                )
+            Group {
+                if isSearchFocused {
+                    RoundedRectangle(cornerRadius: Tokens.radius28, style: .continuous)
+                        .fill(.white)
+                } else {
+                    RoundedRectangle(cornerRadius: Tokens.radius28, style: .continuous)
+                        .fill(.clear)
+                        .glassEffect(.regular, in: .capsule)
+                }
+            }
         )
         .contentShape(RoundedRectangle(cornerRadius: Tokens.radius28, style: .continuous))
         .onTapGesture {
