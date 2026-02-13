@@ -21,19 +21,68 @@ struct PileCard: View {
         return items.first { $0.id == id }
     }
 
+
+
+
+
     private var bgColor: Color {
-        focusedItem?.dominantColor ?? Color(hex: 0xC4B4E0)
+        focusedItem?.dominantColor ?? Color(hex: 0x1A1A1A)
     }
 
     var body: some View {
         ZStack {
+            // Base fill
             RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
                 .fill(bgColor)
+                .overlay(
+                    RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
+                        .stroke(Color.white.opacity(0.06), lineWidth: 0.5)
+                )
                 .animation(Tokens.springDefault, value: focusedItemId)
+
+            // Depth: dark vignette around edges
+            RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
+                .fill(
+                    RadialGradient(
+                        colors: [.clear, .black.opacity(0.35)],
+                        center: .center,
+                        startRadius: 120,
+                        endRadius: 380
+                    )
+                )
+                .allowsHitTesting(false)
+
+            // Depth: inner highlight at top for overhead-light feel
+            RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
+                .fill(
+                    LinearGradient(
+                        stops: [
+                            .init(color: .white.opacity(0.06), location: 0),
+                            .init(color: .clear, location: 0.35),
+                        ],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .allowsHitTesting(false)
+
+            // Depth: subtle bottom shadow inside the card
+            RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
+                .fill(
+                    LinearGradient(
+                        stops: [
+                            .init(color: .clear, location: 0.7),
+                            .init(color: .black.opacity(0.25), location: 1.0),
+                        ],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .allowsHitTesting(false)
 
             // Header
             if focusedItemId == nil {
-                CardHeader(subtitle: "Shop the bin", title: "Dig in to find something great")
+                CardHeader(subtitle: "Shop the bin", title: "Dig in to find something great", lightText: true)
                     .zIndex(50)
                     .transition(.opacity)
                     .allowsHitTesting(false)
@@ -49,6 +98,7 @@ struct PileCard: View {
                     isFocused: isFocused,
                     disabled: isBackground,
                     onTap: {
+                        Haptics.light()
                         withAnimation(Tokens.springDefault) {
                             if isFocused { focusedItemId = nil }
                             else {
@@ -78,6 +128,7 @@ struct PileCard: View {
                 Color.clear
                     .contentShape(Rectangle())
                     .onTapGesture {
+                        Haptics.light()
                         withAnimation(Tokens.springDefault) { focusedItemId = nil }
                     }
                     .zIndex(-1)
@@ -113,6 +164,30 @@ struct CardHeader: View {
     }
 }
 
+/// Card header variant with title on top, subtitle below.
+struct CardHeaderFlipped: View {
+    let title: String
+    let subtitle: String
+    var lightText: Bool = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(title)
+                .font(.system(size: 24, weight: .semibold))
+                .tracking(-1.0)
+                .foregroundColor(lightText ? .white : Tokens.textPrimary)
+
+            Text(subtitle)
+                .font(.system(size: Tokens.bodySmSize, weight: .semibold))
+                .tracking(Tokens.cozyTracking)
+                .foregroundColor(lightText ? .white.opacity(0.56) : Tokens.textTertiary)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .padding(.horizontal, Tokens.space20)
+        .padding(.top, Tokens.space20)
+    }
+}
+
 // MARK: - Focused Product Overlay
 
 private struct FocusedProductOverlay: View {
@@ -123,13 +198,15 @@ private struct FocusedProductOverlay: View {
         VStack(spacing: 0) {
             merchantLogo.padding(.top, 50)
             Spacer()
-            Button(action: {}) {
+            Button(action: {
+                Haptics.light()
+            }) {
                 Text("Shop now")
                     .font(.system(size: Tokens.bodySize, weight: .semibold))
                     .tracking(Tokens.bodyTracking)
                     .foregroundColor(.black)
-                    .padding(.horizontal, 28)
-                    .padding(.vertical, 12)
+                        .padding(.horizontal, 32)
+                        .padding(.vertical, 14)
                     .background(Capsule().fill(.white))
             }
             .padding(.bottom, 40)
@@ -167,6 +244,13 @@ private struct DraggablePileItem: View {
 
     @State private var dragOffset: CGSize = .zero
     @State private var isDragging = false
+    @State private var dragIntent: DragIntent = .undecided
+
+    private enum DragIntent {
+        case undecided
+        case draggingItem
+        case scrollingFeed
+    }
 
     private var focusedSize: CGSize {
         let maxW: CGFloat = Tokens.cardWidth - 80
@@ -217,14 +301,34 @@ private struct DraggablePileItem: View {
         .animation(Tokens.springDefault, value: isFocused)
         .animation(Tokens.springDrag, value: isDragging)
         .onTapGesture { onTap() }
-        .gesture(
+        .simultaneousGesture(
             isFocused ? nil :
-            DragGesture()
+            DragGesture(minimumDistance: 8)
                 .onChanged { value in
-                    if !isDragging { isDragging = true; topZ += 1; item.zIndex = topZ }
+                    if dragIntent == .undecided {
+                        let dx = value.translation.width
+                        let dy = value.translation.height
+                        let distance = hypot(dx, dy)
+                        guard distance >= 12 else { return }
+                        dragIntent = abs(dy) > abs(dx) * 1.12 ? .scrollingFeed : .draggingItem
+                    }
+
+                    guard dragIntent == .draggingItem else { return }
+                    if !isDragging {
+                        isDragging = true
+                        topZ += 1
+                        item.zIndex = topZ
+                        Haptics.soft(intensity: 0.6)
+                    }
                     dragOffset = value.translation
                 }
                 .onEnded { value in
+                    defer { dragIntent = .undecided }
+                    guard dragIntent == .draggingItem else {
+                        isDragging = false
+                        dragOffset = .zero
+                        return
+                    }
                     isDragging = false
                     item.offset.width += value.translation.width
                     item.offset.height += value.translation.height

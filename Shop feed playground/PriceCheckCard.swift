@@ -8,7 +8,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 // MARK: - Price Check Card
 
@@ -19,6 +18,12 @@ struct PriceCheckCard: View {
     @State private var dragStartPrice: Int = 50
     @State private var isShuffling: Bool = false
     @State private var shuffleOut: Bool = false
+    @State private var cardDrag: CGSize = .zero
+    @State private var cardDragIntent: CardDragIntent = .undecided
+
+    private enum CardDragIntent {
+        case undecided, swiping, scrolling
+    }
 
     private let products = PriceCheckProduct.defaults
     private var product: PriceCheckProduct { products[currentProductIndex] }
@@ -31,21 +36,26 @@ struct PriceCheckCard: View {
             // Light gray background
             RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
                 .fill(Color(hex: 0xE8E8E8))
+                .overlay(
+                    RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
+                        .stroke(Color.black.opacity(0.06), lineWidth: 0.5)
+                )
 
             // Dot pattern background
             DotPatternView()
                 .clipShape(RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous))
                 .allowsHitTesting(false)
 
-            VStack(spacing: 0) {
-                // "PRICE CHECK" header
-                priceCheckHeader
-                    .padding(.top, Tokens.space20)
+            // Header (title first, subtitle below)
+            CardHeaderFlipped(title: "Price Check", subtitle: "Guess the price to receive a discount")
+                .allowsHitTesting(false)
 
+            VStack(spacing: 0) {
                 Spacer()
 
                 // Product image (stacked cards look)
                 productImageStack
+                    .offset(y: 15)
                     .padding(.bottom, Tokens.space16)
 
                 Spacer()
@@ -75,26 +85,19 @@ struct PriceCheckCard: View {
 // MARK: - Subviews
 
 private extension PriceCheckCard {
-    var priceCheckHeader: some View {
-        Image("PriceCheckLogo")
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(width: 280)
-    }
-
     var productImageStack: some View {
         ZStack {
             // Third card (deepest)
             RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
                 .fill(.white)
-                .frame(width: 210, height: 210)
+                .frame(width: 273, height: 273)
                 .rotationEffect(.degrees(6))
                 .offset(x: 8, y: 6)
                 .shadow(color: .black.opacity(0.06), radius: 6, x: 0, y: 3)
 
             // Second card — becomes visible during shuffle
             Color.clear
-                .frame(width: 210, height: 210)
+                .frame(width: 273, height: 273)
                 .background {
                     Image(nextProduct.imageName)
                         .resizable()
@@ -106,9 +109,9 @@ private extension PriceCheckCard {
                 .offset(x: shuffleOut ? 0 : 4, y: shuffleOut ? 0 : 3)
                 .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
 
-            // Front card — flies out during shuffle
+            // Front card — draggable in any direction
             Color.clear
-                .frame(width: 210, height: 210)
+                .frame(width: 273, height: 273)
                 .background {
                     Image(product.imageName)
                         .resizable()
@@ -117,11 +120,71 @@ private extension PriceCheckCard {
                 .clipped()
                 .clipShape(RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous))
                 .shadow(color: .black.opacity(0.1), radius: 12, x: 0, y: 6)
-                .rotationEffect(.degrees(shuffleOut ? -15 : 0))
-                .offset(x: shuffleOut ? -300 : 0, y: shuffleOut ? -40 : 0)
+                .rotationEffect(.degrees(Double(cardDrag.width) / 18))
+                .offset(cardDrag)
                 .opacity(shuffleOut ? 0 : 1)
+                .simultaneousGesture(
+                    DragGesture(minimumDistance: 12)
+                        .onChanged { value in
+                            if cardDragIntent == .undecided {
+                                let dx = abs(value.translation.width)
+                                let dy = abs(value.translation.height)
+                                let dist = hypot(dx, dy)
+                                guard dist >= 14 else { return }
+                                // If mostly vertical and small horizontal, let feed scroll
+                                cardDragIntent = (dy > dx * 2.0 && dx < 20) ? .scrolling : .swiping
+                            }
+                            guard cardDragIntent == .swiping else { return }
+                            cardDrag = value.translation
+                        }
+                        .onEnded { value in
+                            defer { cardDragIntent = .undecided }
+                            guard cardDragIntent == .swiping else {
+                                withAnimation(Tokens.springDrag) {
+                                    cardDrag = .zero
+                                }
+                                return
+                            }
+
+                            let velocity = CGSize(
+                                width: value.predictedEndTranslation.width - value.translation.width,
+                                height: value.predictedEndTranslation.height - value.translation.height
+                            )
+                            let speed = hypot(velocity.width, velocity.height)
+                            let distance = hypot(cardDrag.width, cardDrag.height)
+
+                            if distance > 80 || speed > 200 {
+                                // Fling away in the drag direction
+                                let norm = max(distance, 1)
+                                let flyX = (cardDrag.width / norm) * 600
+                                let flyY = (cardDrag.height / norm) * 600
+
+                                withAnimation(.easeOut(duration: 0.25)) {
+                                    cardDrag = CGSize(width: flyX, height: flyY)
+                                    shuffleOut = true
+                                }
+
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.28) {
+                                    var tx = Transaction()
+                                    tx.disablesAnimations = true
+                                    withTransaction(tx) {
+                                        shuffleOut = false
+                                        cardDrag = .zero
+                                        currentProductIndex = (currentProductIndex + 1) % products.count
+                                        guessPrice = product.maxPrice / 3
+                                        isRevealed = false
+                                    }
+                                }
+                            } else {
+                                // Snap back
+                                withAnimation(Tokens.springDrag) {
+                                    cardDrag = .zero
+                                }
+                            }
+                        }
+                )
         }
-        .animation(.spring(response: 0.45, dampingFraction: 0.8), value: shuffleOut)
+        .animation(Tokens.springDefault, value: shuffleOut)
     }
 
     var resultColor: Color {
@@ -135,17 +198,17 @@ private extension PriceCheckCard {
     var actionButton: some View {
         Button {
             if isRevealed {
-                // Shuffle: fly out current card, then advance
-                withAnimation(.spring(response: 0.45, dampingFraction: 0.8)) {
+                // Fling card off to the left, then advance
+                withAnimation(.easeOut(duration: 0.25)) {
+                    cardDrag = CGSize(width: -600, height: -40)
                     shuffleOut = true
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                    // Swap to next product while card is off-screen
-                    // Use no animation for the reset so the old card doesn't fly back
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.28) {
                     var transaction = Transaction()
                     transaction.disablesAnimations = true
                     withTransaction(transaction) {
                         shuffleOut = false
+                        cardDrag = .zero
                         currentProductIndex = (currentProductIndex + 1) % products.count
                         guessPrice = product.maxPrice / 3
                         isRevealed = false
@@ -153,13 +216,12 @@ private extension PriceCheckCard {
                 }
             } else {
                 // Lock in guess
-                withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+                withAnimation(Tokens.springDrag) {
                     isRevealed = true
                 }
                 // Haptic on reveal
-                let generator = UINotificationFeedbackGenerator()
                 let diff = abs(guessPrice - product.actualPrice)
-                generator.notificationOccurred(diff <= 10 ? .success : (diff <= 30 ? .warning : .error))
+                Haptics.notify(diff <= 10 ? .success : (diff <= 30 ? .warning : .error))
             }
         } label: {
             Text(isRevealed ? "Next" : "Lock it in")
@@ -219,9 +281,16 @@ private struct RulerView: View {
     let actualPrice: Int
     let bubbleColor: Color
 
-    private let haptic = UISelectionFeedbackGenerator()
+    @State private var dragIntent: DragIntent = .undecided
+
     private let smallTicksPerInterval = 10
     private let rulerTopOffset: CGFloat = 50  // space for bubble above ruler
+
+    private enum DragIntent {
+        case undecided
+        case adjustingRuler
+        case scrollingFeed
+    }
 
     var body: some View {
         GeometryReader { geo in
@@ -295,15 +364,27 @@ private struct RulerView: View {
                     .offset(x: currentX - 1.5, y: rulerTopOffset)
             }
             .contentShape(Rectangle())
-            .gesture(
+            .simultaneousGesture(
                 isRevealed ? nil :
-                DragGesture(minimumDistance: 0)
+                DragGesture(minimumDistance: 8)
                     .onChanged { drag in
+                        if dragIntent == .undecided {
+                            let dx = drag.translation.width
+                            let dy = drag.translation.height
+                            let distance = hypot(dx, dy)
+                            guard distance >= 12 else { return }
+                            dragIntent = abs(dy) > abs(dx) * 1.12 ? .scrollingFeed : .adjustingRuler
+                        }
+
+                        guard dragIntent == .adjustingRuler else { return }
                         let x = drag.location.x - 16
                         let fraction = max(0, min(x / dragRange, 1))
                         let newValue = Int(fraction * CGFloat(maxValue))
-                        if newValue != value { haptic.selectionChanged() }
+                        if newValue != value { Haptics.selection() }
                         value = newValue
+                    }
+                    .onEnded { _ in
+                        dragIntent = .undecided
                     }
             )
         }

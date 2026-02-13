@@ -3,51 +3,44 @@
 //  Shop feed playground
 //
 //  Home feed with vertically scrolling cards.
-//  To add a new card type:
-//    1. Create a new SwiftUI View file (e.g. MyNewCard.swift)
-//    2. Add a case to FeedCardType below
-//    3. Add the case to FeedCardType.allCards
-//  That's it — no other files need changing.
+//  To add a new card, add one entry to FeedCardRegistry.feed.
 //
 
 import SwiftUI
 
-// MARK: - Card Type Registry
+// MARK: - Feed Card Registry
 
-/// Each case represents one card in the feed, in display order.
-/// Add new card types here — the feed renders them automatically.
-enum FeedCardType: Int, Identifiable, CaseIterable {
-    case pile = 0
-    case arcCarousel
-    case priceCheck
-    case placeholder1
-    case placeholder2
-    case placeholder3
+struct FeedCardDefinition: Identifiable {
+    let id: String
+    private let buildView: () -> AnyView
 
-    var id: Int { rawValue }
+    init<Content: View>(id: String, @ViewBuilder buildView: @escaping () -> Content) {
+        self.id = id
+        self.buildView = { AnyView(buildView()) }
+    }
 
-    /// The ordered list of cards shown in the home feed.
-    static let allCards: [FeedCardType] = [
-        .priceCheck,
-        .arcCarousel,
-        .pile,
-        .placeholder1, .placeholder2, .placeholder3,
+    func makeView() -> some View {
+        buildView()
+    }
+}
+
+enum FeedCardRegistry {
+    /// Ordered list of cards shown in the home feed.
+    static let feed: [FeedCardDefinition] = [
+        .init(id: "price-check") { PriceCheckCard() },
+        .init(id: "shoe-swipe") { ShoeSwipeCard() },
+        .init(id: "next-card") { NextFeedCard() },
+        .init(id: "f1-carousel") { F1DriverCarouselCard() },
+        .init(id: "arc-carousel") { ArcCarouselCard() },
+        .init(id: "pile") { PileCard() },
+        .init(id: "placeholder-1") { PlaceholderFeedCard(color: Color(hex: 0xC4C0B6)) },
+        .init(id: "placeholder-2") { PlaceholderFeedCard(color: Color(hex: 0x1A3328)) },
     ]
 }
 
 // MARK: - Feed View
 
 struct FeedView: View {
-    /// Placeholder colors for cards that haven't been designed yet.
-    private let placeholderColors: [Color] = [
-        Color(hex: 0xC4C0B6),
-        Color(hex: 0x1A3328),
-        Color(hex: 0x3520A0),
-        Color(hex: 0x4A1A12),
-        Color(hex: 0xE8DED0),
-        Color(hex: 0x2C4A3A),
-    ]
-
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 0) {
@@ -57,34 +50,23 @@ struct FeedView: View {
                     .padding(.bottom, Tokens.space8)
 
                 LazyVStack(spacing: Tokens.space8) {
-                    ForEach(FeedCardType.allCards) { card in
-                        feedCard(for: card)
+                    ForEach(FeedCardRegistry.feed) { card in
+                        card.makeView()
                     }
                 }
             }
         }
     }
+}
 
-    // MARK: Card Factory
+// MARK: - Placeholder Card
 
-    @ViewBuilder
-    private func feedCard(for type: FeedCardType) -> some View {
-        switch type {
-        case .pile:
-            PileCard()
+private struct PlaceholderFeedCard: View {
+    let color: Color
 
-        case .arcCarousel:
-            ArcCarouselCard()
-
-        case .priceCheck:
-            PriceCheckCard()
-
-        // Placeholder cards — replace these with real card views
-        default:
-            let index = max(type.rawValue - 1, 0) % placeholderColors.count
-            RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
-                .fill(placeholderColors[index])
-                .frame(width: Tokens.cardWidth, height: Tokens.cardHeight)
-        }
+    var body: some View {
+        RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
+            .fill(color)
+            .frame(width: Tokens.cardWidth, height: Tokens.cardHeight)
     }
 }

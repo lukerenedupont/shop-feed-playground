@@ -59,7 +59,7 @@ struct PortraitData {
                 .init(imageName: "MartyCoat", width: 87, height: 105, rotation: -6),
               ]),
 
-        .init(name: "Claire", brand: "Greyson Clothiers",
+        .init(name: "Rachel", brand: "Odessa A'zion",
               imageName: "PortraitLady", bgColor: Color(hex: 0x6A8A5A), imageScale: 1.5, products: [
                 .init(imageName: "PilePerfume", width: 60, height: 85, rotation: -8),
                 .init(imageName: "PileSunscreen", width: 55, height: 95, rotation: 12),

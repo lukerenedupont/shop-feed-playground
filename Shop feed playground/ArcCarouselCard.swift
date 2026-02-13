@@ -9,6 +9,36 @@
 
 import SwiftUI
 
+private enum ArcMetrics {
+    static let arcRadius: CGFloat = 900
+    static let anglePerCard: CGFloat = 16.25
+    static let cardWidth: CGFloat = 208
+    static let cardHeight: CGFloat = 260
+    static let expandedCardWidth: CGFloat = 310
+    static let expandedCardHeight: CGFloat = 460
+    static let dragPerCard: CGFloat = 132
+    static let arcYOffset: CGFloat = 132
+    static let expandedYOffset: CGFloat = 0
+    static let sideExitX: CGFloat = 500
+    static let centeredDistanceThreshold: CGFloat = 0.3
+    static let centeredDragThreshold: CGFloat = 15
+    static let swipeThreshold: CGFloat = 30
+    static let closeButtonDelay: TimeInterval = 0.45
+    static let closeButtonFadeDuration: TimeInterval = 0.2
+}
+
+private struct ArcCardState {
+    let x: CGFloat
+    let y: CGFloat
+    let width: CGFloat
+    let height: CGFloat
+    let angle: Double
+    let opacity: Double
+    let zIndex: Double
+    let isExpanded: Bool
+    let isCentered: Bool
+}
+
 // MARK: - Arc Carousel Card
 
 struct ArcCarouselCard: View {
@@ -16,22 +46,18 @@ struct ArcCarouselCard: View {
     @State private var dragOffset: CGFloat = 0
     @State private var expandedIndex: Int? = nil
     @State private var showCloseButton: Bool = false
+    @State private var pendingCloseButtonWorkItem: DispatchWorkItem?
 
     private let portraits = PortraitData.defaults
 
-    // Arc geometry
-    private let arcRadius: CGFloat = 900
-    private let anglePerCard: CGFloat = 12
-    private let cardW: CGFloat = 160
-    private let cardH: CGFloat = 200
-    private let dragPerCard: CGFloat = 100
-    private let expandedW: CGFloat = 310
-    private let expandedH: CGFloat = 460
+
+
+
 
     private var isExpanded: Bool { expandedIndex != nil }
 
     private var continuousPosition: CGFloat {
-        CGFloat(currentIndex) + (-dragOffset / dragPerCard)
+        CGFloat(currentIndex) - (dragOffset / ArcMetrics.dragPerCard)
     }
 
     private var bgColor: Color {
@@ -47,6 +73,10 @@ struct ArcCarouselCard: View {
             // Background
             RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
                 .fill(bgColor)
+                .overlay(
+                    RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
+                        .stroke(Color.white.opacity(0.06), lineWidth: 0.5)
+                )
 
             // Dark gradient overlay
             LinearGradient(
@@ -76,10 +106,13 @@ struct ArcCarouselCard: View {
             arcCarousel
 
             // Drag gesture
-            .gesture(isExpanded ? nil : arcDragGesture)
+            .simultaneousGesture(isExpanded ? nil : arcDragGesture)
         }
         .frame(width: Tokens.cardWidth, height: Tokens.cardHeight)
         .clipShape(RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous))
+        .onDisappear {
+            pendingCloseButtonWorkItem?.cancel()
+        }
     }
 }
 
@@ -88,110 +121,214 @@ struct ArcCarouselCard: View {
 private extension ArcCarouselCard {
     var arcCarousel: some View {
         ZStack {
-            ForEach(0..<portraits.count, id: \.self) { i in
-                let isThisExpanded = expandedIndex == i
-                let relPos = CGFloat(i) - continuousPosition
-                let angle = relPos * anglePerCard
-                let radians = angle * .pi / 180
+            ForEach(0..<portraits.count, id: \.self) { index in
+                let cardState = state(for: index)
+                let portrait = portraits[index]
 
-                let arcX = sin(radians) * arcRadius
-                let arcY = (1 - cos(radians)) * arcRadius + 172
-
-                let expandX: CGFloat = isThisExpanded ? 0 : (i < (expandedIndex ?? i) ? -500 : 500)
-                let expandY: CGFloat = isThisExpanded ? -20 : arcY
-
-                let finalX = isExpanded ? expandX : arcX
-                let finalY = isExpanded ? expandY : arcY
-                let finalW = isThisExpanded ? expandedW : cardW
-                let finalH = isThisExpanded ? expandedH : cardH
-                let finalAngle = isExpanded ? 0.0 : Double(angle)
-                let finalOpacity = (isExpanded && !isThisExpanded) ? 0.0 : 1.0
-
-                let distFromCenter = abs(relPos)
-                let isCentered = !isExpanded && distFromCenter < 0.3 && abs(dragOffset) < 15
-
-                PortraitCard(data: portraits[i], showText: isCentered, isExpanded: isThisExpanded)
-                    .frame(width: finalW, height: finalH)
+                PortraitCard(data: portrait, showText: cardState.isCentered, isExpanded: cardState.isExpanded)
+                    .frame(width: cardState.width, height: cardState.height)
                     // Product rail
                     .overlay(alignment: .bottom) {
-                        if isThisExpanded && showCloseButton && !portraits[i].products.isEmpty {
-                            ProductRail(products: portraits[i].products)
+                        if cardState.isExpanded && showCloseButton && !portrait.products.isEmpty {
+                            ProductRail(products: portrait.products)
                         }
                     }
                     .clipShape(RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous))
                     // Close button
                     .overlay(alignment: .topTrailing) {
-                        if isThisExpanded && showCloseButton {
-                            CloseButton {
-                                showCloseButton = false
-                                withAnimation(.spring(response: 0.5, dampingFraction: 0.82)) {
-                                    expandedIndex = nil
-                                }
-                            }
+                        if cardState.isExpanded && showCloseButton {
+                            CloseButton(action: collapseExpandedCard)
                         }
                     }
-                    .rotationEffect(.degrees(finalAngle))
-                    .offset(x: finalX, y: finalY)
-                    .opacity(finalOpacity)
-                    .zIndex(isThisExpanded ? 200 : Double(100) - Double(abs(angle)))
+                    .rotationEffect(.degrees(cardState.angle))
+                    .offset(x: cardState.x, y: cardState.y)
+                    .opacity(cardState.opacity)
+                    .zIndex(cardState.zIndex)
                     .onTapGesture {
-                        guard isCentered else { return }
-                        withAnimation(.spring(response: 0.5, dampingFraction: 0.82)) {
-                            expandedIndex = i
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
-                            withAnimation(.easeIn(duration: 0.2)) { showCloseButton = true }
-                        }
+                        guard cardState.isCentered else { return }
+                        expandCard(at: index)
                     }
             }
         }
-        .animation(.spring(response: 0.5, dampingFraction: 0.82), value: expandedIndex)
+        .animation(Tokens.springExpand, value: expandedIndex)
         .animation(
-            dragOffset == 0 ? .spring(response: 0.45, dampingFraction: 0.8) : .interactiveSpring(),
+            dragOffset == 0 ? Tokens.springDefault : .interactiveSpring(),
             value: continuousPosition
         )
     }
 
+    func state(for index: Int) -> ArcCardState {
+        let relativePosition = CGFloat(index) - continuousPosition
+        let angle = relativePosition * ArcMetrics.anglePerCard
+        let radians = angle * .pi / 180
+
+        let arcX = sin(radians) * ArcMetrics.arcRadius
+        let arcY = (1 - cos(radians)) * ArcMetrics.arcRadius + ArcMetrics.arcYOffset
+        let isThisExpanded = expandedIndex == index
+
+        let expandedX: CGFloat
+        if isThisExpanded {
+            expandedX = 0
+        } else if index < (expandedIndex ?? index) {
+            expandedX = -ArcMetrics.sideExitX
+        } else {
+            expandedX = ArcMetrics.sideExitX
+        }
+
+        let x = isExpanded ? expandedX : arcX
+        let y = isExpanded ? (isThisExpanded ? ArcMetrics.expandedYOffset : arcY) : arcY
+        let width = isThisExpanded ? ArcMetrics.expandedCardWidth : ArcMetrics.cardWidth
+        let height = isThisExpanded ? ArcMetrics.expandedCardHeight : ArcMetrics.cardHeight
+        let resolvedAngle = isExpanded ? 0 : Double(angle)
+        let opacity = (isExpanded && !isThisExpanded) ? 0.0 : 1.0
+        let zIndex = isThisExpanded ? 200 : Double(100) - Double(abs(angle))
+        let isCentered = !isExpanded &&
+            abs(relativePosition) < ArcMetrics.centeredDistanceThreshold &&
+            abs(dragOffset) < ArcMetrics.centeredDragThreshold
+
+        return ArcCardState(
+            x: x,
+            y: y,
+            width: width,
+            height: height,
+            angle: resolvedAngle,
+            opacity: opacity,
+            zIndex: zIndex,
+            isExpanded: isThisExpanded,
+            isCentered: isCentered
+        )
+    }
+
     var arcDragGesture: some Gesture {
-        DragGesture()
-            .onChanged { value in dragOffset = value.translation.width }
+        DragGesture(minimumDistance: 16)
+            .onChanged { value in
+                guard abs(value.translation.width) > abs(value.translation.height) else { return }
+                dragOffset = value.translation.width
+            }
             .onEnded { value in
-                let threshold: CGFloat = 30
+                guard abs(value.translation.width) > abs(value.translation.height) else {
+                    withAnimation(Tokens.springDefault) {
+                        dragOffset = 0
+                    }
+                    return
+                }
+
+                let horizontal = value.translation.width
                 let next: Int
-                if dragOffset < -threshold && currentIndex < portraits.count - 1 { next = currentIndex + 1 }
-                else if dragOffset > threshold && currentIndex > 0 { next = currentIndex - 1 }
-                else { next = currentIndex }
-                withAnimation(.spring(response: 0.45, dampingFraction: 0.8)) {
+                if horizontal < -ArcMetrics.swipeThreshold && currentIndex < portraits.count - 1 {
+                    next = currentIndex + 1
+                } else if horizontal > ArcMetrics.swipeThreshold && currentIndex > 0 {
+                    next = currentIndex - 1
+                } else {
+                    next = currentIndex
+                }
+
+                if next != currentIndex {
+                    Haptics.selection()
+                }
+
+                withAnimation(Tokens.springDefault) {
                     currentIndex = next
                     dragOffset = 0
                 }
             }
     }
+
+    func expandCard(at index: Int) {
+        pendingCloseButtonWorkItem?.cancel()
+        showCloseButton = false
+        Haptics.light()
+
+        withAnimation(Tokens.springExpand) {
+            expandedIndex = index
+        }
+
+        let workItem = DispatchWorkItem {
+            guard expandedIndex == index else { return }
+            withAnimation(.easeIn(duration: ArcMetrics.closeButtonFadeDuration)) {
+                showCloseButton = true
+            }
+        }
+        pendingCloseButtonWorkItem = workItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + ArcMetrics.closeButtonDelay, execute: workItem)
+    }
+
+    func collapseExpandedCard() {
+        pendingCloseButtonWorkItem?.cancel()
+        showCloseButton = false
+        Haptics.light()
+        withAnimation(Tokens.springExpand) {
+            expandedIndex = nil
+        }
+    }
 }
 
 // MARK: - Product Rail (reusable)
 
-struct ProductRail: View {
+private struct ProductRail: View {
     let products: [ProductCutout]
+    private let tileSize: CGFloat = 112
+    private let tilePalettes: [[Color]] = [
+        [Color(hex: 0xD8D4CE), Color(hex: 0xC2BDB5)],
+        [Color(hex: 0xEBE8E3), Color(hex: 0xDDD9D3)],
+        [Color(hex: 0xC9A86C), Color(hex: 0x8B7444)],
+        [Color(hex: 0xD0CCC6), Color(hex: 0xBAB5AE)],
+        [Color(hex: 0xD5D1CB), Color(hex: 0xC0BCB5)],
+        [Color(hex: 0xE8E5E0), Color(hex: 0xDAD6D0)],
+    ]
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: -10) {
-                Spacer().frame(width: 30)
-                ForEach(0..<products.count, id: \.self) { p in
-                    Image(products[p].imageName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: products[p].width, height: products[p].height)
-                        .rotationEffect(.degrees(products[p].rotation))
-                        .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 4)
+            HStack(spacing: 12) {
+                Spacer().frame(width: Tokens.space20)
+                ForEach(Array(products.enumerated()), id: \.offset) { index, product in
+                    BuyAgainStyleRailCard(
+                        product: product,
+                        palette: tilePalettes[index % tilePalettes.count],
+                        size: tileSize
+                    )
                 }
                 Spacer().frame(width: Tokens.space20)
             }
         }
         .frame(maxWidth: .infinity)
-        .padding(.bottom, Tokens.space32)
+        .padding(.bottom, Tokens.space24)
         .transition(.opacity)
+    }
+}
+
+private struct BuyAgainStyleRailCard: View {
+    let product: ProductCutout
+    let palette: [Color]
+    let size: CGFloat
+
+    private var contentSize: CGSize {
+        let maxContent = size * 0.74
+        let scale = min(maxContent / max(product.width, 1), maxContent / max(product.height, 1))
+        return CGSize(width: product.width * scale, height: product.height * scale)
+    }
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
+                .fill(
+                    LinearGradient(
+                        colors: palette,
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .overlay {
+                    Image(product.imageName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: contentSize.width, height: contentSize.height)
+                        .rotationEffect(.degrees(product.rotation * 0.45))
+                        .shadow(color: .black.opacity(0.12), radius: 4, x: 0, y: 2)
+                }
+                .shadow(color: Color(hex: 0x000000, opacity: 0.06), radius: 8, x: 0, y: 2)
+        }
+        .frame(width: size, height: size)
     }
 }
 

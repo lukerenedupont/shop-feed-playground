@@ -94,6 +94,7 @@ enum Tokens {
     static let springDefault = Animation.spring(response: 0.4, dampingFraction: 0.8)
     static let springSnappy = Animation.spring(response: 0.25, dampingFraction: 0.75)
     static let springDrag = Animation.spring(response: 0.3, dampingFraction: 0.7)
+    static let springExpand = Animation.spring(response: 0.5, dampingFraction: 0.82)
 }
 
 // MARK: - Color Hex Helper
@@ -151,6 +152,23 @@ extension View {
     func smallCardStyle(radius: CGFloat = Tokens.radius20) -> some View {
         modifier(SmallCardBackground(radius: radius))
     }
+}
+
+// MARK: - Shared Haptics
+
+/// Pre-warmed haptic generators shared across all cards.
+/// Use `Haptics.selection()` for carousel snaps, `Haptics.light()` for button taps,
+/// `Haptics.soft()` for subtle feedback like edge bounce or item pickup.
+enum Haptics {
+    private static let _selection = UISelectionFeedbackGenerator()
+    private static let _light = UIImpactFeedbackGenerator(style: .light)
+    private static let _soft = UIImpactFeedbackGenerator(style: .soft)
+    private static let _notification = UINotificationFeedbackGenerator()
+
+    static func selection() { _selection.selectionChanged() }
+    static func light() { _light.impactOccurred() }
+    static func soft(intensity: CGFloat = 1.0) { _soft.impactOccurred(intensity: intensity) }
+    static func notify(_ type: UINotificationFeedbackGenerator.FeedbackType) { _notification.notificationOccurred(type) }
 }
 
 // MARK: - Color Interpolation

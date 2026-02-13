@@ -111,7 +111,7 @@ struct ShopTheLookCard: View {
                 }
                 .onEnded { value in
                     let threshold: CGFloat = 50
-                    withAnimation(.spring(response: 0.45, dampingFraction: 0.8)) {
+                    withAnimation(Tokens.springDefault) {
                         if dragOffset < -threshold && currentIndex < celebs.count - 1 {
                             currentIndex += 1
                         } else if dragOffset > threshold && currentIndex > 0 {
