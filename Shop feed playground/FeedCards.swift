@@ -28,8 +28,6 @@ enum FeedCardRegistry {
     /// Ordered list of cards shown in the home feed.
     static let feed: [FeedCardDefinition] = [
         .init(id: "collection-pocket") { CollectionPocketCard() },
-        .init(id: "shop-similar") { ShopSimilarCard() },
-        .init(id: "category-stack") { CategoryStackCard() },
         .init(id: "price-check") { PriceCheckCard() },
         .init(id: "shoe-swipe") { ShoeSwipeCard() },
         .init(id: "next-card") { NextFeedCard() },

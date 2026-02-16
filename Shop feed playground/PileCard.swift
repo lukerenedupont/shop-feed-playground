@@ -22,9 +22,6 @@ struct PileCard: View {
     }
 
 
-
-
-
     private var bgColor: Color {
         focusedItem?.dominantColor ?? Color(hex: 0x1A1A1A)
     }
@@ -88,7 +85,7 @@ struct PileCard: View {
                     .allowsHitTesting(false)
             }
 
-            // Draggable items
+            // Draggable items with float animation
             ForEach($items) { $item in
                 let isFocused = focusedItemId == item.id
                 let isBackground = focusedItemId != nil && !isFocused
@@ -338,3 +335,4 @@ private struct DraggablePileItem: View {
         .allowsHitTesting(!disabled)
     }
 }
+
