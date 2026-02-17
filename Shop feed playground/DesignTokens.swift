@@ -171,6 +171,14 @@ enum Haptics {
     static func notify(_ type: UINotificationFeedbackGenerator.FeedbackType) { _notification.notificationOccurred(type) }
 }
 
+// MARK: - Linear Interpolation
+
+/// Map a value from one range to another (like D3's linearScale).
+/// Used across multiple prototype-inspired cards.
+func lerp(inMin: CGFloat, inMax: CGFloat, outMin: CGFloat, outMax: CGFloat, _ value: CGFloat) -> CGFloat {
+    outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin)
+}
+
 // MARK: - Color Interpolation
 
 extension Color {
