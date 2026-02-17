@@ -27,6 +27,7 @@ struct FeedCardDefinition: Identifiable {
 enum FeedCardRegistry {
     /// Ordered list of cards shown in the home feed.
     static let feed: [FeedCardDefinition] = [
+        .init(id: "collection-pocket-v2") { CollectionPocketCardV2() },
         .init(id: "collection-pocket") { CollectionPocketCard() },
         .init(id: "price-check") { PriceCheckCard() },
         .init(id: "shoe-swipe") { ShoeSwipeCard() },
