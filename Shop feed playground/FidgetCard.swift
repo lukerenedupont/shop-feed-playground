@@ -108,11 +108,10 @@ private extension FidgetCard {
         VStack(alignment: .leading, spacing: 4) {
             Spacer()
             Text("Asics Gel-1130")
-                .font(.system(size: 18, weight: .bold))
+                .shopTextStyle(.subtitle)
                 .foregroundColor(.white)
-                .tracking(-0.5)
             Text("$120")
-                .font(.system(size: 15, weight: .semibold))
+                .shopTextStyle(.bodySmallBold)
                 .foregroundColor(.white.opacity(0.5))
         }
         .frame(maxWidth: .infinity, alignment: .leading)

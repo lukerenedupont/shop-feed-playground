@@ -37,10 +37,10 @@ struct AvatarChip: View {
             .frame(width: Tokens.chipSize, height: Tokens.chipSize)
             .clipShape(Circle())
             .shadow(
-                color: Tokens.shadowColor,
-                radius: Tokens.shadowRadius,
+                color: Tokens.ShopClient.shadowSColor,
+                radius: Tokens.ShopClient.shadowSRadius,
                 x: 0,
-                y: Tokens.shadowY
+                y: Tokens.ShopClient.shadowSY
             )
     }
 }
@@ -69,23 +69,13 @@ struct GlassTextChip: View {
     let label: String
 
     var body: some View {
-        HStack(spacing: Tokens.space2) {
-            Image(assetName)
-                .renderingMode(.template)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 14, height: 14)
-                .foregroundColor(Tokens.textPrimary)
-
-            Text(label)
-                .font(.system(size: Tokens.bodySmSize, weight: .semibold))
-                .tracking(Tokens.cozyTracking)
-                .foregroundColor(Tokens.textPrimary)
-        }
-        .padding(.leading, Tokens.space12)
-        .padding(.trailing, Tokens.space16)
-        .frame(height: Tokens.chipSize)
-        .background(glassChipBackground(shape: Capsule()))
+        ShopClientChip(
+            label: label,
+            iconAssetName: assetName,
+            selected: false,
+            circular: false,
+            variant: .shadow
+        )
     }
 }
 
@@ -102,8 +92,7 @@ struct CategoryChip: View {
                 .frame(width: 28, height: 28)
 
             Text(label)
-                .font(.system(size: Tokens.bodySmSize, weight: .semibold))
-                .tracking(Tokens.cozyTracking)
+                .shopTextStyle(.buttonMedium)
                 .foregroundColor(Tokens.textPrimary)
         }
         .padding(.leading, Tokens.space4)
@@ -117,15 +106,15 @@ struct CategoryChip: View {
 
 private func glassChipBackground<S: Shape>(shape: S) -> some View {
     shape
-        .fill(Tokens.chipFill)
+        .fill(Tokens.ShopClient.bgFill)
         .overlay(
             shape
-                .stroke(Tokens.chipBorder, lineWidth: 0.5)
+                .stroke(Tokens.ShopClient.borderSecondary, lineWidth: 0.5)
         )
         .shadow(
-            color: Tokens.shadowColor,
-            radius: Tokens.shadowRadius,
+            color: Tokens.ShopClient.shadowSColor,
+            radius: Tokens.ShopClient.shadowSRadius,
             x: 0,
-            y: Tokens.shadowY
+            y: Tokens.ShopClient.shadowSY
         )
 }

@@ -67,7 +67,7 @@ struct StatefulButtonCard: View {
                     .contentTransition(.symbolEffect(.replace))
 
                 Text(isAdded ? "Added" : "Add to bag")
-                    .font(.system(size: Layout.labelSize, weight: .bold))
+                    .shopTextStyle(.buttonLarge)
                     .foregroundColor(isAdded ? .black : .white)
             }
             .padding(.horizontal, Layout.horizontalPadding)

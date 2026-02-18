@@ -47,6 +47,7 @@ enum Tokens {
     // MARK: Radii
 
     static let radius12: CGFloat = 12
+    static let radius8: CGFloat = 8
     static let radius16: CGFloat = 16
     static let radius20: CGFloat = 20
     static let radius28: CGFloat = 28
@@ -84,6 +85,7 @@ enum Tokens {
 
     static let chipSize: CGFloat = 40
     static let iconSmall: CGFloat = 16
+    static let feedBottomScrollPadding: CGFloat = 24
     static let cardWidth: CGFloat = 377
     static let cardHeight: CGFloat = 644
     static let cardPadding: CGFloat = 8
@@ -95,6 +97,148 @@ enum Tokens {
     static let springSnappy = Animation.spring(response: 0.25, dampingFraction: 0.75)
     static let springDrag = Animation.spring(response: 0.3, dampingFraction: 0.7)
     static let springExpand = Animation.spring(response: 0.5, dampingFraction: 0.82)
+
+    // MARK: Shopify Shop Client (Gravity) Tokens
+
+    enum ShopClient {
+        // Palette excerpts from shop-client/gravity palette.
+        static let purpleP40 = Color(hex: 0x5433EB)
+        static let purpleL20 = Color(hex: 0x9C83F8)
+        static let purpleL10 = Color(hex: 0xDBD1FF)
+        static let purpleL5 = Color(hex: 0xEEEAFF)
+
+        static let grayscaleD100 = Color(hex: 0x000000)
+        static let grayscaleD93 = Color(hex: 0x121212)
+        static let grayscaleD80 = Color(hex: 0x2A2A2A)
+        static let grayscaleD70 = Color(hex: 0x404040)
+        static let grayscaleD50 = Color(hex: 0x6F7071)
+        static let grayscaleL20 = Color(hex: 0xC9CBCC)
+        static let grayscaleL5 = Color(hex: 0xF2F4F5)
+        static let grayscaleL2 = Color(hex: 0xFCFCFC)
+        static let grayscaleL0 = Color(hex: 0xFFFFFF)
+
+        static let greenD70 = Color(hex: 0x008552)
+        static let greenL30 = Color(hex: 0x92D08D)
+        static let poppyD50 = Color(hex: 0xD92A0F)
+        static let poppyL40 = Color(hex: 0xF05D38)
+
+        // Semantic colors (light-mode defaults from themeColors.ts).
+        static let text = grayscaleD100
+        static let textSecondary = Color.black.opacity(0.75)
+        static let textTertiary = Color.black.opacity(0.56)
+        static let textPlaceholder = Color.black.opacity(0.40)
+        static let textInverse = grayscaleL0
+        static let textBrand = purpleP40
+
+        static let bg = grayscaleL2
+        static let bgFill = grayscaleL0
+        static let bgFillSecondary = grayscaleL5
+        static let bgFillTertiary = grayscaleL20
+        static let bgFillInverse = grayscaleD93
+        static let bgFillBrand = purpleP40
+        static let bgFillSuccess = greenD70
+        static let bgFillCritical = poppyD50
+
+        static let border = Color.black.opacity(0.10)
+        static let borderSecondary = Color(red: 24 / 255, green: 59 / 255, blue: 78 / 255).opacity(0.06)
+        static let borderImage = Color(red: 5 / 255, green: 41 / 255, blue: 77 / 255).opacity(0.10)
+
+        // Core scales mirrored from gravity.
+        static let chipMinHeight: CGFloat = 40
+        static let space36: CGFloat = 36
+        static let space40: CGFloat = 40
+        static let space44: CGFloat = 44
+        static let space48: CGFloat = 48
+        static let space64: CGFloat = 64
+
+        static let sectionGap: CGFloat = 36
+        static let cardRowGutter: CGFloat = 8
+        static let cardPadding: CGFloat = 16
+
+        static let radius6: CGFloat = 6
+        static let radius10: CGFloat = 10
+        static let radius24: CGFloat = 24
+        static let radius36: CGFloat = 36
+        static let radius40: CGFloat = 40
+        static let radiusMax: CGFloat = 9_999_999
+
+        static let shadowSColor = Color.black.opacity(0.06)
+        static let shadowSRadius: CGFloat = 8
+        static let shadowSY: CGFloat = 2
+        static let shadowMColor = Color.black.opacity(0.12)
+        static let shadowMRadius: CGFloat = 24
+        static let shadowMY: CGFloat = 4
+        static let shadowLColor = Color.black.opacity(0.24)
+        static let shadowLRadius: CGFloat = 40
+        static let shadowLY: CGFloat = 8
+
+        // BOUNCE_ANIMATION_DURATIONS from gravity: [100, 100, 83, 67] ms
+        static let buttonBounceDurations: [Double] = [0.100, 0.100, 0.083, 0.067]
+    }
+}
+
+// MARK: - Shop Typography
+
+enum ShopTextStyle {
+    case heroBold
+    case headerBold
+    case sectionTitle
+    case subtitle
+    case bodyLarge
+    case bodyLargeBold
+    case bodySmall
+    case bodySmallBold
+    case caption
+    case captionBold
+    case badge
+    case badgeBold
+    case buttonLarge
+    case buttonMedium
+    case buttonSmall
+}
+
+struct ShopTextSpec {
+    let fontSize: CGFloat
+    let lineHeight: CGFloat
+    let letterSpacing: CGFloat
+    let weight: Font.Weight
+}
+
+extension Tokens.ShopClient {
+    static func textSpec(_ style: ShopTextStyle) -> ShopTextSpec {
+        switch style {
+        case .heroBold:
+            return .init(fontSize: 36, lineHeight: 42, letterSpacing: -1.5, weight: .bold)
+        case .headerBold:
+            return .init(fontSize: 24, lineHeight: 26, letterSpacing: -1, weight: .semibold)
+        case .sectionTitle:
+            return .init(fontSize: 20, lineHeight: 22, letterSpacing: -1, weight: .semibold)
+        case .subtitle:
+            return .init(fontSize: 18, lineHeight: 20, letterSpacing: -0.5, weight: .semibold)
+        case .bodyLarge:
+            return .init(fontSize: 16, lineHeight: 22, letterSpacing: -0.5, weight: .regular)
+        case .bodyLargeBold:
+            return .init(fontSize: 16, lineHeight: 22, letterSpacing: -0.5, weight: .medium)
+        case .bodySmall:
+            return .init(fontSize: 14, lineHeight: 18, letterSpacing: -0.2, weight: .regular)
+        case .bodySmallBold:
+            return .init(fontSize: 14, lineHeight: 18, letterSpacing: -0.2, weight: .semibold)
+        case .caption:
+            return .init(fontSize: 12, lineHeight: 16, letterSpacing: -0.2, weight: .regular)
+        case .captionBold:
+            return .init(fontSize: 12, lineHeight: 16, letterSpacing: -0.2, weight: .semibold)
+        case .badge:
+            return .init(fontSize: 10, lineHeight: 13, letterSpacing: -0.2, weight: .regular)
+        case .badgeBold:
+            return .init(fontSize: 10, lineHeight: 13, letterSpacing: -0.2, weight: .semibold)
+        case .buttonLarge:
+            return .init(fontSize: 16, lineHeight: 20, letterSpacing: -0.5, weight: .semibold)
+        case .buttonMedium:
+            return .init(fontSize: 14, lineHeight: 16, letterSpacing: -0.2, weight: .semibold)
+        case .buttonSmall:
+            return .init(fontSize: 12, lineHeight: 16, letterSpacing: -0.2, weight: .semibold)
+        }
+    }
 }
 
 // MARK: - Color Hex Helper
@@ -120,12 +264,17 @@ struct CardBackground: ViewModifier {
         content
             .background(
                 RoundedRectangle(cornerRadius: radius, style: .continuous)
-                    .fill(.white)
+                    .fill(Tokens.ShopClient.bgFill)
                     .overlay(
                         RoundedRectangle(cornerRadius: radius, style: .continuous)
-                            .stroke(Tokens.imageBorder, lineWidth: 0.5)
+                            .stroke(Tokens.ShopClient.borderImage, lineWidth: 0.5)
                     )
-                    .shadow(color: Tokens.shadowColor, radius: Tokens.shadowRadius, x: 0, y: Tokens.shadowY)
+                    .shadow(
+                        color: Tokens.ShopClient.shadowSColor,
+                        radius: Tokens.ShopClient.shadowSRadius,
+                        x: 0,
+                        y: Tokens.ShopClient.shadowSY
+                    )
             )
     }
 }
@@ -138,9 +287,14 @@ struct SmallCardBackground: ViewModifier {
         content
             .overlay(
                 RoundedRectangle(cornerRadius: radius, style: .continuous)
-                    .stroke(Tokens.imageBorder, lineWidth: 0.5)
+                    .stroke(Tokens.ShopClient.borderImage, lineWidth: 0.5)
             )
-            .shadow(color: Tokens.shadowColorS, radius: Tokens.shadowRadiusS, x: 0, y: Tokens.shadowYS)
+            .shadow(
+                color: Tokens.ShopClient.shadowSColor,
+                radius: Tokens.ShopClient.shadowSRadius,
+                x: 0,
+                y: Tokens.ShopClient.shadowSY
+            )
     }
 }
 
@@ -151,6 +305,22 @@ extension View {
 
     func smallCardStyle(radius: CGFloat = Tokens.radius20) -> some View {
         modifier(SmallCardBackground(radius: radius))
+    }
+
+    func shopTextStyle(_ style: ShopTextStyle) -> some View {
+        modifier(ShopTextStyleModifier(style: style))
+    }
+}
+
+private struct ShopTextStyleModifier: ViewModifier {
+    let style: ShopTextStyle
+
+    func body(content: Content) -> some View {
+        let spec = Tokens.ShopClient.textSpec(style)
+        return content
+            .font(.system(size: spec.fontSize, weight: spec.weight))
+            .tracking(spec.letterSpacing)
+            .lineSpacing(max(0, spec.lineHeight - spec.fontSize))
     }
 }
 

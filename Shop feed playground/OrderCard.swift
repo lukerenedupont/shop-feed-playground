@@ -26,8 +26,7 @@ struct OrderCard: View {
                     VStack(alignment: .leading, spacing: Tokens.space8) {
                         HStack(spacing: Tokens.space8) {
                             Text(stages[i].label)
-                                .font(.system(size: Tokens.bodySize, weight: .semibold))
-                                .tracking(Tokens.bodyTracking)
+                                .shopTextStyle(.bodyLargeBold)
                                 .foregroundColor(Tokens.textPrimary)
 
                             if stages[i].hasPromise {
@@ -44,13 +43,13 @@ struct OrderCard: View {
 
                 // Action button
                 if let actionLabel {
-                    Text(actionLabel)
-                        .font(.system(size: Tokens.bodySmSize, weight: .semibold))
-                        .tracking(Tokens.cozyTracking)
-                        .foregroundColor(Tokens.textPrimary)
-                        .padding(.horizontal, Tokens.space16)
-                        .padding(.vertical, Tokens.space10)
-                        .background(Capsule().fill(Tokens.fillSecondary))
+                    ShopClientButton(
+                        title: actionLabel,
+                        variant: .tertiary,
+                        size: .m
+                    ) {
+                        Haptics.light()
+                    }
                         .padding(.top, Tokens.space4)
                 }
             }
@@ -74,8 +73,7 @@ struct ReviewOrderCard: View {
                 MerchantRow(name: merchant)
 
                 Text("Review your order")
-                    .font(.system(size: Tokens.bodySize, weight: .semibold))
-                    .tracking(Tokens.bodyTracking)
+                    .shopTextStyle(.bodyLargeBold)
                     .foregroundColor(Tokens.textPrimary)
 
                 HStack(spacing: Tokens.space8) {
@@ -110,13 +108,12 @@ struct MerchantRow: View {
                 .frame(width: 24, height: 24)
                 .overlay(
                     Text(String(name.prefix(1)))
-                        .font(.system(size: 9, weight: .bold))
+                        .shopTextStyle(.badgeBold)
                         .foregroundColor(.gray)
                 )
 
             Text(name)
-                .font(.system(size: Tokens.bodySmSize, weight: .semibold))
-                .tracking(Tokens.cozyTracking)
+                .shopTextStyle(.bodySmallBold)
                 .foregroundColor(Tokens.textSecondary)
                 .lineLimit(1)
         }

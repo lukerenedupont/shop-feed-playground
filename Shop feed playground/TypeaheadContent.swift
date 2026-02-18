@@ -40,13 +40,12 @@ struct TypeaheadContent: View {
                                     .foregroundColor(Tokens.textPlaceholder)
 
                                 Text(suggestions[i].0)
-                                    .font(.system(size: Tokens.bodySmSize, weight: .medium))
-                                    .tracking(Tokens.cozyTracking)
+                                    .shopTextStyle(.bodySmall)
                                     .foregroundColor(Tokens.textPrimary)
                                     .lineLimit(1)
 
                                 Text(suggestions[i].1)
-                                    .font(.system(size: Tokens.bodySmSize))
+                                    .shopTextStyle(.bodySmall)
                             }
                             .padding(.horizontal, Tokens.space12)
                             .frame(height: 36)
@@ -61,8 +60,7 @@ struct TypeaheadContent: View {
 
                 // Recents header
                 Text("Recents")
-                    .font(.system(size: Tokens.subtitleSize, weight: .semibold))
-                    .tracking(Tokens.bodyTracking)
+                    .shopTextStyle(.subtitle)
                     .foregroundColor(Tokens.textPrimary)
                     .padding(.horizontal, Tokens.space16)
                     .padding(.top, Tokens.space24)
@@ -108,14 +106,12 @@ private struct RecentSearchRow: View {
 
             VStack(alignment: .leading, spacing: 1) {
                 Text(title)
-                    .font(.system(size: Tokens.bodySmSize, weight: .medium))
-                    .tracking(Tokens.cozyTracking)
+                    .shopTextStyle(.bodySmall)
                     .foregroundColor(Tokens.textPrimary)
                     .lineLimit(1)
 
                 Text(time)
-                    .font(.system(size: Tokens.captionSize, weight: .regular))
-                    .tracking(Tokens.cozyTracking)
+                    .shopTextStyle(.caption)
                     .foregroundColor(Tokens.textPlaceholder)
             }
 

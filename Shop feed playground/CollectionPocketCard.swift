@@ -178,7 +178,12 @@ private extension CollectionPocketCard {
             .scaledToFill()
             .frame(width: Layout.pileSize, height: Layout.pileSize)
             .clipShape(RoundedRectangle(cornerRadius: Layout.pileCorner, style: .continuous))
-            .shadow(color: .black.opacity(0.15), radius: 6, x: 0, y: 2)
+            .shadow(
+                color: Tokens.ShopClient.shadowSColor,
+                radius: Tokens.ShopClient.shadowSRadius,
+                x: 0,
+                y: Tokens.ShopClient.shadowSY
+            )
             .matchedGeometryEffect(id: matchID, in: hero)
             .scaleEffect(fs)
             .rotationEffect(.degrees(pr + fr))
@@ -267,7 +272,12 @@ private extension CollectionPocketCard {
         }
         .frame(width: w, height: h)
         .clipShape(RoundedRectangle(cornerRadius: r, style: .continuous))
-        .shadow(color: .black.opacity(morphed ? 0.2 : 0.08), radius: morphed ? 8 : 12, x: 0, y: morphed ? 4 : 4)
+        .shadow(
+            color: morphed ? Tokens.ShopClient.shadowMColor : Tokens.ShopClient.shadowSColor,
+            radius: morphed ? Tokens.ShopClient.shadowMRadius : Tokens.ShopClient.shadowSRadius,
+            x: 0,
+            y: morphed ? Tokens.ShopClient.shadowMY : Tokens.ShopClient.shadowSY
+        )
         .rotationEffect(.degrees(rot))
         .offset(x: px, y: py)
         .zIndex(morphed ? 200 : s.zIndex)
@@ -296,9 +306,8 @@ private extension CollectionPocketCard {
             Text(label)
             Text("Edit")
         }
-        .font(.system(size: 40, weight: .bold))
+        .shopTextStyle(.heroBold)
         .foregroundColor(.white)
-        .tracking(-1.5)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
         .padding(16)
         .opacity(morphed ? 0 : Double(peek))

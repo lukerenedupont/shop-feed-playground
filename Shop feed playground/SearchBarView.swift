@@ -33,16 +33,14 @@ struct SearchBarView: View {
                 ZStack(alignment: .leading) {
                     if searchText.isEmpty {
                         Text("Ask anything")
-                            .font(.system(size: Tokens.bodySize, weight: .regular))
-                            .tracking(Tokens.bodyTracking)
-                            .foregroundColor(Tokens.textPlaceholder)
+                            .shopTextStyle(.bodyLarge)
+                            .foregroundColor(Tokens.ShopClient.textPlaceholder)
                             .padding(.leading, isSearchFocused ? Tokens.space16 : 0)
                     }
 
                     TextField("", text: $searchText)
-                        .font(.system(size: Tokens.bodySize, weight: .regular))
-                        .tracking(Tokens.bodyTracking)
-                        .foregroundColor(Tokens.textPrimary)
+                        .shopTextStyle(.bodyLarge)
+                        .foregroundColor(Tokens.ShopClient.text)
                         .padding(.leading, isSearchFocused ? Tokens.space16 : 0)
                         .focused($textFieldFocused)
                         .allowsHitTesting(isSearchFocused)
@@ -72,7 +70,7 @@ struct SearchBarView: View {
                         .frame(width: Tokens.chipSize, height: Tokens.chipSize)
                         .background(
                             Circle()
-                                .stroke(Color.black.opacity(0.12), lineWidth: 1)
+                                .stroke(Tokens.ShopClient.border, lineWidth: 1)
                         )
                         .matchedGeometryEffect(id: "plusIcon", in: searchAnimation)
                 }
@@ -80,12 +78,12 @@ struct SearchBarView: View {
                 Spacer()
 
                 Image(systemName: "arrow.right")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(.white)
+                    .font(.system(size: Tokens.ShopClient.textSpec(.buttonMedium).fontSize, weight: .semibold))
+                    .foregroundColor(Tokens.ShopClient.textInverse)
                     .frame(width: Tokens.chipSize, height: Tokens.chipSize)
                     .background(
                         Circle()
-                            .fill(Color.black.opacity(0.2))
+                            .fill(Tokens.ShopClient.bgFillBrand)
                     )
             }
             .padding(.horizontal, Tokens.space8)
@@ -99,7 +97,17 @@ struct SearchBarView: View {
             Group {
                 if isSearchFocused {
                     RoundedRectangle(cornerRadius: Tokens.radius28, style: .continuous)
-                        .fill(.white)
+                        .fill(Tokens.ShopClient.bgFill)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: Tokens.radius28, style: .continuous)
+                                .stroke(Tokens.ShopClient.borderSecondary, lineWidth: 0.5)
+                        )
+                        .shadow(
+                            color: Tokens.ShopClient.shadowSColor,
+                            radius: Tokens.ShopClient.shadowSRadius,
+                            x: 0,
+                            y: Tokens.ShopClient.shadowSY
+                        )
                 } else {
                     RoundedRectangle(cornerRadius: Tokens.radius28, style: .continuous)
                         .fill(.clear)

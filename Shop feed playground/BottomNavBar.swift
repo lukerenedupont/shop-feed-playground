@@ -26,12 +26,12 @@ struct BottomNavBar: View {
                             Group {
                                 if selectedTab == index {
                                     Capsule()
-                                        .fill(.white)
+                                        .fill(Tokens.ShopClient.bgFill)
                                         .shadow(
-                                            color: Tokens.shadowColor,
-                                            radius: Tokens.shadowRadius,
+                                            color: Tokens.ShopClient.shadowSColor,
+                                            radius: Tokens.ShopClient.shadowSRadius,
                                             x: 0,
-                                            y: Tokens.shadowY
+                                            y: Tokens.ShopClient.shadowSY
                                         )
                                         .matchedGeometryEffect(id: "activeTab", in: tabAnimation)
                                 }

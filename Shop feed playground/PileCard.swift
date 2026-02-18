@@ -146,13 +146,11 @@ struct CardHeader: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(subtitle)
-                .font(.system(size: Tokens.bodySmSize, weight: .semibold))
-                .tracking(Tokens.cozyTracking)
+                .shopTextStyle(.bodySmallBold)
                 .foregroundColor(lightText ? .white.opacity(0.56) : Tokens.textTertiary)
 
             Text(title)
-                .font(.system(size: 24, weight: .semibold))
-                .tracking(-1.0)
+                .shopTextStyle(.headerBold)
                 .foregroundColor(lightText ? .white : Tokens.textPrimary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -170,13 +168,11 @@ struct CardHeaderFlipped: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(title)
-                .font(.system(size: 24, weight: .semibold))
-                .tracking(-1.0)
+                .shopTextStyle(.headerBold)
                 .foregroundColor(lightText ? .white : Tokens.textPrimary)
 
             Text(subtitle)
-                .font(.system(size: Tokens.bodySmSize, weight: .semibold))
-                .tracking(Tokens.cozyTracking)
+                .shopTextStyle(.bodySmallBold)
                 .foregroundColor(lightText ? .white.opacity(0.56) : Tokens.textTertiary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -195,17 +191,12 @@ private struct FocusedProductOverlay: View {
         VStack(spacing: 0) {
             merchantLogo.padding(.top, 50)
             Spacer()
-            Button(action: {
-                Haptics.light()
-            }) {
-                Text("Shop now")
-                    .font(.system(size: Tokens.bodySize, weight: .semibold))
-                    .tracking(Tokens.bodyTracking)
-                    .foregroundColor(.black)
-                        .padding(.horizontal, 32)
-                        .padding(.vertical, 14)
-                    .background(Capsule().fill(.white))
-            }
+            ShopClientButton(
+                title: "Shop now",
+                variant: .secondary,
+                size: .l,
+                action: { Haptics.light() }
+            )
             .padding(.bottom, 40)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -271,13 +262,11 @@ private struct DraggablePileItem: View {
             if isFocused {
                 VStack(spacing: Tokens.space12) {
                     Text(item.productName)
-                        .font(.system(size: Tokens.bodySize, weight: .semibold))
-                        .tracking(Tokens.bodyTracking)
+                        .shopTextStyle(.bodyLargeBold)
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                     Text(item.price)
-                        .font(.system(size: Tokens.bodySize, weight: .semibold))
-                        .tracking(Tokens.bodyTracking)
+                        .shopTextStyle(.bodyLargeBold)
                         .foregroundColor(.white)
                 }
                 .transition(.opacity.combined(with: .move(edge: .bottom)))

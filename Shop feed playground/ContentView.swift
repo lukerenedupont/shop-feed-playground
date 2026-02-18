@@ -168,23 +168,13 @@ private struct CloseKeyboardButton: View {
     var body: some View {
         HStack {
             Spacer()
-            Button(action: action) {
-                HStack(spacing: Tokens.space4) {
-                    Image(systemName: "xmark")
-                        .font(.system(size: 11, weight: .bold))
-                    Text("Close")
-                        .font(.system(size: Tokens.bodySmSize, weight: .semibold))
-                        .tracking(Tokens.cozyTracking)
-                }
-                .foregroundColor(.black)
-                .padding(.horizontal, Tokens.space16)
-                .frame(height: Tokens.chipSize)
-                .background(
-                    Capsule()
-                        .fill(.white)
-                        .shadow(color: .black.opacity(0.08), radius: Tokens.shadowRadiusS, x: 0, y: Tokens.shadowYS)
-                )
-            }
+            ShopClientButton(
+                title: "Close",
+                variant: .tertiary,
+                size: .m,
+                leadingSystemImage: "xmark",
+                action: action
+            )
             .padding(.trailing, Tokens.space16)
             .padding(.bottom, Tokens.space8)
         }

@@ -53,7 +53,12 @@ struct ScratchOfferCard: View {
         }
         .frame(width: Tokens.cardWidth, height: Tokens.cardHeight)
         .clipShape(RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous))
-        .shadow(color: Tokens.shadowColor400, radius: 40, x: 0, y: 8)
+        .shadow(
+            color: Tokens.ShopClient.shadowLColor,
+            radius: Tokens.ShopClient.shadowLRadius,
+            x: 0,
+            y: Tokens.ShopClient.shadowLY
+        )
         .onReceive(timer) { _ in
             guard remainingSeconds > 0 else { return }
             remainingSeconds -= 1
@@ -186,8 +191,7 @@ private struct ScratchSurface: View {
                     .clipped()
 
                 Text("A gift from")
-                    .font(.system(size: 36, weight: .semibold))
-                    .tracking(-1.15)
+                    .shopTextStyle(.heroBold)
                     .foregroundColor(.white)
                     .frame(width: 192 * scaleX)
                     .position(x: width * 0.5, y: 284 * scaleY)
@@ -200,8 +204,7 @@ private struct ScratchSurface: View {
                     .position(x: width * 0.5 + (3 * scaleX), y: 348 * scaleY)
 
                 Text("Scratch to claim")
-                    .font(.system(size: Tokens.bodySize, weight: .regular))
-                    .tracking(0.15)
+                    .shopTextStyle(.bodyLarge)
                     .foregroundColor(.white)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 10)
@@ -444,19 +447,13 @@ private struct ClaimButton: View {
     let action: () -> Void
 
     var body: some View {
-        Button(action: action) {
-            Text(title)
-                .font(.system(size: Tokens.bodySize, weight: .semibold))
-                .tracking(Tokens.bodyTracking)
-                .foregroundColor(.white)
-                .padding(.horizontal, 32)
-                .padding(.vertical, 12)
-                .background(
-                    Capsule(style: .continuous)
-                        .fill(Color.black.opacity(isEnabled ? 0.88 : 0.5))
-                )
-        }
-        .disabled(!isEnabled)
+        ShopClientButton(
+            title: title,
+            variant: .secondary,
+            size: .l,
+            disabled: !isEnabled,
+            action: action
+        )
     }
 }
 
@@ -471,22 +468,15 @@ private struct ExpiredOfferOverlay: View {
             .overlay {
                 VStack(spacing: Tokens.space12) {
                     Text("Offer expired")
-                        .font(.system(size: 24, weight: .semibold))
-                        .tracking(-0.6)
+                        .shopTextStyle(.headerBold)
                         .foregroundColor(.white)
 
-                    Button(action: onSeeMore) {
-                        Text("See more offers")
-                            .font(.system(size: Tokens.bodySmSize, weight: .semibold))
-                            .tracking(Tokens.cozyTracking)
-                            .foregroundColor(.black)
-                            .padding(.horizontal, 18)
-                            .padding(.vertical, 10)
-                            .background(
-                                Capsule(style: .continuous)
-                                    .fill(.white)
-                            )
-                    }
+                    ShopClientButton(
+                        title: "See more offers",
+                        variant: .secondary,
+                        size: .m,
+                        action: onSeeMore
+                    )
                 }
             }
             .allowsHitTesting(true)

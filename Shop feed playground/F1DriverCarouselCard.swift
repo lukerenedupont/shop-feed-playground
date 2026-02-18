@@ -182,19 +182,19 @@ private extension F1DriverCarouselCard {
                         .font(.system(size: 14))
 
                     Text(driver.country)
-                        .font(.system(size: Tokens.captionSize, weight: .medium))
+                        .shopTextStyle(.caption)
                         .foregroundColor(.white.opacity(0.7))
 
                     Rectangle().fill(.white.opacity(0.3)).frame(width: 1, height: 12)
 
                     Text(driver.team)
-                        .font(.system(size: Tokens.captionSize, weight: .medium))
+                        .shopTextStyle(.caption)
                         .foregroundColor(.white.opacity(0.7))
 
                     Rectangle().fill(.white.opacity(0.3)).frame(width: 1, height: 12)
 
                     Text("\(driver.number)")
-                        .font(.system(size: Tokens.captionSize, weight: .bold))
+                        .shopTextStyle(.captionBold)
                         .foregroundColor(.white.opacity(0.7))
                 }
                 .padding(.top, Tokens.space8)
@@ -207,8 +207,7 @@ private extension F1DriverCarouselCard {
                     }
                 } label: {
                     Text("Shop now")
-                        .font(.system(size: Tokens.bodySize, weight: .semibold))
-                        .tracking(Tokens.bodyTracking)
+                        .shopTextStyle(.bodyLargeBold)
                     .foregroundColor(driver.teamColor)
                     .padding(.horizontal, 32)
                     .padding(.vertical, 14)
@@ -281,14 +280,12 @@ private struct F1ProductChip: View {
 
                 VStack(alignment: .leading, spacing: 3) {
                     Text(product.name)
-                        .font(.system(size: Tokens.captionSize, weight: .regular))
-                        .tracking(0.15)
+                        .shopTextStyle(.caption)
                         .foregroundColor(.black)
                         .lineLimit(1)
 
                     Text(product.price)
-                        .font(.system(size: Tokens.captionSize, weight: .semibold))
-                        .tracking(0.15)
+                        .shopTextStyle(.captionBold)
                         .foregroundColor(.black)
                 }
 
@@ -303,7 +300,12 @@ private struct F1ProductChip: View {
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .fill(.white)
-                    .shadow(color: .black.opacity(0.16), radius: 12, x: 0, y: 4)
+                    .shadow(
+                        color: Tokens.ShopClient.shadowMColor,
+                        radius: Tokens.ShopClient.shadowMRadius,
+                        x: 0,
+                        y: Tokens.ShopClient.shadowMY
+                    )
             )
         }
         .buttonStyle(.plain)

@@ -13,8 +13,6 @@ struct ShoeSwipeCard: View {
     @State private var dragTranslation: CGFloat = 0
     @State private var hitEdge: Bool = false
     @State private var isExpanded: Bool = false
-    @State private var tiltLocation = CGPoint.zero
-    @State private var isTilting = false
 
     private let shoes: [ShoeSlide] = [
         .init(imageName: "ShoeSwipeGreen", background: Color(hex: 0x2F3218)),
@@ -53,7 +51,12 @@ struct ShoeSwipeCard: View {
                         .offset(y: 196)
                 }
 
-                // (tiltable tile moved above dismiss overlay)
+                // White product tile (behind the shoe when expanded)
+                if isExpanded {
+                    productTile
+                        .transition(.scale(scale: 0.8).combined(with: .opacity))
+                        .zIndex(4)
+                }
 
                 ForEach(shoes.indices, id: \.self) { index in
                     let relative = CGFloat(index - selectedIndex)
@@ -81,8 +84,7 @@ struct ShoeSwipeCard: View {
                 Spacer()
                 Button(action: { Haptics.light() }) {
                     Text("Shop now")
-                        .font(.system(size: Tokens.bodySize, weight: .semibold))
-                        .tracking(Tokens.bodyTracking)
+                        .shopTextStyle(.bodyLargeBold)
                         .foregroundColor(selectedShoe.background)
                         .padding(.horizontal, 32)
                         .padding(.vertical, 14)
@@ -96,17 +98,11 @@ struct ShoeSwipeCard: View {
                 Color.clear
                     .contentShape(Rectangle())
                     .onTapGesture {
-                        withAnimation(.spring()) { tiltLocation = .zero }
-                        isTilting = false
                         withAnimation(Tokens.springExpand) {
                             isExpanded = false
                         }
                         Haptics.light()
                     }
-
-                // Tiltable product tile (above dismiss so it receives drag)
-                tiltableProductTile
-                    .transition(.scale(scale: 0.8).combined(with: .opacity))
             }
         }
         .frame(width: Tokens.cardWidth, height: Tokens.cardHeight)
@@ -180,8 +176,6 @@ struct ShoeSwipeCard: View {
                 height: expandedActive ? 186 : shoeHeight
             )
             .rotationEffect(.degrees(expandedActive ? 90 : 0))
-            .rotation3DEffect(.degrees(expandedActive ? tiltLocation.x : 0), axis: (x: 0, y: 1, z: 0))
-            .rotation3DEffect(.degrees(expandedActive ? tiltLocation.y : 0), axis: (x: 1, y: 0, z: 0))
             .scaleEffect(expandedActive ? 1.0 : (isActive ? 1.0 : 0.9))
             .opacity(isExpanded ? (isActive ? 1.0 : 0) : (isActive ? 1.0 : 0.98))
             .shadow(
@@ -206,63 +200,16 @@ struct ShoeSwipeCard: View {
             }
     }
 
-    // MARK: - Tiltable product tile
-
-    private let tiltIntensity: CGFloat = 10
-
-    private var tiltableProductTile: some View {
-        ZStack {
-            // Holo border
-            RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
-                .fill(
-                    AngularGradient(
-                        gradient: Gradient(colors: [
-                            Color(hex: 0xE84855), Color(hex: 0xF9DC5C), Color(hex: 0x3BB273),
-                            Color(hex: 0x2EC4B6), Color(hex: 0x5B7AFF), Color(hex: 0xE84393),
-                            Color(hex: 0xE84855),
-                        ]),
-                        center: .center
-                    )
-                )
-                .frame(width: tileSize, height: tileSize)
-                .rotation3DEffect(.degrees(tiltLocation.x * 0.3), axis: (x: 0, y: 1, z: 0))
-                .rotation3DEffect(.degrees(tiltLocation.y * 0.3), axis: (x: 1, y: 0, z: 0))
-                .animation(.interactiveSpring(), value: tiltLocation)
-
-            // White face
-            productTile
-                .rotation3DEffect(.degrees(tiltLocation.x), axis: (x: 0, y: 1, z: 0))
-                .rotation3DEffect(.degrees(tiltLocation.y), axis: (x: 1, y: 0, z: 0))
-                .gesture(
-                    DragGesture(minimumDistance: 0)
-                        .onChanged { gesture in
-                            let nx = tiltIntensity * (2 * gesture.location.x / tileSize - 1)
-                            let ny = -tiltIntensity * (2 * gesture.location.y / tileSize - 1)
-                            withAnimation(isTilting ? .interactiveSpring() : .spring()) {
-                                tiltLocation = CGPoint(x: nx, y: ny)
-                            }
-                            isTilting = true
-                        }
-                        .onEnded { _ in
-                            isTilting = false
-                            withAnimation(.spring()) { tiltLocation = .zero }
-                        }
-                )
-        }
-        .zIndex(5)
-    }
-
-    // MARK: - Product tile (white card)
+    // MARK: - Product tile (white card behind the shoe when expanded)
 
     private var productTile: some View {
         RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
             .fill(.white)
-            .frame(width: tileSize - 4, height: tileSize - 4)
+            .frame(width: tileSize, height: tileSize)
             .shadow(color: .black.opacity(0.08), radius: 16, x: 0, y: 8)
             .overlay(alignment: .topLeading) {
                 Text("$50.00")
-                    .font(.system(size: Tokens.captionSize, weight: .semibold))
-                    .tracking(Tokens.cozyTracking)
+                    .shopTextStyle(.captionBold)
                     .foregroundColor(.white)
                     .padding(.horizontal, 9)
                     .padding(.vertical, 4)
@@ -288,6 +235,7 @@ struct ShoeSwipeCard: View {
                     .padding(.bottom, 14)
                     .padding(.trailing, 14)
             }
+            .zIndex(5)
     }
 }
 

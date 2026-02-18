@@ -65,9 +65,9 @@ struct BuyAgainAndPastOrders: View {
         .padding(.bottom, Tokens.space20)
         .background(
             RoundedRectangle(cornerRadius: Tokens.radius28, style: .continuous)
-                .fill(.white)
+                .fill(Tokens.ShopClient.bgFill)
         )
-        .padding(.top, 36)
+        .padding(.top, Tokens.ShopClient.sectionGap)
     }
 }
 
@@ -91,7 +91,12 @@ private struct BuyAgainCard: View {
                     BuyAgainAccent(style: product.accentStyle)
                         .clipShape(RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous))
                 }
-                .shadow(color: Color(hex: 0x000000, opacity: 0.06), radius: 8, x: 0, y: 2)
+                .shadow(
+                    color: Tokens.ShopClient.shadowSColor,
+                    radius: Tokens.ShopClient.shadowSRadius,
+                    x: 0,
+                    y: Tokens.ShopClient.shadowSY
+                )
 
             Image("BuyAgainIcon")
                 .renderingMode(.original)
@@ -172,8 +177,7 @@ private struct PastOrderRow: View {
 
             VStack(alignment: .leading, spacing: Tokens.space4) {
                 Text(order.deliveredText)
-                    .font(.system(size: Tokens.bodySize, weight: .semibold))
-                    .tracking(Tokens.bodyTracking)
+                    .shopTextStyle(.bodyLargeBold)
                     .foregroundColor(Tokens.textPrimary)
                     .lineLimit(1)
 
@@ -183,8 +187,7 @@ private struct PastOrderRow: View {
                         Text(" \u{30fb} \(count) \u{30fb} \(total)")
                     }
                 }
-                .font(.system(size: Tokens.captionSize, weight: .regular))
-                .tracking(Tokens.cozyTracking)
+                .shopTextStyle(.caption)
                 .foregroundColor(Tokens.textSecondary)
                 .lineLimit(1)
             }
@@ -201,6 +204,6 @@ private struct PastOrderRow: View {
                 RoundedRectangle(cornerRadius: 6, style: .continuous)
                     .stroke(Tokens.imageBorder, lineWidth: 0.375)
             )
-            .shadow(color: .black.opacity(0.1), radius: 1.5, x: 0, y: 0.75)
+            .shadow(color: Tokens.ShopClient.shadowSColor.opacity(0.8), radius: 1.5, x: 0, y: 0.75)
     }
 }

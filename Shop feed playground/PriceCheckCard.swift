@@ -93,7 +93,12 @@ private extension PriceCheckCard {
                 .frame(width: 273, height: 273)
                 .rotationEffect(.degrees(6))
                 .offset(x: 8, y: 6)
-                .shadow(color: .black.opacity(0.06), radius: 6, x: 0, y: 3)
+                .shadow(
+                    color: Tokens.ShopClient.shadowSColor,
+                    radius: Tokens.ShopClient.shadowSRadius,
+                    x: 0,
+                    y: Tokens.ShopClient.shadowSY
+                )
 
             // Second card — becomes visible during shuffle
             Color.clear
@@ -107,7 +112,12 @@ private extension PriceCheckCard {
                 .clipShape(RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous))
                 .rotationEffect(.degrees(shuffleOut ? 0 : 3))
                 .offset(x: shuffleOut ? 0 : 4, y: shuffleOut ? 0 : 3)
-                .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
+                .shadow(
+                    color: Tokens.ShopClient.shadowSColor.opacity(1.2),
+                    radius: Tokens.ShopClient.shadowSRadius,
+                    x: 0,
+                    y: Tokens.ShopClient.shadowSY
+                )
 
             // Front card — draggable in any direction
             Color.clear
@@ -119,7 +129,12 @@ private extension PriceCheckCard {
                 }
                 .clipped()
                 .clipShape(RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous))
-                .shadow(color: .black.opacity(0.1), radius: 12, x: 0, y: 6)
+                .shadow(
+                    color: Tokens.ShopClient.shadowMColor,
+                    radius: Tokens.ShopClient.shadowMRadius,
+                    x: 0,
+                    y: Tokens.ShopClient.shadowMY
+                )
                 .rotationEffect(.degrees(Double(cardDrag.width) / 18))
                 .offset(cardDrag)
                 .opacity(shuffleOut ? 0 : 1)
@@ -196,44 +211,39 @@ private extension PriceCheckCard {
     }
 
     var actionButton: some View {
-        Button {
-            if isRevealed {
-                // Fling card off to the left, then advance
-                withAnimation(.easeOut(duration: 0.25)) {
-                    cardDrag = CGSize(width: -600, height: -40)
-                    shuffleOut = true
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.28) {
-                    var transaction = Transaction()
-                    transaction.disablesAnimations = true
-                    withTransaction(transaction) {
-                        shuffleOut = false
-                        cardDrag = .zero
-                        currentProductIndex = (currentProductIndex + 1) % products.count
-                        guessPrice = product.maxPrice / 3
-                        isRevealed = false
+        ShopClientButton(
+            title: isRevealed ? "Next" : "Lock it in",
+            variant: .primary,
+            size: .l,
+            action: {
+                if isRevealed {
+                    // Fling card off to the left, then advance
+                    withAnimation(.easeOut(duration: 0.25)) {
+                        cardDrag = CGSize(width: -600, height: -40)
+                        shuffleOut = true
                     }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.28) {
+                        var transaction = Transaction()
+                        transaction.disablesAnimations = true
+                        withTransaction(transaction) {
+                            shuffleOut = false
+                            cardDrag = .zero
+                            currentProductIndex = (currentProductIndex + 1) % products.count
+                            guessPrice = product.maxPrice / 3
+                            isRevealed = false
+                        }
+                    }
+                } else {
+                    // Lock in guess
+                    withAnimation(Tokens.springDrag) {
+                        isRevealed = true
+                    }
+                    // Haptic on reveal
+                    let diff = abs(guessPrice - product.actualPrice)
+                    Haptics.notify(diff <= 10 ? .success : (diff <= 30 ? .warning : .error))
                 }
-            } else {
-                // Lock in guess
-                withAnimation(Tokens.springDrag) {
-                    isRevealed = true
-                }
-                // Haptic on reveal
-                let diff = abs(guessPrice - product.actualPrice)
-                Haptics.notify(diff <= 10 ? .success : (diff <= 30 ? .warning : .error))
             }
-        } label: {
-            Text(isRevealed ? "Next" : "Lock it in")
-                .font(.system(size: Tokens.bodySize, weight: .semibold))
-                .tracking(Tokens.bodyTracking)
-                .foregroundColor(.white)
-                .padding(.horizontal, 32)
-                .padding(.vertical, 14)
-                .background(
-                    Capsule().fill(Color(hex: 0x5433EB))
-                )
-        }
+        )
     }
 }
 

@@ -80,19 +80,19 @@ struct CategoryStackCard: View {
 
         return ZStack {
             // Background color tile
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
+            RoundedRectangle(cornerRadius: Tokens.radius16, style: .continuous)
                 .fill(category.color)
 
             // Category name rotated vertically on the spine
             VStack(spacing: 4) {
                 Text(category.name)
-                    .font(.system(size: 14, weight: .bold))
+                    .shopTextStyle(.bodySmallBold)
                     .foregroundColor(.white)
                     .rotationEffect(.degrees(-90))
                     .fixedSize()
 
                 Text("\(category.products.count)")
-                    .font(.system(size: 11, weight: .medium))
+                    .shopTextStyle(.badge)
                     .foregroundColor(.white.opacity(0.6))
                     .rotationEffect(.degrees(-90))
                     .fixedSize()
@@ -119,7 +119,7 @@ struct CategoryStackCard: View {
                         .foregroundColor(.white)
 
                     Text("\(category.products.count) products")
-                        .font(.system(size: Tokens.bodySmSize, weight: .medium))
+                        .shopTextStyle(.bodySmall)
                         .foregroundColor(.white.opacity(0.5))
                 }
 
@@ -144,7 +144,7 @@ struct CategoryStackCard: View {
             .padding(.bottom, 16)
 
             // Color accent bar
-            RoundedRectangle(cornerRadius: 6, style: .continuous)
+            RoundedRectangle(cornerRadius: Tokens.ShopClient.radius6, style: .continuous)
                 .fill(category.color)
                 .frame(height: 4)
                 .padding(.horizontal, 20)
@@ -166,17 +166,12 @@ struct CategoryStackCard: View {
             Spacer()
 
             // Shop category button
-            Button {
-                Haptics.light()
-            } label: {
-                Text("Shop \(category.name)")
-                    .font(.system(size: Tokens.bodySize, weight: .semibold))
-                    .tracking(Tokens.bodyTracking)
-                    .foregroundColor(.black)
-                    .padding(.horizontal, 32)
-                    .padding(.vertical, 14)
-                    .background(Capsule().fill(.white))
-            }
+            ShopClientButton(
+                title: "Shop \(category.name)",
+                variant: .secondary,
+                size: .l,
+                action: { Haptics.light() }
+            )
             .padding(.bottom, 40)
         }
     }
@@ -191,12 +186,12 @@ private struct StackProductTile: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             // Product image placeholder
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
+            RoundedRectangle(cornerRadius: Tokens.radius16, style: .continuous)
                 .fill(product.tileColor)
                 .frame(width: 140, height: 180)
                 .overlay(alignment: .topLeading) {
                     Text(product.price)
-                        .font(.system(size: Tokens.captionSize, weight: .semibold))
+                        .shopTextStyle(.captionBold)
                         .foregroundColor(.white)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 3)
@@ -218,12 +213,12 @@ private struct StackProductTile: View {
 
             // Product info
             Text(product.name)
-                .font(.system(size: Tokens.captionSize, weight: .medium))
+                .shopTextStyle(.caption)
                 .foregroundColor(.white)
                 .lineLimit(1)
 
             Text(product.brand)
-                .font(.system(size: 11, weight: .regular))
+                .shopTextStyle(.badge)
                 .foregroundColor(.white.opacity(0.5))
                 .lineLimit(1)
         }

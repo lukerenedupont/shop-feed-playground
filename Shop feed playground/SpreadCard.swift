@@ -75,7 +75,7 @@ private extension SpreadCard {
         VStack(spacing: 4) {
             Spacer()
             Text(isDragging || isRotating ? "" : "Drag to explore")
-                .font(.system(size: 13, weight: .medium))
+                .shopTextStyle(.caption)
                 .foregroundColor(.white.opacity(0.35))
                 .padding(.bottom, 28)
         }

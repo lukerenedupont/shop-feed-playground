@@ -116,15 +116,15 @@ private extension HalfSheetCard {
             HStack {
                 VStack(alignment: .leading, spacing: Layout.titleSpacing) {
                     Text("Product details")
-                        .font(.system(size: Layout.titleSize, weight: .bold))
+                        .shopTextStyle(.subtitle)
                         .foregroundColor(.white)
                     Text("Premium leather sneaker")
-                        .font(.system(size: Layout.subtitleSize))
+                        .shopTextStyle(.bodySmall)
                         .foregroundColor(.white.opacity(0.6))
                 }
                 Spacer()
                 Text("$185")
-                    .font(.system(size: Layout.priceSize, weight: .bold))
+                    .shopTextStyle(.sectionTitle)
                     .foregroundColor(.white)
             }
 
@@ -138,16 +138,13 @@ private extension HalfSheetCard {
 
             Spacer()
 
-            Button {
-                Haptics.light()
-            } label: {
-                Text("Add to bag")
-                    .font(.system(size: Layout.buttonFontSize, weight: .bold))
-                    .foregroundColor(.black)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, Layout.buttonPaddingV)
-                    .background(Capsule().fill(.white))
-            }
+            ShopClientButton(
+                title: "Add to bag",
+                variant: .secondary,
+                size: .l,
+                expandHorizontally: true,
+                action: { Haptics.light() }
+            )
         }
         .padding(Layout.sheetPadding)
     }
@@ -156,7 +153,7 @@ private extension HalfSheetCard {
         HStack(spacing: Layout.pillItemSpacing) {
             Circle().fill(.white).frame(width: Layout.pillDotSize, height: Layout.pillDotSize)
             Text("View details")
-                .font(.system(size: Layout.subtitleSize, weight: .semibold))
+                .shopTextStyle(.bodySmallBold)
                 .foregroundColor(.white)
         }
     }
@@ -168,11 +165,11 @@ private extension HalfSheetCard {
     func sheetRow(label: String, value: String) -> some View {
         HStack {
             Text(label)
-                .font(.system(size: Layout.rowFontSize))
+                .shopTextStyle(.bodySmall)
                 .foregroundColor(.white.opacity(0.5))
             Spacer()
             Text(value)
-                .font(.system(size: Layout.rowFontSize, weight: .semibold))
+                .shopTextStyle(.bodySmallBold)
                 .foregroundColor(.white)
         }
     }

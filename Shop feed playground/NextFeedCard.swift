@@ -79,8 +79,7 @@ struct NextFeedCard: View {
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {
                         Text("Pick your color")
-                            .font(.system(size: Tokens.bodySmSize, weight: .semibold))
-                            .tracking(Tokens.cozyTracking)
+                            .shopTextStyle(.bodySmallBold)
                             .foregroundColor(.white.opacity(0.56))
                         Spacer()
                     }
@@ -90,8 +89,7 @@ struct NextFeedCard: View {
 
                     HStack(spacing: 0) {
                         Text(selectedColor.name)
-                            .font(.system(size: 24, weight: .semibold))
-                            .tracking(-1.0)
+                            .shopTextStyle(.headerBold)
                             .foregroundColor(.white)
 
                         Spacer()
@@ -221,8 +219,7 @@ private struct ProductGridTile: View {
             .clipShape(RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous))
             .overlay(alignment: .topLeading) {
                 Text("$50.00")
-                    .font(.system(size: Tokens.captionSize, weight: .semibold))
-                    .tracking(Tokens.cozyTracking)
+                    .shopTextStyle(.captionBold)
                     .foregroundColor(.white)
                     .padding(.horizontal, 9)
                     .padding(.vertical, 4)
@@ -322,9 +319,14 @@ private struct ColorSwatchSelector: View {
         }
         .padding(12)
         .background(
-            RoundedRectangle(cornerRadius: 100, style: .continuous)
+            RoundedRectangle(cornerRadius: Tokens.ShopClient.radiusMax, style: .continuous)
                 .fill(.white)
-                .shadow(color: .black.opacity(0.12), radius: 12, x: 0, y: 4)
+                .shadow(
+                    color: Tokens.ShopClient.shadowMColor,
+                    radius: Tokens.ShopClient.shadowMRadius,
+                    x: 0,
+                    y: Tokens.ShopClient.shadowMY
+                )
         )
         .frame(width: 53, height: 201)
     }

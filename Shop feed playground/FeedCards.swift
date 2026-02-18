@@ -27,9 +27,25 @@ struct FeedCardDefinition: Identifiable {
 enum FeedCardRegistry {
     /// Ordered list of cards shown in the home feed.
     static let feed: [FeedCardDefinition] = [
+        .init(id: "topic-merch-digest") { TopicMerchDigestCard() },
+        .init(id: "blank-canvas-top") { BlankCanvasCard() },
+        .init(id: "blank-top") { BlankTopCard() },
+        .init(id: "vibe-board") { VibeBoardCard() },
+        .init(id: "category-explorer") { CategoryExplorerCard() },
+        .init(id: "collection-pocket") { CollectionPocketCard() },
+        .init(id: "shop-the-look-focus") { ShopTheLookFocusCard() },
+        .init(id: "price-check") { PriceCheckCard() },
+        .init(id: "shoe-swipe") { ShoeSwipeCard() },
+        .init(id: "next-card") { NextFeedCard() },
+        .init(id: "f1-carousel") { F1DriverCarouselCard() },
+        .init(id: "arc-carousel") { ArcCarouselCard() },
+        .init(id: "pile") { PileCard() },
+        .init(id: "placeholder-1") { PlaceholderFeedCard(color: Color(hex: 0xC4C0B6)) },
+        .init(id: "placeholder-2") { PlaceholderFeedCard(color: Color(hex: 0x1A3328)) },
+
+        // Late-night explorations (kept at bottom of feed)
         .init(id: "magnify-grid") { MagnifyGridCard() },
         .init(id: "collection-pocket-v2") { CollectionPocketCardV2() },
-        .init(id: "collection-pocket") { CollectionPocketCard() },
         .init(id: "spread") { SpreadCard() },
         .init(id: "fidget") { FidgetCard() },
         .init(id: "boomerang") { BoomerangCard() },
@@ -47,35 +63,38 @@ enum FeedCardRegistry {
         .init(id: "half-sheet") { HalfSheetCard() },
         .init(id: "spatial-tap") { SpatialTapCard() },
         .init(id: "touch-canvas") { TouchCanvasCard() },
-        .init(id: "price-check") { PriceCheckCard() },
-        .init(id: "shoe-swipe") { ShoeSwipeCard() },
-        .init(id: "next-card") { NextFeedCard() },
-        .init(id: "f1-carousel") { F1DriverCarouselCard() },
-        .init(id: "arc-carousel") { ArcCarouselCard() },
-        .init(id: "pile") { PileCard() },
-        .init(id: "placeholder-1") { PlaceholderFeedCard(color: Color(hex: 0xC4C0B6)) },
-        .init(id: "placeholder-2") { PlaceholderFeedCard(color: Color(hex: 0x1A3328)) },
     ]
 }
 
 // MARK: - Feed View
 
 struct FeedView: View {
+    @State private var focusedCardID: String? = FeedCardRegistry.feed.first?.id
+
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
+        ScrollView(.vertical) {
             VStack(spacing: 0) {
                 Color.clear.frame(height: Tokens.searchBarTopOffset)
-
-                FilterChipsView()
-                    .padding(.bottom, Tokens.space8)
 
                 LazyVStack(spacing: Tokens.space8) {
                     ForEach(FeedCardRegistry.feed) { card in
                         card.makeView()
+                            .id(card.id)
+                            .scrollTransition(.interactive, axis: .vertical) { content, phase in
+                                content
+                                    .scaleEffect(phase.isIdentity ? 1 : 0.985)
+                                    .opacity(phase.isIdentity ? 1 : 0.92)
+                            }
                     }
                 }
+                .scrollTargetLayout()
+
+                Color.clear.frame(height: Tokens.feedBottomScrollPadding)
             }
         }
+        .scrollIndicators(.hidden)
+        .scrollTargetBehavior(.viewAligned(limitBehavior: .alwaysByOne))
+        .scrollPosition(id: $focusedCardID, anchor: .center)
     }
 }
 

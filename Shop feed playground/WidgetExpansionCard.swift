@@ -87,7 +87,7 @@ struct WidgetExpansionCard: View {
         VStack(spacing: Layout.expandedSpacing) {
             HStack {
                 Text("New note")
-                    .font(.system(size: Layout.headerFontSize, weight: .bold))
+                    .shopTextStyle(.subtitle)
                     .foregroundColor(.white)
                 Spacer()
                 Button {
@@ -103,7 +103,7 @@ struct WidgetExpansionCard: View {
             }
 
             TextField("Type something...", text: $text)
-                .font(.system(size: Layout.textFieldFontSize))
+                .shopTextStyle(.bodySmall)
                 .foregroundColor(.white)
                 .padding(Layout.textFieldPadding)
                 .background(

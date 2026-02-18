@@ -133,8 +133,7 @@ struct CollectionPocketCardV2: View {
 private extension CollectionPocketCardV2 {
     var title: some View {
         Text("Men")
-            .font(.system(size: 40, weight: .bold))
-            .tracking(-1.5)
+            .shopTextStyle(.heroBold)
             .foregroundColor(.white)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .padding(.top, 22)
@@ -193,13 +192,11 @@ private extension CollectionPocketCardV2 {
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(folder.category)
-                    .font(.system(size: 13, weight: .bold))
+                    .shopTextStyle(.captionBold)
                     .foregroundColor(.white)
-                    .tracking(-0.3)
                 Text(folder.brand)
-                    .font(.system(size: 10, weight: .semibold))
+                    .shopTextStyle(.badgeBold)
                     .foregroundColor(.white.opacity(0.6))
-                    .tracking(-0.2)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
             .padding(.horizontal, 12)
@@ -207,7 +204,12 @@ private extension CollectionPocketCardV2 {
         }
         .frame(width: Layout.folderW, height: Layout.folderH)
         .clipShape(folderClip)
-        .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
+        .shadow(
+            color: Tokens.ShopClient.shadowSColor,
+            radius: Tokens.ShopClient.shadowSRadius,
+            x: 0,
+            y: Tokens.ShopClient.shadowSY
+        )
         .offset(y: isPeeked ? 14 : 0)
         .matchedGeometryEffect(id: "folder-\(ci)", in: hero)
     }
@@ -246,7 +248,12 @@ private extension CollectionPocketCardV2 {
             .scaledToFill()
             .frame(width: Layout.pileSize, height: Layout.pileSize)
             .clipShape(RoundedRectangle(cornerRadius: Layout.pileCorner, style: .continuous))
-            .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+            .shadow(
+                color: Tokens.ShopClient.shadowSColor,
+                radius: Tokens.ShopClient.shadowSRadius,
+                x: 0,
+                y: Tokens.ShopClient.shadowSY
+            )
             .matchedGeometryEffect(id: matchID, in: hero)
             .rotationEffect(.degrees(pr + fr))
             .offset(x: px + CGFloat(fx), y: py + CGFloat(fy))

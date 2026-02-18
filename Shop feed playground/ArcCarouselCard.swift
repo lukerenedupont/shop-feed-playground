@@ -324,9 +324,19 @@ private struct BuyAgainStyleRailCard: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: contentSize.width, height: contentSize.height)
                         .rotationEffect(.degrees(product.rotation * 0.45))
-                        .shadow(color: .black.opacity(0.12), radius: 4, x: 0, y: 2)
+                        .shadow(
+                            color: Tokens.ShopClient.shadowSColor,
+                            radius: Tokens.ShopClient.shadowSRadius,
+                            x: 0,
+                            y: Tokens.ShopClient.shadowSY
+                        )
                 }
-                .shadow(color: Color(hex: 0x000000, opacity: 0.06), radius: 8, x: 0, y: 2)
+                .shadow(
+                    color: Tokens.ShopClient.shadowSColor,
+                    radius: Tokens.ShopClient.shadowSRadius,
+                    x: 0,
+                    y: Tokens.ShopClient.shadowSY
+                )
         }
         .frame(width: size, height: size)
     }
@@ -379,12 +389,10 @@ private struct PortraitCard: View {
             .overlay(alignment: .bottomLeading) {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(data.name)
-                        .font(.system(size: 24, weight: .medium))
-                        .tracking(-1.0)
+                        .shopTextStyle(.headerBold)
                         .foregroundColor(.white)
                     Text(data.brand)
-                        .font(.system(size: Tokens.captionSize, weight: .regular))
-                        .tracking(Tokens.cozyTracking)
+                        .shopTextStyle(.caption)
                         .foregroundColor(.white.opacity(0.56))
                 }
                 .padding(Tokens.space16)

@@ -76,7 +76,7 @@ private extension MagnifyGridCard {
         VStack {
             Spacer()
             Text(isDragging ? "" : "Touch and drag to explore")
-                .font(.system(size: 13, weight: .medium))
+                .shopTextStyle(.caption)
                 .foregroundColor(.white.opacity(0.35))
                 .padding(.bottom, 24)
         }

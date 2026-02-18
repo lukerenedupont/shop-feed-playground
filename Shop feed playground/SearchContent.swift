@@ -16,18 +16,16 @@ struct SectionHeader: View {
     var body: some View {
         HStack(spacing: Tokens.space4) {
             Text(title)
-                .font(.system(size: Tokens.subtitleSize, weight: .semibold))
-                .tracking(Tokens.bodyTracking)
-                .lineSpacing(Tokens.lineHeightSubtitle - Tokens.subtitleSize)
+                .shopTextStyle(.subtitle)
                 .foregroundColor(Tokens.textPrimary)
 
             if showArrow {
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 10, weight: .bold))
+                    .font(.system(size: Tokens.ShopClient.textSpec(.badgeBold).fontSize, weight: .bold))
                     .foregroundColor(Tokens.textPrimary)
                     .frame(width: Tokens.iconSmall, height: Tokens.iconSmall)
                     .padding(Tokens.space2)
-                    .background(Circle().fill(Tokens.fillSecondary))
+                    .background(Circle().fill(Tokens.ShopClient.bgFillSecondary))
             }
 
             Spacer()
@@ -67,14 +65,12 @@ struct KeepShoppingSection: View {
 
                             VStack(alignment: .leading, spacing: 0) {
                                 Text(item.title)
-                                    .font(.system(size: Tokens.bodySmSize, weight: .semibold))
-                                    .tracking(Tokens.cozyTracking)
+                                    .shopTextStyle(.bodySmallBold)
                                     .lineLimit(1)
                                     .foregroundColor(Tokens.textPrimary)
 
                                 Text(item.brands)
-                                    .font(.system(size: Tokens.captionSize, weight: .regular))
-                                    .tracking(Tokens.cozyTracking)
+                                    .shopTextStyle(.caption)
                                     .lineLimit(1)
                                     .foregroundColor(Tokens.textSecondary)
                             }
@@ -160,14 +156,12 @@ struct RecentSearchesSection: View {
 
             VStack(alignment: .leading, spacing: 0) {
                 Text(item.query)
-                    .font(.system(size: Tokens.captionSize, weight: .medium))
-                    .tracking(Tokens.cozyTracking)
+                    .shopTextStyle(.captionBold)
                     .foregroundColor(Tokens.textPrimary)
                     .lineLimit(1)
 
                 Text(item.time)
-                    .font(.system(size: Tokens.badgeSize, weight: .regular))
-                    .tracking(Tokens.cozyTracking)
+                    .shopTextStyle(.badge)
                     .foregroundColor(Tokens.textTertiary)
             }
         }
@@ -216,8 +210,7 @@ struct ForYouSection: View {
 
                         VStack(spacing: Tokens.space8) {
                             Text(brand.name)
-                                .font(.system(size: Tokens.bodySmSize, weight: .bold))
-                                .tracking(Tokens.cozyTracking)
+                                .shopTextStyle(.bodySmallBold)
                                 .foregroundColor(textColor.opacity(0.7))
                                 .lineLimit(1)
                                 .padding(.top, Tokens.space16)
@@ -228,13 +221,11 @@ struct ForYouSection: View {
                                 .shadow(color: Tokens.shadowColorS, radius: Tokens.shadowRadiusS, x: 0, y: Tokens.shadowYS)
 
                             Text(brand.name.capitalized.components(separatedBy: " ").prefix(2).joined(separator: " "))
-                                .font(.system(size: Tokens.captionSize, weight: .semibold))
-                                .tracking(Tokens.cozyTracking)
+                                .shopTextStyle(.captionBold)
                                 .foregroundColor(textColor)
 
                             Text(brand.rating)
-                                .font(.system(size: Tokens.captionSize, weight: .regular))
-                                .tracking(Tokens.cozyTracking)
+                                .shopTextStyle(.caption)
                                 .foregroundColor(textColor.opacity(0.7))
 
                             Spacer().frame(height: Tokens.space4)
@@ -279,12 +270,10 @@ struct RefreshBannerSection: View {
                         HStack(alignment: .bottom) {
                             VStack(alignment: .leading, spacing: 5) {
                                 Text(tile.title)
-                                    .font(.system(size: 20, weight: .semibold))
-                                    .tracking(-1.0)
+                                    .shopTextStyle(.sectionTitle)
                                     .foregroundColor(.white)
                                 Text(tile.subtitle)
-                                    .font(.system(size: Tokens.captionSize, weight: .medium))
-                                    .tracking(Tokens.cozyTracking)
+                                    .shopTextStyle(.captionBold)
                                     .foregroundColor(.white.opacity(0.75))
                             }
                             Spacer()
@@ -338,16 +327,13 @@ struct NewBackInStockSection: View {
 
                             VStack(alignment: .leading, spacing: Tokens.space2) {
                                 Text(product.merchant)
-                                    .font(.system(size: Tokens.captionSize, weight: .regular))
-                                    .tracking(Tokens.cozyTracking)
+                                    .shopTextStyle(.caption)
                                     .foregroundColor(Tokens.textSecondary)
                                 Text(product.name)
-                                    .font(.system(size: Tokens.bodySmSize, weight: .semibold))
-                                    .tracking(Tokens.cozyTracking)
+                                    .shopTextStyle(.bodySmallBold)
                                     .foregroundColor(Tokens.textPrimary)
                                 Text(product.price)
-                                    .font(.system(size: Tokens.bodySmSize, weight: .bold))
-                                    .tracking(Tokens.cozyTracking)
+                                    .shopTextStyle(.bodySmallBold)
                                     .foregroundColor(Tokens.textPrimary)
                             }
                             .padding(.horizontal, Tokens.space4)
@@ -390,8 +376,7 @@ struct ExploreBeautySection: View {
             ) {
                 ForEach(categories) { cat in
                     Text(cat.name)
-                        .font(.system(size: Tokens.bodySize, weight: .semibold))
-                        .tracking(Tokens.bodyTracking)
+                        .shopTextStyle(.bodyLargeBold)
                         .multilineTextAlignment(.center)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -442,8 +427,7 @@ struct EverythingOnShopSection: View {
             ) {
                 ForEach(categories) { cat in
                     Text(cat.name)
-                        .font(.system(size: Tokens.bodySmSize, weight: .semibold))
-                        .tracking(Tokens.cozyTracking)
+                        .shopTextStyle(.bodySmallBold)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity, alignment: .center)
                         .frame(height: 80)
@@ -460,8 +444,7 @@ struct EverythingOnShopSection: View {
             HStack {
                 Spacer()
                 Text("More")
-                    .font(.system(size: Tokens.bodySize, weight: .semibold))
-                    .tracking(Tokens.bodyTracking)
+                    .shopTextStyle(.bodyLargeBold)
                     .foregroundColor(Tokens.textPrimary)
                 Spacer()
             }

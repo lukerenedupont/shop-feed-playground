@@ -19,8 +19,7 @@ struct OrdersPageContent: View {
                 // Header
                 HStack {
                     Text("Orders")
-                        .font(.system(size: 28, weight: .semibold))
-                        .tracking(-0.8)
+                        .shopTextStyle(.headerBold)
                         .foregroundColor(Tokens.textPrimary)
                     Spacer()
                     Image(systemName: "ellipsis")

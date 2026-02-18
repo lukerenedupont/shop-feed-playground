@@ -51,8 +51,7 @@ struct ShopTheLookCard: View {
                 Spacer()
                 HStack {
                     Text(celeb.caption)
-                        .font(.system(size: Tokens.captionSize, weight: .regular))
-                        .tracking(Tokens.cozyTracking)
+                        .shopTextStyle(.caption)
                         .foregroundColor(.white.opacity(0.6))
 
                     Spacer()
@@ -60,8 +59,7 @@ struct ShopTheLookCard: View {
                     // Tap to explore hint
                     if !showProducts {
                         Text("Tap to explore")
-                            .font(.system(size: Tokens.captionSize, weight: .semibold))
-                            .tracking(Tokens.cozyTracking)
+                            .shopTextStyle(.captionBold)
                             .foregroundColor(.white.opacity(0.8))
                             .padding(.horizontal, 12)
                             .padding(.vertical, 6)
@@ -171,33 +169,27 @@ private extension ShopTheLookCard {
                 // Info
                 VStack(spacing: Tokens.space4) {
                     Text(product.merchant)
-                        .font(.system(size: Tokens.captionSize, weight: .regular))
-                        .tracking(Tokens.cozyTracking)
+                        .shopTextStyle(.caption)
                         .foregroundColor(Tokens.textSecondary)
 
                     Text(product.name)
-                        .font(.system(size: Tokens.bodySize, weight: .semibold))
-                        .tracking(Tokens.bodyTracking)
+                        .shopTextStyle(.bodyLargeBold)
                         .foregroundColor(Tokens.textPrimary)
                         .multilineTextAlignment(.center)
 
                     Text(product.price)
-                        .font(.system(size: Tokens.bodySize, weight: .bold))
-                        .tracking(Tokens.bodyTracking)
+                        .shopTextStyle(.bodyLargeBold)
                         .foregroundColor(Tokens.textPrimary)
                         .padding(.top, Tokens.space4)
                 }
 
                 // Shop now button
-                Button(action: {}) {
-                    Text("Shop now")
-                        .font(.system(size: Tokens.bodySize, weight: .semibold))
-                        .tracking(Tokens.bodyTracking)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 32)
-                        .padding(.vertical, 14)
-                        .background(Capsule().fill(.black))
-                }
+                ShopClientButton(
+                    title: "Shop now",
+                    variant: .secondary,
+                    size: .l,
+                    action: {}
+                )
                 .padding(.top, Tokens.space8)
             }
             .padding(Tokens.space24)
@@ -241,14 +233,12 @@ private struct FloatingProductCard: View {
             // Name + price
             VStack(alignment: .leading, spacing: 3) {
                 Text(product.name)
-                    .font(.system(size: Tokens.captionSize, weight: .regular))
-                    .tracking(0.15)
+                    .shopTextStyle(.caption)
                     .foregroundColor(.black)
                     .lineLimit(1)
 
                 Text(product.price)
-                    .font(.system(size: Tokens.captionSize, weight: .semibold))
-                    .tracking(0.15)
+                    .shopTextStyle(.captionBold)
                     .foregroundColor(.black)
             }
             .frame(width: 75, alignment: .leading)
@@ -265,7 +255,12 @@ private struct FloatingProductCard: View {
         .background(
             RoundedRectangle(cornerRadius: 12, style: .continuous)
                 .fill(.white)
-                .shadow(color: .black.opacity(0.16), radius: 12, x: 0, y: 4)
+                .shadow(
+                    color: Tokens.ShopClient.shadowMColor,
+                    radius: Tokens.ShopClient.shadowMRadius,
+                    x: 0,
+                    y: Tokens.ShopClient.shadowMY
+                )
         )
     }
 }
