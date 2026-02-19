@@ -16,17 +16,22 @@ struct ClothesPileSwipeCard: View {
     @State private var isExpanded: Bool = false
     @State private var isAreaFocused: Bool = false
     @State private var areaFocusOffset: CGSize = .zero
-    @State private var focusedProduct: ClothesAreaProduct?
-    @State private var productCardXOffset: CGFloat = 0
+    @State private var focusedChipOffset: CGSize = .zero
+    @State private var focusedHotspot: ClothesAreaHotspot?
+    @State private var favoritedHotspotIDs: Set<String> = []
+    @State private var logoDisplayedIndex: Int = 0
+    @State private var logoIncomingIndex: Int?
+    @State private var logoRollProgress: CGFloat = 0
+    @State private var logoRollID: UUID = .init()
 
     private let slides: [ClothesPileSlide] = [
-        .init(imageName: "OutfitFloat01", background: Color(hex: 0x2F3218)),
-        .init(imageName: "OutfitFloat02", background: Color(hex: 0x262525)),
-        .init(imageName: "OutfitFloat03", background: Color(hex: 0x331515)),
-        .init(imageName: "OutfitFloat04", background: Color(hex: 0x2D3740)),
-        .init(imageName: "OutfitFloat05", background: Color(hex: 0x3B2F2A)),
-        .init(imageName: "OutfitFloat06", background: Color(hex: 0x28323D)),
-        .init(imageName: "OutfitFloat07", background: Color(hex: 0x3A2E49)),
+        .init(imageName: "OutfitFloat01", logoImageName: "ClothesLogoGalleryDept", background: Color(hex: 0x2F3218)),
+        .init(imageName: "OutfitFloat02", logoImageName: "ClothesLogoJnco", background: Color(hex: 0x262525)),
+        .init(imageName: "OutfitFloat03", logoImageName: "ClothesLogoComfrt", background: Color(hex: 0x331515)),
+        .init(imageName: "OutfitFloat04", logoImageName: "ClothesLogoAffliction", background: Color(hex: 0x2D3740)),
+        .init(imageName: "OutfitFloat05", logoImageName: "ClothesLogoTrueClassic", background: Color(hex: 0x3B2F2A)),
+        .init(imageName: "OutfitFloat06", logoImageName: "ClothesLogoKicksCrew", background: Color(hex: 0x28323D)),
+        .init(imageName: "OutfitFloat07", logoImageName: "ClothesLogoYoungLA", background: Color(hex: 0x3A2E49)),
     ]
 
     private let itemWidth: CGFloat = 336
@@ -36,8 +41,8 @@ struct ClothesPileSwipeCard: View {
     private let tileSize: CGFloat = 242
     private let areaZoomScale: CGFloat = 1.30
 
-    private func products(for imageName: String) -> [ClothesAreaProduct] {
-        ClothesAreaProduct.byImageName[imageName] ?? ClothesAreaProduct.fallback
+    private func hotspots(for imageName: String) -> [ClothesAreaHotspot] {
+        ClothesAreaHotspot.byImageName[imageName] ?? ClothesAreaHotspot.fallback
     }
 
     private func normalizedPoint(for location: CGPoint, in frameSize: CGSize) -> CGPoint {
@@ -53,16 +58,24 @@ struct ClothesPileSwipeCard: View {
         hypot(a.x - b.x, a.y - b.y)
     }
 
-    private func nearestProduct(
+    private func nearestHotspot(
         for imageName: String,
         location: CGPoint,
         frameSize: CGSize
-    ) -> ClothesAreaProduct? {
-        let spots = products(for: imageName)
+    ) -> ClothesAreaHotspot? {
+        let points = hotspots(for: imageName)
         let normalized = normalizedPoint(for: location, in: frameSize)
-        return spots.min {
-            pointDistance($0.point, normalized) < pointDistance($1.point, normalized)
+        return points.min { lhs, rhs in
+            pointDistance(lhs.point, normalized) < pointDistance(rhs.point, normalized)
         }
+    }
+
+    private enum LogoRollLayout {
+        static let width: CGFloat = 240
+        static let height: CGFloat = 62
+        static let travelDistance: CGFloat = 102
+        static let animationDuration: Double = 0.38
+        static let animation = Animation.timingCurve(0.18, 0.86, 0.2, 1, duration: animationDuration)
     }
 
     private func floatingYOffset(for index: Int, time: TimeInterval, isActive: Bool) -> CGFloat {
@@ -86,12 +99,24 @@ struct ClothesPileSwipeCard: View {
         )
     }
 
+    private func chipOffset(for location: CGPoint, in frameSize: CGSize) -> CGSize {
+        let x = (location.x - frameSize.width / 2) * 0.72
+        let y = (location.y - frameSize.height / 2) * 0.72 + 8
+        let maxX = frameSize.width * 0.30
+        let maxY = frameSize.height * 0.30
+
+        return CGSize(
+            width: min(max(x, -maxX), maxX),
+            height: min(max(y, -maxY), maxY)
+        )
+    }
+
     private func clearAreaFocus(animated: Bool = true) {
         let update = {
             isAreaFocused = false
             areaFocusOffset = .zero
-            focusedProduct = nil
-            productCardXOffset = 0
+            focusedChipOffset = .zero
+            focusedHotspot = nil
         }
 
         if animated {
@@ -101,54 +126,127 @@ struct ClothesPileSwipeCard: View {
         }
     }
 
-    private var floatingProductCard: some View {
-        VStack {
-            Spacer()
+    @ViewBuilder
+    private func areaPriceChip(for hotspot: ClothesAreaHotspot) -> some View {
+        let isFavorite = favoritedHotspotIDs.contains(hotspot.id)
+        let chipShape = Capsule(style: .continuous)
+        let chipContent = HStack(spacing: 10) {
+            Text(hotspot.price)
+                .shopTextStyle(.bodySmallBold)
+                .foregroundStyle(.white)
 
-            if let focusedProduct {
-                HStack(spacing: 10) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(focusedProduct.title)
-                            .shopTextStyle(.bodySmallBold)
-                            .foregroundStyle(Tokens.ShopClient.text)
-                            .lineLimit(1)
+            Spacer(minLength: 8)
 
-                        Text(focusedProduct.subtitle)
-                            .shopTextStyle(.caption)
-                            .foregroundStyle(Tokens.ShopClient.textSecondary)
-                            .lineLimit(1)
+            Button {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    if isFavorite {
+                        favoritedHotspotIDs.remove(hotspot.id)
+                    } else {
+                        favoritedHotspotIDs.insert(hotspot.id)
                     }
-
-                    Spacer(minLength: 10)
-
-                    Text(focusedProduct.price)
-                        .shopTextStyle(.bodySmallBold)
-                        .foregroundStyle(Tokens.ShopClient.text)
                 }
-                .padding(.horizontal, 12)
-                .padding(.vertical, 9)
+                Haptics.light()
+            } label: {
+                Circle()
+                    .fill(.white.opacity(0.22))
+                    .frame(width: 28, height: 28)
+                    .overlay {
+                        Image(isFavorite ? "HeartIcon" : "HeartOutlineIcon")
+                            .resizable()
+                            .renderingMode(.template)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 12, height: 12)
+                            .foregroundStyle(.white)
+                    }
+            }
+            .buttonStyle(.plain)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .frame(width: 128, height: 46)
+
+        if #available(iOS 26.0, *) {
+            chipContent
+                .background(.ultraThinMaterial, in: chipShape)
                 .background(
-                    RoundedRectangle(cornerRadius: Tokens.radius12, style: .continuous)
-                        .fill(.white.opacity(0.94))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: Tokens.radius12, style: .continuous)
-                                .stroke(Tokens.ShopClient.borderImage, lineWidth: 0.5)
-                        )
-                        .shadow(
-                            color: Tokens.ShopClient.shadowMColor,
-                            radius: Tokens.ShopClient.shadowMRadius,
-                            x: 0,
-                            y: Tokens.ShopClient.shadowMY
-                        )
+                    chipShape
+                        .fill(Color(hex: 0x35537B).opacity(0.56))
                 )
-                .offset(x: productCardXOffset)
-                .padding(.horizontal, 22)
-                .padding(.bottom, 54)
-                .transition(.move(edge: .bottom).combined(with: .opacity))
+                .overlay(
+                    chipShape
+                        .stroke(.white.opacity(0.45), lineWidth: 1)
+                )
+                .shadow(color: .black.opacity(0.20), radius: 10, x: 0, y: 4)
+                .glassEffect(.regular.interactive(), in: .capsule)
+        } else {
+            chipContent
+                .background(.ultraThinMaterial, in: chipShape)
+                .background(
+                    chipShape
+                        .fill(Color(hex: 0x35537B).opacity(0.56))
+                )
+                .overlay(
+                    chipShape
+                        .stroke(.white.opacity(0.45), lineWidth: 1)
+                )
+                .shadow(color: .black.opacity(0.20), radius: 10, x: 0, y: 4)
+        }
+    }
+
+    private var slotLogoView: some View {
+        let rollPhase: CGFloat = min(1, max(0, -logoRollProgress))
+
+        return ZStack {
+            logoImageView(for: logoDisplayedIndex)
+                .offset(y: logoRollProgress * LogoRollLayout.travelDistance)
+                .opacity(Double(1 - rollPhase * 0.52))
+                .blur(radius: rollPhase * 0.9)
+
+            if let logoIncomingIndex {
+                logoImageView(for: logoIncomingIndex)
+                    .offset(y: (logoRollProgress + 1) * LogoRollLayout.travelDistance)
+                    .opacity(Double(0.55 + rollPhase * 0.45))
+                    .blur(radius: (1 - rollPhase) * 0.9)
             }
         }
-        .animation(.easeInOut(duration: 0.24), value: focusedProduct?.id)
-        .animation(.easeInOut(duration: 0.24), value: productCardXOffset)
+        .frame(width: LogoRollLayout.width, height: LogoRollLayout.height)
+        .clipped()
+    }
+
+    private func logoImageView(for index: Int) -> some View {
+        let bounded = min(max(index, 0), max(0, slides.count - 1))
+        return Image(slides[bounded].logoImageName)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: LogoRollLayout.width, height: LogoRollLayout.height)
+    }
+
+    private func rollLogo(to newIndex: Int) {
+        guard !slides.isEmpty else { return }
+        let bounded = min(max(newIndex, 0), slides.count - 1)
+        guard bounded != logoDisplayedIndex || logoIncomingIndex != nil else { return }
+
+        if let logoIncomingIndex {
+            logoDisplayedIndex = logoIncomingIndex
+            self.logoIncomingIndex = nil
+            logoRollProgress = 0
+        }
+
+        let rollID = UUID()
+        logoRollID = rollID
+        logoIncomingIndex = bounded
+        logoRollProgress = 0
+
+        withAnimation(LogoRollLayout.animation) {
+            logoRollProgress = -1
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + LogoRollLayout.animationDuration) {
+            guard logoRollID == rollID else { return }
+            logoDisplayedIndex = bounded
+            logoIncomingIndex = nil
+            logoRollProgress = 0
+        }
     }
 
     var body: some View {
@@ -196,14 +294,29 @@ struct ClothesPileSwipeCard: View {
             .offset(y: 20)
 
             VStack {
-                Image("ShoeSwipeKithLogo")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 48)
+                slotLogoView
                     .padding(.top, 28)
                 Spacer()
             }
             .allowsHitTesting(false)
+
+            VStack {
+                Spacer()
+                Button(action: { Haptics.light() }) {
+                    Text("Shop now")
+                        .shopTextStyle(.bodyLargeBold)
+                        .foregroundStyle(selectedSlide.background)
+                        .padding(.horizontal, 30)
+                        .padding(.vertical, 12)
+                        .background(
+                            Capsule(style: .continuous)
+                                .fill(.white)
+                        )
+                }
+                .padding(.bottom, 36)
+                .opacity(isExpanded ? 0 : 1)
+                .animation(.easeInOut(duration: 0.2), value: isExpanded)
+            }
 
             if isExpanded {
                 Color.clear
@@ -215,17 +328,20 @@ struct ClothesPileSwipeCard: View {
                         Haptics.light()
                     }
             }
-
-            if !isExpanded {
-                floatingProductCard
-                    .allowsHitTesting(false)
-            }
         }
         .frame(width: Tokens.cardWidth, height: Tokens.cardHeight)
         .clipShape(RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous))
         .contentShape(Rectangle())
+        .onAppear {
+            logoDisplayedIndex = selectedIndex
+            logoIncomingIndex = nil
+            logoRollProgress = 0
+        }
         .onChange(of: selectedIndex) { _, _ in
             clearAreaFocus(animated: false)
+        }
+        .onChange(of: selectedIndex) { _, newValue in
+            rollLogo(to: newValue)
         }
         .onChange(of: isExpanded) { _, expanded in
             if expanded {
@@ -332,22 +448,29 @@ struct ClothesPileSwipeCard: View {
                 y: (expandedActive ? -6 : -32) + floatYOffset
             )
             .zIndex(isActive ? 10 : 1)
+            .overlay {
+                if isActive, !isExpanded, isAreaFocused, let focusedHotspot {
+                    areaPriceChip(for: focusedHotspot)
+                        .offset(x: focusedChipOffset.width, y: focusedChipOffset.height)
+                        .transition(.scale(scale: 0.92).combined(with: .opacity))
+                        .animation(.spring(response: 0.34, dampingFraction: 0.82), value: focusedHotspot.id)
+                }
+            }
             .gesture(
                 SpatialTapGesture()
                     .onEnded { value in
                         guard isActive && !isExpanded else { return }
-                        let normalized = normalizedPoint(for: value.location, in: frameSize)
-                        let mappedProduct = nearestProduct(
+                        let mappedHotspot = nearestHotspot(
                             for: slides[index].imageName,
                             location: value.location,
                             frameSize: frameSize
-                        ) ?? products(for: slides[index].imageName).first
+                        ) ?? hotspots(for: slides[index].imageName).first
 
                         withAnimation(.spring(response: 0.42, dampingFraction: 0.84, blendDuration: 0.2)) {
                             isAreaFocused = true
                             areaFocusOffset = focusOffset(for: value.location, in: frameSize)
-                            focusedProduct = mappedProduct
-                            productCardXOffset = (normalized.x - 0.5) * 132
+                            focusedChipOffset = chipOffset(for: value.location, in: frameSize)
+                            focusedHotspot = mappedHotspot
                         }
                         Haptics.light()
                     }
@@ -401,91 +524,73 @@ struct ClothesPileSwipeCard: View {
 
 private struct ClothesPileSlide {
     let imageName: String
+    let logoImageName: String
     let background: Color
 }
 
-private struct ClothesAreaProduct: Identifiable {
+private struct ClothesAreaHotspot: Identifiable {
     let id: String
-    let title: String
-    let subtitle: String
-    let price: String
     let point: CGPoint
-}
+    let price: String
 
-private extension ClothesAreaProduct {
-    static func make(
-        _ id: String,
-        _ title: String,
-        _ subtitle: String,
-        _ price: String,
-        x: CGFloat,
-        y: CGFloat
-    ) -> ClothesAreaProduct {
-        .init(
-            id: id,
-            title: title,
-            subtitle: subtitle,
-            price: price,
-            point: .init(x: x, y: y)
+    private static func make(_ imageName: String, _ x: CGFloat, _ y: CGFloat, _ price: String, index: Int) -> ClothesAreaHotspot {
+        ClothesAreaHotspot(
+            id: "\(imageName)-\(index)",
+            point: CGPoint(x: x, y: y),
+            price: price
         )
     }
 
-    static let fallback: [ClothesAreaProduct] = [
-        .make("fallback-top", "Layered top", "Cotton blend", "$88", x: 0.50, y: 0.40),
-        .make("fallback-bottom", "Relaxed pants", "Straight fit", "$112", x: 0.30, y: 0.66),
-        .make("fallback-shoes", "Low sneakers", "Cushioned sole", "$138", x: 0.72, y: 0.70),
-    ]
-
-    static let byImageName: [String: [ClothesAreaProduct]] = [
+    static let byImageName: [String: [ClothesAreaHotspot]] = [
         "OutfitFloat01": [
-            .make("o1-cap", "Logo cap", "Washed burgundy", "$42", x: 0.52, y: 0.15),
-            .make("o1-jacket", "Pattern jacket", "Oversized fit", "$248", x: 0.52, y: 0.37),
-            .make("o1-jeans", "Light denim", "Relaxed straight", "$128", x: 0.25, y: 0.62),
-            .make("o1-tee", "Graphic tee", "Heavy jersey", "$54", x: 0.52, y: 0.74),
-            .make("o1-shoes", "Court sneakers", "Leather low-top", "$168", x: 0.75, y: 0.67),
+            make("OutfitFloat01", 0.50, 0.30, "$188", index: 0),
+            make("OutfitFloat01", 0.36, 0.48, "$84", index: 1),
+            make("OutfitFloat01", 0.62, 0.58, "$142", index: 2),
+            make("OutfitFloat01", 0.49, 0.78, "$96", index: 3),
         ],
         "OutfitFloat02": [
-            .make("o2-hat", "Knit beanie", "Soft ribbed wool", "$36", x: 0.49, y: 0.16),
-            .make("o2-outer", "Coach jacket", "Matte shell finish", "$198", x: 0.52, y: 0.38),
-            .make("o2-pants", "Utility trouser", "Relaxed taper", "$122", x: 0.28, y: 0.64),
-            .make("o2-shirt", "Box tee", "Midweight cotton", "$48", x: 0.51, y: 0.73),
-            .make("o2-shoe", "Retro runner", "Foam support", "$152", x: 0.74, y: 0.68),
+            make("OutfitFloat02", 0.46, 0.26, "$210", index: 0),
+            make("OutfitFloat02", 0.33, 0.48, "$128", index: 1),
+            make("OutfitFloat02", 0.59, 0.56, "$76", index: 2),
+            make("OutfitFloat02", 0.52, 0.80, "$104", index: 3),
         ],
         "OutfitFloat03": [
-            .make("o3-hat", "Dad cap", "Brushed twill", "$34", x: 0.50, y: 0.15),
-            .make("o3-shell", "Cropped shell", "Wind resistant", "$214", x: 0.52, y: 0.37),
-            .make("o3-jean", "Vintage jean", "Loose straight", "$118", x: 0.26, y: 0.65),
-            .make("o3-tee", "Core tee", "Soft heavyweight", "$46", x: 0.51, y: 0.74),
-            .make("o3-shoes", "Trail shoes", "All-terrain grip", "$178", x: 0.74, y: 0.69),
+            make("OutfitFloat03", 0.55, 0.24, "$164", index: 0),
+            make("OutfitFloat03", 0.38, 0.44, "$92", index: 1),
+            make("OutfitFloat03", 0.62, 0.56, "$138", index: 2),
+            make("OutfitFloat03", 0.47, 0.78, "$88", index: 3),
         ],
         "OutfitFloat04": [
-            .make("o4-cap", "Cord cap", "Structured brim", "$38", x: 0.51, y: 0.16),
-            .make("o4-layer", "Plaid overshirt", "Brushed weave", "$162", x: 0.52, y: 0.38),
-            .make("o4-pants", "Wide trouser", "Pressed twill", "$136", x: 0.28, y: 0.64),
-            .make("o4-top", "Plain tee", "Premium cotton", "$42", x: 0.50, y: 0.74),
-            .make("o4-shoe", "Court leather", "Minimal profile", "$158", x: 0.73, y: 0.69),
+            make("OutfitFloat04", 0.48, 0.28, "$236", index: 0),
+            make("OutfitFloat04", 0.34, 0.50, "$66", index: 1),
+            make("OutfitFloat04", 0.60, 0.58, "$124", index: 2),
+            make("OutfitFloat04", 0.50, 0.79, "$112", index: 3),
         ],
         "OutfitFloat05": [
-            .make("o5-cap", "6-panel cap", "Stone wash", "$34", x: 0.50, y: 0.15),
-            .make("o5-jacket", "Coach jacket", "Water resistant", "$176", x: 0.51, y: 0.37),
-            .make("o5-pant", "Tech jogger", "Tapered fit", "$106", x: 0.29, y: 0.65),
-            .make("o5-tee", "Logo tee", "Relaxed fit", "$52", x: 0.50, y: 0.74),
-            .make("o5-shoe", "Foam runner", "Cloud midsole", "$148", x: 0.74, y: 0.69),
+            make("OutfitFloat05", 0.52, 0.27, "$172", index: 0),
+            make("OutfitFloat05", 0.35, 0.46, "$98", index: 1),
+            make("OutfitFloat05", 0.61, 0.60, "$152", index: 2),
+            make("OutfitFloat05", 0.47, 0.80, "$74", index: 3),
         ],
         "OutfitFloat06": [
-            .make("o6-hat", "Beanie", "Merino blend", "$40", x: 0.50, y: 0.15),
-            .make("o6-shirt", "Oxford shirt", "Crisp cotton", "$92", x: 0.51, y: 0.37),
-            .make("o6-bottom", "Indigo jean", "Mid-rise straight", "$124", x: 0.27, y: 0.64),
-            .make("o6-knit", "Cable vest", "Layer friendly", "$96", x: 0.51, y: 0.74),
-            .make("o6-loafer", "Penny loafer", "Soft leather", "$176", x: 0.74, y: 0.69),
+            make("OutfitFloat06", 0.50, 0.30, "$198", index: 0),
+            make("OutfitFloat06", 0.35, 0.52, "$106", index: 1),
+            make("OutfitFloat06", 0.63, 0.56, "$86", index: 2),
+            make("OutfitFloat06", 0.48, 0.80, "$118", index: 3),
         ],
         "OutfitFloat07": [
-            .make("o7-cap", "Work cap", "Faded black", "$36", x: 0.50, y: 0.15),
-            .make("o7-jacket", "Chore jacket", "Boxy silhouette", "$154", x: 0.52, y: 0.37),
-            .make("o7-chino", "Relaxed chino", "Garment dyed", "$108", x: 0.29, y: 0.65),
-            .make("o7-henley", "Waffle henley", "Natural stretch", "$58", x: 0.51, y: 0.74),
-            .make("o7-shoe", "Canvas high-top", "Flexible sole", "$82", x: 0.74, y: 0.69),
+            make("OutfitFloat07", 0.50, 0.28, "$146", index: 0),
+            make("OutfitFloat07", 0.36, 0.50, "$82", index: 1),
+            make("OutfitFloat07", 0.62, 0.59, "$134", index: 2),
+            make("OutfitFloat07", 0.49, 0.80, "$92", index: 3),
         ],
+    ]
+
+    static let fallback: [ClothesAreaHotspot] = [
+        make("fallback", 0.50, 0.32, "$120", index: 0),
+        make("fallback", 0.36, 0.54, "$88", index: 1),
+        make("fallback", 0.62, 0.60, "$144", index: 2),
+        make("fallback", 0.49, 0.80, "$96", index: 3),
     ]
 }
 
