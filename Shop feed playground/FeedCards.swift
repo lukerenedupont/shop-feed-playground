@@ -27,7 +27,9 @@ struct FeedCardDefinition: Identifiable {
 enum FeedCardRegistry {
     /// Ordered list of cards shown in the home feed.
     static let feed: [FeedCardDefinition] = [
+        .init(id: "clothes-pile-swipe") { ClothesPileSwipeCard() },
         .init(id: "topic-merch-digest") { TopicMerchDigestCard() },
+        .init(id: "outfit-float-grid") { OutfitFloatGridCard() },
         .init(id: "blank-canvas-top") { BlankCanvasCard() },
         .init(id: "blank-top") { BlankTopCard() },
         .init(id: "vibe-board") { VibeBoardCard() },
@@ -69,7 +71,7 @@ enum FeedCardRegistry {
 // MARK: - Feed View
 
 struct FeedView: View {
-    @State private var focusedCardID: String? = FeedCardRegistry.feed.first?.id
+    @State private var focusedCardID: String? = "clothes-pile-swipe"
 
     var body: some View {
         ScrollView(.vertical) {
