@@ -215,6 +215,7 @@ private extension PriceCheckCard {
             title: isRevealed ? "Next" : "Lock it in",
             variant: .primary,
             size: .l,
+            expandHorizontally: true,
             action: {
                 if isRevealed {
                     // Fling card off to the left, then advance
@@ -244,6 +245,7 @@ private extension PriceCheckCard {
                 }
             }
         )
+        .frame(width: 128)
     }
 }
 
@@ -315,7 +317,7 @@ private struct RulerView: View {
                     Text("$\(value)")
                         .font(.system(size: 22, weight: .bold))
                         .tracking(-0.5)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                         .padding(.horizontal, 14)
                         .padding(.vertical, 6)
                         .background(
@@ -347,7 +349,7 @@ private struct RulerView: View {
                             let dollarValue = (i / smallTicksPerInterval) * tickInterval
                             let text = Text("\(dollarValue)")
                                 .font(.system(size: 10, weight: .medium))
-                                .foregroundColor(.black.opacity(0.5))
+                                .foregroundStyle(.black.opacity(0.5))
                             context.draw(
                                 context.resolve(text),
                                 at: CGPoint(x: x, y: rulerTopOffset + 36),

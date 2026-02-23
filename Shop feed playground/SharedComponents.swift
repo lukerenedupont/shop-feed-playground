@@ -5,7 +5,9 @@
 //  Reusable UI components shared across multiple feed cards.
 //
 
+import AVFoundation
 import SwiftUI
+import UIKit
 
 // MARK: - Product Tile (Legacy)
 
@@ -86,7 +88,7 @@ struct FeedProductCard: View {
                 if let priceBadgeText {
                     Text(priceBadgeText)
                         .shopTextStyle(.badgeBold)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 4)
                         .background(Capsule(style: .continuous).fill(.black.opacity(0.30)))
@@ -104,7 +106,7 @@ struct FeedProductCard: View {
                                 .renderingMode(.template)
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: Const.favoriteIconSize, height: Const.favoriteIconSize)
-                                .foregroundColor(.white)
+                                .foregroundStyle(.white)
                         }
                         .padding(8)
                 }
@@ -131,7 +133,7 @@ struct PriceTag: View {
     var body: some View {
         Text(text)
             .shopTextStyle(.captionBold)
-            .foregroundColor(.white)
+            .foregroundStyle(.white)
             .padding(.horizontal, 8)
             .padding(.vertical, 4)
             .background(Capsule().fill(.black.opacity(bgOpacity)))
@@ -153,7 +155,7 @@ struct FavoriteButton: View {
                 .renderingMode(.template)
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 14, height: 14)
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
                 .frame(width: 30, height: 30)
                 .background(Circle().fill(.black.opacity(bgOpacity)))
         }
@@ -205,6 +207,123 @@ struct MerchantLogo: View {
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(height: height)
-            .foregroundColor(.white)
+            .foregroundStyle(.white)
+    }
+}
+
+// MARK: - Spotlight Product Tile
+
+/// Shared white product tile used in the "shop similar" style cards.
+struct SpotlightProductTile: View {
+    let size: CGFloat
+    let price: String
+
+    var body: some View {
+        RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
+            .fill(.white)
+            .frame(width: size, height: size)
+            .shadow(color: .black.opacity(0.08), radius: 16, x: 0, y: 8)
+            .overlay(alignment: .topLeading) {
+                PriceTag(text: price, bgOpacity: 0.30)
+                    .padding(.top, 14)
+                    .padding(.leading, 14)
+            }
+            .overlay(alignment: .bottomTrailing) {
+                Circle()
+                    .fill(Color(hex: 0xE0E0E0))
+                    .frame(width: 36, height: 36)
+                    .overlay {
+                        Image("HeartOutlineIcon")
+                            .resizable()
+                            .renderingMode(.template)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 16, height: 16)
+                            .foregroundStyle(Color(hex: 0x888888))
+                    }
+                    .padding(.bottom, 14)
+                    .padding(.trailing, 14)
+            }
+    }
+}
+
+// MARK: - Shared Looping Video Background
+
+struct SharedLoopingVideoBackground: UIViewRepresentable {
+    let url: URL
+    var overscan: CGFloat = 2
+
+    func makeUIView(context: Context) -> SharedLoopingVideoContainerView {
+        let view = SharedLoopingVideoContainerView()
+        view.overscan = overscan
+        view.configure(with: url)
+        return view
+    }
+
+    func updateUIView(_ uiView: SharedLoopingVideoContainerView, context: Context) {
+        uiView.overscan = overscan
+        uiView.configure(with: url)
+    }
+
+    static func dismantleUIView(_ uiView: SharedLoopingVideoContainerView, coordinator: ()) {
+        uiView.stop()
+    }
+}
+
+final class SharedLoopingVideoContainerView: UIView {
+    private let queuePlayer = AVQueuePlayer()
+    private var looper: AVPlayerLooper?
+    private var videoLayer: AVPlayerLayer?
+    private var currentURL: URL?
+    var overscan: CGFloat = 2
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .clear
+        clipsToBounds = true
+        isUserInteractionEnabled = false
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        videoLayer?.frame = bounds.insetBy(dx: -overscan, dy: -overscan)
+    }
+
+    func configure(with url: URL) {
+        guard currentURL != url else {
+            if queuePlayer.timeControlStatus != .playing {
+                queuePlayer.play()
+            }
+            return
+        }
+
+        currentURL = url
+        queuePlayer.pause()
+        queuePlayer.removeAllItems()
+
+        let item = AVPlayerItem(url: url)
+        looper = AVPlayerLooper(player: queuePlayer, templateItem: item)
+
+        if videoLayer == nil {
+            let layer = AVPlayerLayer(player: queuePlayer)
+            layer.videoGravity = .resizeAspectFill
+            self.layer.addSublayer(layer)
+            videoLayer = layer
+        } else {
+            videoLayer?.player = queuePlayer
+        }
+
+        queuePlayer.isMuted = true
+        queuePlayer.play()
+    }
+
+    func stop() {
+        queuePlayer.pause()
+        queuePlayer.removeAllItems()
+        looper = nil
+        currentURL = nil
     }
 }

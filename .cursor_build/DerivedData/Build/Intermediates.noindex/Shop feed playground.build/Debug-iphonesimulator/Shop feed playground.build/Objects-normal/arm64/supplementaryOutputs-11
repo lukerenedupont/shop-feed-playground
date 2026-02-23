@@ -1,0 +1,37 @@
+{
+  "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "object" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps"
+  },
+  "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/TouchCanvasCard.swift" : {
+    "const-values" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/TouchCanvasCard.swiftconstvalues",
+    "dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/TouchCanvasCard.d",
+    "diagnostics" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/TouchCanvasCard.dia",
+    "object" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/TouchCanvasCard.o",
+    "swift-dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/TouchCanvasCard.swiftdeps"
+  },
+  "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/TypeaheadContent.swift" : {
+    "const-values" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/TypeaheadContent.swiftconstvalues",
+    "dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/TypeaheadContent.d",
+    "diagnostics" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/TypeaheadContent.dia",
+    "object" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/TypeaheadContent.o",
+    "swift-dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/TypeaheadContent.swiftdeps"
+  },
+  "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/VibeBoardCard.swift" : {
+    "const-values" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/VibeBoardCard.swiftconstvalues",
+    "dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/VibeBoardCard.d",
+    "diagnostics" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/VibeBoardCard.dia",
+    "object" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/VibeBoardCard.o",
+    "swift-dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/VibeBoardCard.swiftdeps"
+  },
+  "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/WidgetExpansionCard.swift" : {
+    "const-values" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/WidgetExpansionCard.swiftconstvalues",
+    "dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/WidgetExpansionCard.d",
+    "diagnostics" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/WidgetExpansionCard.dia",
+    "object" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/WidgetExpansionCard.o",
+    "swift-dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/WidgetExpansionCard.swiftdeps"
+  }
+}

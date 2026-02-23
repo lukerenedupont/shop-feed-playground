@@ -1,0 +1,37 @@
+{
+  "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/OrderCard.swift" : {
+    "const-values" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/OrderCard.swiftconstvalues",
+    "dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/OrderCard.d",
+    "diagnostics" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/OrderCard.dia",
+    "object" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/OrderCard.o",
+    "swift-dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/OrderCard.swiftdeps"
+  },
+  "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/OrderModels.swift" : {
+    "const-values" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/OrderModels.swiftconstvalues",
+    "dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/OrderModels.d",
+    "diagnostics" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/OrderModels.dia",
+    "object" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/OrderModels.o",
+    "swift-dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/OrderModels.swiftdeps"
+  },
+  "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/OrdersPageContent.swift" : {
+    "const-values" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/OrdersPageContent.swiftconstvalues",
+    "dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/OrdersPageContent.d",
+    "diagnostics" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/OrdersPageContent.dia",
+    "object" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/OrdersPageContent.o",
+    "swift-dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/OrdersPageContent.swiftdeps"
+  },
+  "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/PantoneSpreadCard.swift" : {
+    "const-values" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/PantoneSpreadCard.swiftconstvalues",
+    "dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/PantoneSpreadCard.d",
+    "diagnostics" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/PantoneSpreadCard.dia",
+    "object" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/PantoneSpreadCard.o",
+    "swift-dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/PantoneSpreadCard.swiftdeps"
+  },
+  "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/PhyllotaxisCard.swift" : {
+    "const-values" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/PhyllotaxisCard.swiftconstvalues",
+    "dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/PhyllotaxisCard.d",
+    "diagnostics" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/PhyllotaxisCard.dia",
+    "object" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/PhyllotaxisCard.o",
+    "swift-dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/DerivedData/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/PhyllotaxisCard.swiftdeps"
+  }
+}

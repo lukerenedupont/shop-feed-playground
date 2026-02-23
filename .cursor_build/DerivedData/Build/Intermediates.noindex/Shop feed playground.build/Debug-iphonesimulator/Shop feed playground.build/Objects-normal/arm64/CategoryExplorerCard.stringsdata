@@ -1,0 +1,16 @@
+{
+  "source": "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/CategoryExplorerCard.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Explore categories",
+        "location": {
+          "startingColumn": 14,
+          "startingLine": 60
+        }
+      }
+    ]
+  },
+  "version": 1
+}

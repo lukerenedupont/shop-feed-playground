@@ -1,0 +1,30 @@
+{
+  "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/ArcCarouselCard.swift" : {
+    "const-values" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/ArcCarouselCard.swiftconstvalues",
+    "dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/ArcCarouselCard.d",
+    "diagnostics" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/ArcCarouselCard.dia",
+    "object" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/ArcCarouselCard.o",
+    "swift-dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/ArcCarouselCard.swiftdeps"
+  },
+  "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/ArcCarouselData.swift" : {
+    "const-values" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/ArcCarouselData.swiftconstvalues",
+    "dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/ArcCarouselData.d",
+    "diagnostics" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/ArcCarouselData.dia",
+    "object" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/ArcCarouselData.o",
+    "swift-dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/ArcCarouselData.swiftdeps"
+  },
+  "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/BlankCanvasCard.swift" : {
+    "const-values" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/BlankCanvasCard.swiftconstvalues",
+    "dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/BlankCanvasCard.d",
+    "diagnostics" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/BlankCanvasCard.dia",
+    "object" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/BlankCanvasCard.o",
+    "swift-dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/BlankCanvasCard.swiftdeps"
+  },
+  "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/BoomerangCard.swift" : {
+    "const-values" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/BoomerangCard.swiftconstvalues",
+    "dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/BoomerangCard.d",
+    "diagnostics" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/BoomerangCard.dia",
+    "object" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/BoomerangCard.o",
+    "swift-dependencies" : "/Users/lukedupont/Desktop/Developer/Shop feed playground/.cursor_build/Build/Intermediates.noindex/Shop feed playground.build/Debug-iphonesimulator/Shop feed playground.build/Objects-normal/arm64/BoomerangCard.swiftdeps"
+  }
+}

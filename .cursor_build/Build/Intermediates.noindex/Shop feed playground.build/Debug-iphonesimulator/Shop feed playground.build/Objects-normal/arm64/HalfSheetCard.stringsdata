@@ -1,0 +1,48 @@
+{
+  "source": "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/HalfSheetCard.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "$185",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 126
+        }
+      },
+      {
+        "comment": "",
+        "key": "Product details",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 118
+        }
+      },
+      {
+        "comment": "",
+        "key": "Premium leather sneaker",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 121
+        }
+      },
+      {
+        "comment": "",
+        "key": "Add to bag",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 144
+        }
+      },
+      {
+        "comment": "",
+        "key": "View details",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 158
+        }
+      }
+    ]
+  },
+  "version": 1
+}

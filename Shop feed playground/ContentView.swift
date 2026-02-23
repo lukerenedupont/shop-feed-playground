@@ -13,23 +13,29 @@ struct ContentView: View {
     @State private var selectedTab: Int = 0
     @State private var isSearchFocused: Bool = false
     @State private var showTypeahead: Bool = false
+    @StateObject private var chromeState = AppChromeState()
 
     var body: some View {
         ZStack {
             Tokens.bg.ignoresSafeArea()
 
             pageContent
-            decorativeGradient
+            if !chromeState.hideGlobalFeedChrome {
+                decorativeGradient
+            }
 
-            if isSearchFocused {
+            if isSearchFocused && !chromeState.hideGlobalFeedChrome {
                 Tokens.bg
                     .ignoresSafeArea()
                     .transition(.opacity)
             }
 
-            searchLayer
-            bottomControls
+            if !chromeState.hideGlobalFeedChrome {
+                searchLayer
+                bottomControls
+            }
         }
+        .environmentObject(chromeState)
         .onChange(of: isSearchFocused) { _, focused in
             if focused {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -50,7 +56,10 @@ private extension ContentView {
     @ViewBuilder
     var pageContent: some View {
         switch selectedTab {
-        case 0:  FeedView()
+        case 0:
+            NavigationStack {
+                FeedView()
+            }
         case 1:  SearchPageContent()
         default: OrdersPageContent()
         }
@@ -168,13 +177,23 @@ private struct CloseKeyboardButton: View {
     var body: some View {
         HStack {
             Spacer()
-            ShopClientButton(
-                title: "Close",
-                variant: .tertiary,
-                size: .m,
-                leadingSystemImage: "xmark",
-                action: action
-            )
+            Button(action: action) {
+                HStack(spacing: Tokens.space8) {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 16, weight: .semibold))
+
+                    Text("Close")
+                        .shopTextStyle(.buttonMedium)
+                }
+                .foregroundStyle(Tokens.ShopClient.text)
+                .padding(.horizontal, Tokens.space16)
+                .frame(height: 40)
+                .background(
+                    Capsule(style: .continuous)
+                        .fill(Tokens.ShopClient.bgFillSecondary)
+                )
+            }
+            .buttonStyle(.plain)
             .padding(.trailing, Tokens.space16)
             .padding(.bottom, Tokens.space8)
         }

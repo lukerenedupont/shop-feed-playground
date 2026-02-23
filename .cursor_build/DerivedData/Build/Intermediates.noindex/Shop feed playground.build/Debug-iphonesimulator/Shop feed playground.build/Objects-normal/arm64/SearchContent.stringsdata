@@ -1,0 +1,16 @@
+{
+  "source": "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/SearchContent.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "More",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 446
+        }
+      }
+    ]
+  },
+  "version": 1
+}

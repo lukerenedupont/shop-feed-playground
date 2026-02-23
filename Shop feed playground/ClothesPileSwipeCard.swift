@@ -23,6 +23,7 @@ struct ClothesPileSwipeCard: View {
     @State private var logoIncomingIndex: Int?
     @State private var logoRollProgress: CGFloat = 0
     @State private var logoRollID: UUID = .init()
+    @State private var tiltRotation: CGSize = .zero
 
     private let slides: [ClothesPileSlide] = [
         .init(imageName: "OutfitFloat01", logoImageName: "ClothesLogoGalleryDept", background: Color(hex: 0x2F3218)),
@@ -40,6 +41,8 @@ struct ClothesPileSwipeCard: View {
     private let spreadMultiplier: CGFloat = 2.0
     private let tileSize: CGFloat = 242
     private let areaZoomScale: CGFloat = 1.30
+    private let tiltIntensity: CGFloat = 10
+    private let tiltPerspective: CGFloat = 0.72
 
     private func hotspots(for imageName: String) -> [ClothesAreaHotspot] {
         ClothesAreaHotspot.byImageName[imageName] ?? ClothesAreaHotspot.fallback
@@ -109,6 +112,37 @@ struct ClothesPileSwipeCard: View {
             width: min(max(x, -maxX), maxX),
             height: min(max(y, -maxY), maxY)
         )
+    }
+
+    private func tiltRotation(for location: CGPoint, in frameSize: CGSize) -> CGSize {
+        let width = max(frameSize.width, 1)
+        let height = max(frameSize.height, 1)
+
+        let x = lerp(
+            inMin: 0,
+            inMax: width,
+            outMin: -tiltIntensity,
+            outMax: tiltIntensity,
+            location.x
+        )
+        let y = lerp(
+            inMin: 0,
+            inMax: height,
+            outMin: tiltIntensity,
+            outMax: -tiltIntensity,
+            location.y
+        )
+
+        return CGSize(width: x, height: y)
+    }
+
+    private func resetTiltRotation(animated: Bool = true) {
+        let update = { tiltRotation = .zero }
+        if animated {
+            withAnimation(.spring(response: 0.42, dampingFraction: 0.82, blendDuration: 0.16), update)
+        } else {
+            update()
+        }
     }
 
     private func clearAreaFocus(animated: Bool = true) {
@@ -251,6 +285,7 @@ struct ClothesPileSwipeCard: View {
 
     var body: some View {
         let selectedSlide = slides[selectedIndex]
+        let shouldHideShopNow = isExpanded || isAreaFocused
 
         ZStack {
             RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
@@ -314,8 +349,9 @@ struct ClothesPileSwipeCard: View {
                         )
                 }
                 .padding(.bottom, 36)
-                .opacity(isExpanded ? 0 : 1)
-                .animation(.easeInOut(duration: 0.2), value: isExpanded)
+                .opacity(shouldHideShopNow ? 0 : 1)
+                .animation(.easeInOut(duration: 0.2), value: shouldHideShopNow)
+                .allowsHitTesting(!shouldHideShopNow)
             }
 
             if isExpanded {
@@ -339,6 +375,7 @@ struct ClothesPileSwipeCard: View {
         }
         .onChange(of: selectedIndex) { _, _ in
             clearAreaFocus(animated: false)
+            resetTiltRotation(animated: false)
         }
         .onChange(of: selectedIndex) { _, newValue in
             rollLogo(to: newValue)
@@ -347,6 +384,7 @@ struct ClothesPileSwipeCard: View {
             if expanded {
                 clearAreaFocus(animated: false)
             }
+            resetTiltRotation(animated: false)
         }
         .simultaneousGesture(
             isExpanded ? nil :
@@ -419,6 +457,7 @@ struct ClothesPileSwipeCard: View {
             if distanceFromCenter <= 1.0 { return 2.0 }
             return 3.2
         }()
+        let liveTilt = (!isExpanded && isActive) ? tiltRotation : .zero
         let zoomScale = (!isExpanded && isActive && isAreaFocused) ? areaZoomScale : 1.0
         let zoomOffset = (!isExpanded && isActive && isAreaFocused) ? areaFocusOffset : .zero
         let floatYOffset = isExpanded ? 0 : floatingYOffset(for: index, time: time, isActive: isActive)
@@ -433,6 +472,16 @@ struct ClothesPileSwipeCard: View {
             .clipped()
             .rotationEffect(.degrees(expandedActive ? 90 : 0))
             .scaleEffect(expandedActive ? 1.0 : sideScale)
+            .rotation3DEffect(
+                .degrees(Double(liveTilt.width)),
+                axis: (x: 0, y: 1, z: 0),
+                perspective: tiltPerspective
+            )
+            .rotation3DEffect(
+                .degrees(Double(liveTilt.height)),
+                axis: (x: 1, y: 0, z: 0),
+                perspective: tiltPerspective
+            )
             .blur(radius: sideBlur)
             .opacity(isExpanded ? (isActive ? 1.0 : 0) : (isActive ? 1.0 : 0.98))
             .shadow(
@@ -476,48 +525,32 @@ struct ClothesPileSwipeCard: View {
                     }
             )
             .simultaneousGesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { value in
+                        guard isActive && !isExpanded else { return }
+                        let nextTilt = tiltRotation(for: value.location, in: frameSize)
+                        withAnimation(.interactiveSpring(response: 0.25, dampingFraction: 0.82, blendDuration: 0.1)) {
+                            tiltRotation = nextTilt
+                        }
+                    }
+                    .onEnded { _ in
+                        guard isActive && !isExpanded else { return }
+                        resetTiltRotation(animated: true)
+                    }
+            )
+            .simultaneousGesture(
                 TapGesture(count: 2)
                     .onEnded {
                         guard isActive && !isExpanded else { return }
                         clearAreaFocus(animated: true)
+                        resetTiltRotation(animated: true)
                         Haptics.selection()
                     }
             )
     }
 
     private var productTile: some View {
-        RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
-            .fill(.white)
-            .frame(width: tileSize, height: tileSize)
-            .shadow(color: .black.opacity(0.08), radius: 16, x: 0, y: 8)
-            .overlay(alignment: .topLeading) {
-                Text("$50.00")
-                    .shopTextStyle(.captionBold)
-                    .foregroundStyle(.white)
-                    .padding(.horizontal, 9)
-                    .padding(.vertical, 4)
-                    .background(
-                        Capsule(style: .continuous)
-                            .fill(.black.opacity(0.30))
-                    )
-                    .padding(.top, 14)
-                    .padding(.leading, 14)
-            }
-            .overlay(alignment: .bottomTrailing) {
-                Circle()
-                    .fill(Color(hex: 0xE0E0E0))
-                    .frame(width: 36, height: 36)
-                    .overlay {
-                        Image("HeartOutlineIcon")
-                            .resizable()
-                            .renderingMode(.template)
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 16, height: 16)
-                            .foregroundStyle(Color(hex: 0x888888))
-                    }
-                    .padding(.bottom, 14)
-                    .padding(.trailing, 14)
-            }
+        SpotlightProductTile(size: tileSize, price: "$50.00")
             .zIndex(5)
     }
 }

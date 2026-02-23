@@ -49,11 +49,11 @@ struct ArcCarouselCard: View {
     @State private var pendingCloseButtonWorkItem: DispatchWorkItem?
 
     private let portraits = PortraitData.defaults
+    private let backgroundVideoURL = URL(fileURLWithPath: "/Users/lukedupont/Downloads/ScreenRecording_02-19-2026 19-15-37_1.mov")
 
-
-
-
-
+    private var hasBackgroundVideo: Bool {
+        FileManager.default.fileExists(atPath: backgroundVideoURL.path)
+    }
     private var isExpanded: Bool { expandedIndex != nil }
 
     private var continuousPosition: CGFloat {
@@ -71,12 +71,27 @@ struct ArcCarouselCard: View {
     var body: some View {
         ZStack {
             // Background
-            RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
-                .fill(bgColor)
-                .overlay(
+            Group {
+                if hasBackgroundVideo {
+                    SharedLoopingVideoBackground(url: backgroundVideoURL)
+                        .frame(width: Tokens.cardWidth, height: Tokens.cardHeight)
+                        .clipped()
+                } else {
                     RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
-                        .stroke(Color.white.opacity(0.06), lineWidth: 0.5)
-                )
+                        .fill(bgColor)
+                }
+            }
+            .overlay {
+                if hasBackgroundVideo {
+                    RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
+                        .fill(bgColor.opacity(0.26))
+                }
+            }
+            .overlay(
+                RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
+                    .stroke(Color.white.opacity(0.06), lineWidth: 0.5)
+            )
+            .animation(Tokens.springDefault, value: currentIndex)
 
             // Dark gradient overlay
             LinearGradient(
@@ -89,14 +104,16 @@ struct ArcCarouselCard: View {
             .clipShape(RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous))
             .allowsHitTesting(false)
 
-            // Background image
-            Image("MartySupreme")
-                .resizable()
-                .scaledToFill()
-                .frame(width: Tokens.cardWidth, height: Tokens.cardHeight)
-                .opacity(0.15)
-                .clipped()
-                .allowsHitTesting(false)
+            // Fallback background image (only when local video is unavailable)
+            if !hasBackgroundVideo {
+                Image("MartySupreme")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: Tokens.cardWidth, height: Tokens.cardHeight)
+                    .opacity(0.15)
+                    .clipped()
+                    .allowsHitTesting(false)
+            }
 
             // Header
             CardHeader(subtitle: "What they're wearing", title: "A24", lightText: true)
@@ -278,7 +295,7 @@ private struct ProductRail: View {
     ]
 
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
+        ScrollView(.horizontal) {
             HStack(spacing: 12) {
                 Spacer().frame(width: Tokens.space20)
                 ForEach(Array(products.enumerated()), id: \.offset) { index, product in
@@ -291,6 +308,7 @@ private struct ProductRail: View {
                 Spacer().frame(width: Tokens.space20)
             }
         }
+        .scrollIndicators(.hidden)
         .frame(maxWidth: .infinity)
         .padding(.bottom, Tokens.space24)
         .transition(.opacity)
@@ -351,7 +369,7 @@ struct CloseButton: View {
         Button(action: action) {
             Image(systemName: "xmark")
                 .font(.system(size: 14, weight: .bold))
-                .foregroundColor(.black)
+                .foregroundStyle(.black)
                 .frame(width: 32, height: 32)
                 .background(Circle().fill(.white))
         }
@@ -390,10 +408,10 @@ private struct PortraitCard: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(data.name)
                         .shopTextStyle(.headerBold)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                     Text(data.brand)
                         .shopTextStyle(.caption)
-                        .foregroundColor(.white.opacity(0.56))
+                        .foregroundStyle(.white.opacity(0.56))
                 }
                 .padding(Tokens.space16)
                 .opacity(showText ? 1 : 0)
@@ -401,3 +419,4 @@ private struct PortraitCard: View {
             .clipShape(RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous))
     }
 }
+

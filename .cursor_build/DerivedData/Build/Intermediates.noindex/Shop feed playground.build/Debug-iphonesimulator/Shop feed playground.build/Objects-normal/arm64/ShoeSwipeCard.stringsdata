@@ -1,0 +1,24 @@
+{
+  "source": "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/ShoeSwipeCard.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Shop now",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 86
+        }
+      },
+      {
+        "comment": "",
+        "key": "$50.00",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 211
+        }
+      }
+    ]
+  },
+  "version": 1
+}

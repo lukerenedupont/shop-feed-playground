@@ -1,0 +1,16 @@
+{
+  "source": "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/TypeaheadContent.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Recents",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 62
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,24 @@
+{
+  "source": "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/WidgetExpansionCard.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Type something...",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 105
+        }
+      },
+      {
+        "comment": "",
+        "key": "New note",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 89
+        }
+      }
+    ]
+  },
+  "version": 1
+}

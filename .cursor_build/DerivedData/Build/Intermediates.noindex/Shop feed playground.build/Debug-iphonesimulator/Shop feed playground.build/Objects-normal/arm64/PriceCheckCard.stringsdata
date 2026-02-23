@@ -1,0 +1,24 @@
+{
+  "source": "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/PriceCheckCard.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "$%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 315
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 348
+        }
+      }
+    ]
+  },
+  "version": 1
+}

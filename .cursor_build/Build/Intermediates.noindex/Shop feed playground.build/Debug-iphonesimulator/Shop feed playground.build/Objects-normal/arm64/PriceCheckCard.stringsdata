@@ -1,0 +1,40 @@
+{
+  "source": "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/PriceCheckCard.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Next",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 227
+        }
+      },
+      {
+        "comment": "",
+        "key": "Lock it in",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 227
+        }
+      },
+      {
+        "comment": "",
+        "key": "$%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 305
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 338
+        }
+      }
+    ]
+  },
+  "version": 1
+}

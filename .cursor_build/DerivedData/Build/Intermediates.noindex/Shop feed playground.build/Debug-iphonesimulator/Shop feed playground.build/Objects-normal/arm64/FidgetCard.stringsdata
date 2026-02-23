@@ -1,0 +1,24 @@
+{
+  "source": "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/FidgetCard.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Asics Gel-1130",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 110
+        }
+      },
+      {
+        "comment": "",
+        "key": "$120",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 113
+        }
+      }
+    ]
+  },
+  "version": 1
+}

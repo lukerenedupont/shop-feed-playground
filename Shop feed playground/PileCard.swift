@@ -258,6 +258,11 @@ private struct DraggablePileItem: View {
                     width: isFocused ? focusedSize.width : item.size.width,
                     height: isFocused ? focusedSize.height : item.size.height
                 )
+                .stickered(
+                    width: isFocused ? 2.8 : 2.2,
+                    shadowColor: .black.opacity(0.30),
+                    shadowWidth: 0.9
+                )
 
             if isFocused {
                 VStack(spacing: Tokens.space12) {

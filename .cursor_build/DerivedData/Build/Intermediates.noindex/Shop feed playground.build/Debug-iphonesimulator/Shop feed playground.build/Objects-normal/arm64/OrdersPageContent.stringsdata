@@ -1,0 +1,16 @@
+{
+  "source": "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/OrdersPageContent.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Orders",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 21
+        }
+      }
+    ]
+  },
+  "version": 1
+}

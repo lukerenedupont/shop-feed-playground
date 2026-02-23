@@ -5,20 +5,22 @@
 //  Full-bleed video card inspired by the Figma collection card.
 //
 
-import AVFoundation
 import SwiftUI
 import UIKit
 
 struct VibeBoardCard: View {
+    @State private var favoriteProductIDs: Set<String> = []
+    @State private var productImages: [String: UIImage] = [:]
+
     private let heroVideoURL = URL(fileURLWithPath: "/Users/lukedupont/Downloads/make_the_scene_move_in_a_subtle_way_kplozzeyilgaw02e3of4_1.mp4")
     private let videoFillScale: CGFloat = 1.24
     private let carouselProducts: [VibeCarouselProduct] = [
-        .init(id: "prod-1", filePath: "/Users/lukedupont/.cursor/projects/Users-lukedupont-Desktop-developer-Shop-feed-playground/assets/Screenshot_2026-02-18_at_11.36.27_AM-4677b6f3-683f-4acf-a566-5c3f878de759.png"),
-        .init(id: "prod-2", filePath: "/Users/lukedupont/.cursor/projects/Users-lukedupont-Desktop-developer-Shop-feed-playground/assets/Screenshot_2026-02-18_at_11.36.38_AM-e55d7673-d0e7-4122-bf05-1e7182f5b932.png"),
-        .init(id: "prod-3", filePath: "/Users/lukedupont/.cursor/projects/Users-lukedupont-Desktop-developer-Shop-feed-playground/assets/Screenshot_2026-02-18_at_11.36.50_AM-cc6657ba-d702-4839-a5a2-526d59ba3925.png"),
-        .init(id: "prod-4", filePath: "/Users/lukedupont/.cursor/projects/Users-lukedupont-Desktop-developer-Shop-feed-playground/assets/Screenshot_2026-02-18_at_11.37.04_AM-832b0a69-459c-4029-a76d-125864026129.png"),
-        .init(id: "prod-5", filePath: "/Users/lukedupont/.cursor/projects/Users-lukedupont-Desktop-developer-Shop-feed-playground/assets/Screenshot_2026-02-18_at_11.37.20_AM-5211992c-f6e3-493e-954e-e96e68b4c74b.png"),
-        .init(id: "prod-6", filePath: "/Users/lukedupont/.cursor/projects/Users-lukedupont-Desktop-developer-Shop-feed-playground/assets/Screenshot_2026-02-18_at_11.37.29_AM-dd0915f8-dcde-4970-964c-5d765871633a.png"),
+        .init(id: "prod-1", filePath: "/Users/lukedupont/.cursor/projects/Users-lukedupont-Desktop-developer-Shop-feed-playground/assets/Screenshot_2026-02-18_at_11.36.27_AM-4677b6f3-683f-4acf-a566-5c3f878de759.png", price: "$96.00"),
+        .init(id: "prod-2", filePath: "/Users/lukedupont/.cursor/projects/Users-lukedupont-Desktop-developer-Shop-feed-playground/assets/Screenshot_2026-02-18_at_11.36.38_AM-e55d7673-d0e7-4122-bf05-1e7182f5b932.png", price: "$124.00"),
+        .init(id: "prod-3", filePath: "/Users/lukedupont/.cursor/projects/Users-lukedupont-Desktop-developer-Shop-feed-playground/assets/Screenshot_2026-02-18_at_11.36.50_AM-cc6657ba-d702-4839-a5a2-526d59ba3925.png", price: "$88.00"),
+        .init(id: "prod-4", filePath: "/Users/lukedupont/.cursor/projects/Users-lukedupont-Desktop-developer-Shop-feed-playground/assets/Screenshot_2026-02-18_at_11.37.04_AM-832b0a69-459c-4029-a76d-125864026129.png", price: "$142.00"),
+        .init(id: "prod-5", filePath: "/Users/lukedupont/.cursor/projects/Users-lukedupont-Desktop-developer-Shop-feed-playground/assets/Screenshot_2026-02-18_at_11.37.20_AM-5211992c-f6e3-493e-954e-e96e68b4c74b.png", price: "$108.00"),
+        .init(id: "prod-6", filePath: "/Users/lukedupont/.cursor/projects/Users-lukedupont-Desktop-developer-Shop-feed-playground/assets/Screenshot_2026-02-18_at_11.37.29_AM-dd0915f8-dcde-4970-964c-5d765871633a.png", price: "$132.00"),
     ]
 
     private var hasLocalVideo: Bool {
@@ -39,6 +41,9 @@ struct VibeBoardCard: View {
             x: 0,
             y: Tokens.ShopClient.shadowLY
         )
+        .onAppear {
+            loadProductImagesIfNeeded()
+        }
     }
 }
 
@@ -46,7 +51,7 @@ private extension VibeBoardCard {
     var fullBleedBackground: some View {
         Group {
             if hasLocalVideo {
-                LoopingVideoBackground(url: heroVideoURL)
+                SharedLoopingVideoBackground(url: heroVideoURL)
                     .scaleEffect(videoFillScale)
             } else {
                 fallbackBackground
@@ -97,19 +102,23 @@ private extension VibeBoardCard {
     }
 
     var productCarousel: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
+        ScrollView(.horizontal) {
             HStack(spacing: Tokens.space8) {
                 ForEach(carouselProducts) { product in
                     productCard(product)
                 }
             }
         }
+        .scrollIndicators(.hidden)
         .scrollClipDisabled()
     }
 
     func productCard(_ product: VibeCarouselProduct) -> some View {
-        Group {
-            if let image = UIImage(contentsOfFile: product.filePath) {
+        let isFavorite = favoriteProductIDs.contains(product.id)
+        let image = productImages[product.id]
+
+        return Group {
+            if let image {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFill()
@@ -128,6 +137,23 @@ private extension VibeBoardCard {
             RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
                 .stroke(.white.opacity(0.16), lineWidth: 0.5)
         )
+        .overlay(alignment: .topLeading) {
+            PriceTag(text: product.price)
+                .padding(8)
+        }
+        .overlay(alignment: .bottomTrailing) {
+            FavoriteButton(isFavorite: isFavorite) {
+                Haptics.light()
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                    if isFavorite {
+                        favoriteProductIDs.remove(product.id)
+                    } else {
+                        favoriteProductIDs.insert(product.id)
+                    }
+                }
+            }
+            .padding(8)
+        }
         .shadow(
             color: Tokens.ShopClient.shadowMColor,
             radius: Tokens.ShopClient.shadowMRadius,
@@ -135,87 +161,21 @@ private extension VibeBoardCard {
             y: Tokens.ShopClient.shadowMY
         )
     }
+
+    func loadProductImagesIfNeeded() {
+        guard productImages.isEmpty else { return }
+        var loaded: [String: UIImage] = [:]
+        for product in carouselProducts {
+            guard let image = UIImage(contentsOfFile: product.filePath) else { continue }
+            loaded[product.id] = image
+        }
+        productImages = loaded
+    }
 }
 
 private struct VibeCarouselProduct: Identifiable {
     let id: String
     let filePath: String
-}
-
-private struct LoopingVideoBackground: UIViewRepresentable {
-    let url: URL
-
-    func makeUIView(context: Context) -> LoopingVideoContainerView {
-        let view = LoopingVideoContainerView()
-        view.configure(with: url)
-        return view
-    }
-
-    func updateUIView(_ uiView: LoopingVideoContainerView, context: Context) {
-        uiView.configure(with: url)
-    }
-
-    static func dismantleUIView(_ uiView: LoopingVideoContainerView, coordinator: ()) {
-        uiView.stop()
-    }
-}
-
-private final class LoopingVideoContainerView: UIView {
-    private let queuePlayer = AVQueuePlayer()
-    private var looper: AVPlayerLooper?
-    private var videoLayer: AVPlayerLayer?
-    private var currentURL: URL?
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .clear
-        clipsToBounds = true
-        isUserInteractionEnabled = false
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        // Overscan slightly so encoded edge pixels never show.
-        videoLayer?.frame = bounds.insetBy(dx: -2, dy: -2)
-    }
-
-    func configure(with url: URL) {
-        guard currentURL != url else {
-            if queuePlayer.timeControlStatus != .playing {
-                queuePlayer.play()
-            }
-            return
-        }
-
-        currentURL = url
-        queuePlayer.pause()
-        queuePlayer.removeAllItems()
-
-        let item = AVPlayerItem(url: url)
-        looper = AVPlayerLooper(player: queuePlayer, templateItem: item)
-
-        if videoLayer == nil {
-            let layer = AVPlayerLayer(player: queuePlayer)
-            layer.videoGravity = .resizeAspectFill
-            self.layer.addSublayer(layer)
-            videoLayer = layer
-        } else {
-            videoLayer?.player = queuePlayer
-        }
-
-        queuePlayer.isMuted = true
-        queuePlayer.play()
-    }
-
-    func stop() {
-        queuePlayer.pause()
-        queuePlayer.removeAllItems()
-        looper = nil
-        currentURL = nil
-    }
+    let price: String
 }
 

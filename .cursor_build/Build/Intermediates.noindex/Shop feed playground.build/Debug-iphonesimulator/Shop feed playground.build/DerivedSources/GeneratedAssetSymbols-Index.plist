@@ -1,0 +1,1463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>colors</key>
+	<array/>
+	<key>images</key>
+	<array>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameAPCPhoto</string>
+			<key>relativePath</key>
+			<string>./APCPhoto.imageset</string>
+			<key>swiftSymbol</key>
+			<string>apcPhoto</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameAvatar</string>
+			<key>relativePath</key>
+			<string>./Avatar.imageset</string>
+			<key>swiftSymbol</key>
+			<string>avatar</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBellIcon</string>
+			<key>relativePath</key>
+			<string>./BellIcon.imageset</string>
+			<key>swiftSymbol</key>
+			<string>bellIcon</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBlackShoe1</string>
+			<key>relativePath</key>
+			<string>./BlackShoe1.imageset</string>
+			<key>swiftSymbol</key>
+			<string>blackShoe1</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBlackShoe2</string>
+			<key>relativePath</key>
+			<string>./BlackShoe2.imageset</string>
+			<key>swiftSymbol</key>
+			<string>blackShoe2</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBlackShoe3</string>
+			<key>relativePath</key>
+			<string>./BlackShoe3.imageset</string>
+			<key>swiftSymbol</key>
+			<string>blackShoe3</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBlackShoe4</string>
+			<key>relativePath</key>
+			<string>./BlackShoe4.imageset</string>
+			<key>swiftSymbol</key>
+			<string>blackShoe4</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBlackShoe5</string>
+			<key>relativePath</key>
+			<string>./BlackShoe5.imageset</string>
+			<key>swiftSymbol</key>
+			<string>blackShoe5</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBlackShoe6</string>
+			<key>relativePath</key>
+			<string>./BlackShoe6.imageset</string>
+			<key>swiftSymbol</key>
+			<string>blackShoe6</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBlueShoe1</string>
+			<key>relativePath</key>
+			<string>./BlueShoe1.imageset</string>
+			<key>swiftSymbol</key>
+			<string>blueShoe1</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBlueShoe2</string>
+			<key>relativePath</key>
+			<string>./BlueShoe2.imageset</string>
+			<key>swiftSymbol</key>
+			<string>blueShoe2</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBlueShoe3</string>
+			<key>relativePath</key>
+			<string>./BlueShoe3.imageset</string>
+			<key>swiftSymbol</key>
+			<string>blueShoe3</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBlueShoe4</string>
+			<key>relativePath</key>
+			<string>./BlueShoe4.imageset</string>
+			<key>swiftSymbol</key>
+			<string>blueShoe4</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBlueShoe5</string>
+			<key>relativePath</key>
+			<string>./BlueShoe5.imageset</string>
+			<key>swiftSymbol</key>
+			<string>blueShoe5</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBlueShoe6</string>
+			<key>relativePath</key>
+			<string>./BlueShoe6.imageset</string>
+			<key>swiftSymbol</key>
+			<string>blueShoe6</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBrownShoe1</string>
+			<key>relativePath</key>
+			<string>./BrownShoe1.imageset</string>
+			<key>swiftSymbol</key>
+			<string>brownShoe1</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBrownShoe2</string>
+			<key>relativePath</key>
+			<string>./BrownShoe2.imageset</string>
+			<key>swiftSymbol</key>
+			<string>brownShoe2</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBrownShoe3</string>
+			<key>relativePath</key>
+			<string>./BrownShoe3.imageset</string>
+			<key>swiftSymbol</key>
+			<string>brownShoe3</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBrownShoe4</string>
+			<key>relativePath</key>
+			<string>./BrownShoe4.imageset</string>
+			<key>swiftSymbol</key>
+			<string>brownShoe4</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBrownShoe5</string>
+			<key>relativePath</key>
+			<string>./BrownShoe5.imageset</string>
+			<key>swiftSymbol</key>
+			<string>brownShoe5</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBrownShoe6</string>
+			<key>relativePath</key>
+			<string>./BrownShoe6.imageset</string>
+			<key>swiftSymbol</key>
+			<string>brownShoe6</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBurgundyProductBeanie</string>
+			<key>relativePath</key>
+			<string>./BurgundyProductBeanie.imageset</string>
+			<key>swiftSymbol</key>
+			<string>burgundyProductBeanie</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBurgundyProductHoodie</string>
+			<key>relativePath</key>
+			<string>./BurgundyProductHoodie.imageset</string>
+			<key>swiftSymbol</key>
+			<string>burgundyProductHoodie</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBurgundyProductMug</string>
+			<key>relativePath</key>
+			<string>./BurgundyProductMug.imageset</string>
+			<key>swiftSymbol</key>
+			<string>burgundyProductMug</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBurgundyProductShirt</string>
+			<key>relativePath</key>
+			<string>./BurgundyProductShirt.imageset</string>
+			<key>swiftSymbol</key>
+			<string>burgundyProductShirt</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBurgundyProductSocks</string>
+			<key>relativePath</key>
+			<string>./BurgundyProductSocks.imageset</string>
+			<key>swiftSymbol</key>
+			<string>burgundyProductSocks</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBurgundyProductVans</string>
+			<key>relativePath</key>
+			<string>./BurgundyProductVans.imageset</string>
+			<key>swiftSymbol</key>
+			<string>burgundyProductVans</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBuyAgainIcon</string>
+			<key>relativePath</key>
+			<string>./BuyAgainIcon.imageset</string>
+			<key>swiftSymbol</key>
+			<string>buyAgainIcon</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameCelebBadBunny</string>
+			<key>relativePath</key>
+			<string>./CelebBadBunny.imageset</string>
+			<key>swiftSymbol</key>
+			<string>celebBadBunny</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameCelebJacob</string>
+			<key>relativePath</key>
+			<string>./CelebJacob.imageset</string>
+			<key>swiftSymbol</key>
+			<string>celebJacob</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameCelebJonah</string>
+			<key>relativePath</key>
+			<string>./CelebJonah.imageset</string>
+			<key>swiftSymbol</key>
+			<string>celebJonah</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameF1Albon</string>
+			<key>relativePath</key>
+			<string>./F1Albon.imageset</string>
+			<key>swiftSymbol</key>
+			<string>f1Albon</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameF1Alonso</string>
+			<key>relativePath</key>
+			<string>./F1Alonso.imageset</string>
+			<key>swiftSymbol</key>
+			<string>f1Alonso</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameF1Gasly</string>
+			<key>relativePath</key>
+			<string>./F1Gasly.imageset</string>
+			<key>swiftSymbol</key>
+			<string>f1Gasly</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameF1Hamilton</string>
+			<key>relativePath</key>
+			<string>./F1Hamilton.imageset</string>
+			<key>swiftSymbol</key>
+			<string>f1Hamilton</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameF1Leclerc</string>
+			<key>relativePath</key>
+			<string>./F1Leclerc.imageset</string>
+			<key>swiftSymbol</key>
+			<string>f1Leclerc</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameF1LeclercBanner</string>
+			<key>relativePath</key>
+			<string>./F1LeclercBanner.imageset</string>
+			<key>swiftSymbol</key>
+			<string>f1LeclercBanner</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameF1Norris</string>
+			<key>relativePath</key>
+			<string>./F1Norris.imageset</string>
+			<key>swiftSymbol</key>
+			<string>f1Norris</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameF1Verstappen</string>
+			<key>relativePath</key>
+			<string>./F1Verstappen.imageset</string>
+			<key>swiftSymbol</key>
+			<string>f1Verstappen</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameGreenShoe1</string>
+			<key>relativePath</key>
+			<string>./GreenShoe1.imageset</string>
+			<key>swiftSymbol</key>
+			<string>greenShoe1</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameGreenShoe2</string>
+			<key>relativePath</key>
+			<string>./GreenShoe2.imageset</string>
+			<key>swiftSymbol</key>
+			<string>greenShoe2</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameGreenShoe3</string>
+			<key>relativePath</key>
+			<string>./GreenShoe3.imageset</string>
+			<key>swiftSymbol</key>
+			<string>greenShoe3</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameGreenShoe4</string>
+			<key>relativePath</key>
+			<string>./GreenShoe4.imageset</string>
+			<key>swiftSymbol</key>
+			<string>greenShoe4</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameGreenShoe5</string>
+			<key>relativePath</key>
+			<string>./GreenShoe5.imageset</string>
+			<key>swiftSymbol</key>
+			<string>greenShoe5</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameGreenShoe6</string>
+			<key>relativePath</key>
+			<string>./GreenShoe6.imageset</string>
+			<key>swiftSymbol</key>
+			<string>greenShoe6</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameHeartFilled</string>
+			<key>relativePath</key>
+			<string>./HeartFilled.imageset</string>
+			<key>swiftSymbol</key>
+			<string>heartFilled</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameHeartIcon</string>
+			<key>relativePath</key>
+			<string>./HeartIcon.imageset</string>
+			<key>swiftSymbol</key>
+			<string>heartIcon</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameHeartOutlineIcon</string>
+			<key>relativePath</key>
+			<string>./HeartOutlineIcon.imageset</string>
+			<key>swiftSymbol</key>
+			<string>heartOutlineIcon</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameHomeIcon</string>
+			<key>relativePath</key>
+			<string>./HomeIcon.imageset</string>
+			<key>swiftSymbol</key>
+			<string>homeIcon</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameLogoCaraway</string>
+			<key>relativePath</key>
+			<string>./LogoCaraway.imageset</string>
+			<key>swiftSymbol</key>
+			<string>logoCaraway</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameLogoCeremonia</string>
+			<key>relativePath</key>
+			<string>./LogoCeremonia.imageset</string>
+			<key>swiftSymbol</key>
+			<string>logoCeremonia</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameLogoHasbro</string>
+			<key>relativePath</key>
+			<string>./LogoHasbro.imageset</string>
+			<key>swiftSymbol</key>
+			<string>logoHasbro</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameLogoKith</string>
+			<key>relativePath</key>
+			<string>./LogoKith.imageset</string>
+			<key>swiftSymbol</key>
+			<string>logoKith</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameLogoMoscot</string>
+			<key>relativePath</key>
+			<string>./LogoMoscot.imageset</string>
+			<key>swiftSymbol</key>
+			<string>logoMoscot</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameLogoNike</string>
+			<key>relativePath</key>
+			<string>./LogoNike.imageset</string>
+			<key>swiftSymbol</key>
+			<string>logoNike</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameLogoNoguchi</string>
+			<key>relativePath</key>
+			<string>./LogoNoguchi.imageset</string>
+			<key>swiftSymbol</key>
+			<string>logoNoguchi</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameLogoOwala</string>
+			<key>relativePath</key>
+			<string>./LogoOwala.imageset</string>
+			<key>swiftSymbol</key>
+			<string>logoOwala</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameLogoReebok</string>
+			<key>relativePath</key>
+			<string>./LogoReebok.imageset</string>
+			<key>swiftSymbol</key>
+			<string>logoReebok</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameLogoTekla</string>
+			<key>relativePath</key>
+			<string>./LogoTekla.imageset</string>
+			<key>swiftSymbol</key>
+			<string>logoTekla</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameLogoVacation</string>
+			<key>relativePath</key>
+			<string>./LogoVacation.imageset</string>
+			<key>swiftSymbol</key>
+			<string>logoVacation</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameMartyCoat</string>
+			<key>relativePath</key>
+			<string>./MartyCoat.imageset</string>
+			<key>swiftSymbol</key>
+			<string>martyCoat</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameMartyGlasses</string>
+			<key>relativePath</key>
+			<string>./MartyGlasses.imageset</string>
+			<key>swiftSymbol</key>
+			<string>martyGlasses</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameMartyGloves</string>
+			<key>relativePath</key>
+			<string>./MartyGloves.imageset</string>
+			<key>swiftSymbol</key>
+			<string>martyGloves</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameMartySupreme</string>
+			<key>relativePath</key>
+			<string>./MartySupreme.imageset</string>
+			<key>swiftSymbol</key>
+			<string>martySupreme</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameMartyTie</string>
+			<key>relativePath</key>
+			<string>./MartyTie.imageset</string>
+			<key>swiftSymbol</key>
+			<string>martyTie</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameOrdersIcon</string>
+			<key>relativePath</key>
+			<string>./OrdersIcon.imageset</string>
+			<key>swiftSymbol</key>
+			<string>ordersIcon</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePileBeanie</string>
+			<key>relativePath</key>
+			<string>./PileBeanie.imageset</string>
+			<key>swiftSymbol</key>
+			<string>pileBeanie</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePileLantern</string>
+			<key>relativePath</key>
+			<string>./PileLantern.imageset</string>
+			<key>swiftSymbol</key>
+			<string>pileLantern</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePileMatchaTin</string>
+			<key>relativePath</key>
+			<string>./PileMatchaTin.imageset</string>
+			<key>swiftSymbol</key>
+			<string>pileMatchaTin</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePileNike</string>
+			<key>relativePath</key>
+			<string>./PileNike.imageset</string>
+			<key>swiftSymbol</key>
+			<string>pileNike</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePilePerfume</string>
+			<key>relativePath</key>
+			<string>./PilePerfume.imageset</string>
+			<key>swiftSymbol</key>
+			<string>pilePerfume</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePileReebok</string>
+			<key>relativePath</key>
+			<string>./PileReebok.imageset</string>
+			<key>swiftSymbol</key>
+			<string>pileReebok</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePileSaucepan</string>
+			<key>relativePath</key>
+			<string>./PileSaucepan.imageset</string>
+			<key>swiftSymbol</key>
+			<string>pileSaucepan</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePileSlippers</string>
+			<key>relativePath</key>
+			<string>./PileSlippers.imageset</string>
+			<key>swiftSymbol</key>
+			<string>pileSlippers</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePileSunglasses</string>
+			<key>relativePath</key>
+			<string>./PileSunglasses.imageset</string>
+			<key>swiftSymbol</key>
+			<string>pileSunglasses</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePileSunscreen</string>
+			<key>relativePath</key>
+			<string>./PileSunscreen.imageset</string>
+			<key>swiftSymbol</key>
+			<string>pileSunscreen</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePileTray</string>
+			<key>relativePath</key>
+			<string>./PileTray.imageset</string>
+			<key>swiftSymbol</key>
+			<string>pileTray</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePileWaterBottle</string>
+			<key>relativePath</key>
+			<string>./PileWaterBottle.imageset</string>
+			<key>swiftSymbol</key>
+			<string>pileWaterBottle</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePileWolverine</string>
+			<key>relativePath</key>
+			<string>./PileWolverine.imageset</string>
+			<key>swiftSymbol</key>
+			<string>pileWolverine</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePileYankeesCap</string>
+			<key>relativePath</key>
+			<string>./PileYankeesCap.imageset</string>
+			<key>swiftSymbol</key>
+			<string>pileYankeesCap</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePlusIcon</string>
+			<key>relativePath</key>
+			<string>./PlusIcon.imageset</string>
+			<key>swiftSymbol</key>
+			<string>plusIcon</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePocketShoe1</string>
+			<key>relativePath</key>
+			<string>./PocketShoe1.imageset</string>
+			<key>swiftSymbol</key>
+			<string>pocketShoe1</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePocketShoe2</string>
+			<key>relativePath</key>
+			<string>./PocketShoe2.imageset</string>
+			<key>swiftSymbol</key>
+			<string>pocketShoe2</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePocketShoe3</string>
+			<key>relativePath</key>
+			<string>./PocketShoe3.imageset</string>
+			<key>swiftSymbol</key>
+			<string>pocketShoe3</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePocketShoe4</string>
+			<key>relativePath</key>
+			<string>./PocketShoe4.imageset</string>
+			<key>swiftSymbol</key>
+			<string>pocketShoe4</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePocketShoe5</string>
+			<key>relativePath</key>
+			<string>./PocketShoe5.imageset</string>
+			<key>swiftSymbol</key>
+			<string>pocketShoe5</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePortraitDion</string>
+			<key>relativePath</key>
+			<string>./PortraitDion.imageset</string>
+			<key>swiftSymbol</key>
+			<string>portraitDion</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePortraitLady</string>
+			<key>relativePath</key>
+			<string>./PortraitLady.imageset</string>
+			<key>swiftSymbol</key>
+			<string>portraitLady</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePortraitMarty</string>
+			<key>relativePath</key>
+			<string>./PortraitMarty.imageset</string>
+			<key>swiftSymbol</key>
+			<string>portraitMarty</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePortraitOldGuy</string>
+			<key>relativePath</key>
+			<string>./PortraitOldGuy.imageset</string>
+			<key>swiftSymbol</key>
+			<string>portraitOldGuy</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePortraitWally</string>
+			<key>relativePath</key>
+			<string>./PortraitWally.imageset</string>
+			<key>swiftSymbol</key>
+			<string>portraitWally</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePriceCaraway</string>
+			<key>relativePath</key>
+			<string>./PriceCaraway.imageset</string>
+			<key>swiftSymbol</key>
+			<string>priceCaraway</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePriceCheckLogo</string>
+			<key>relativePath</key>
+			<string>./PriceCheckLogo.imageset</string>
+			<key>swiftSymbol</key>
+			<string>priceCheckLogo</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePriceErrorsCap</string>
+			<key>relativePath</key>
+			<string>./PriceErrorsCap.imageset</string>
+			<key>swiftSymbol</key>
+			<string>priceErrorsCap</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePriceErrorsFleece</string>
+			<key>relativePath</key>
+			<string>./PriceErrorsFleece.imageset</string>
+			<key>swiftSymbol</key>
+			<string>priceErrorsFleece</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePriceFrostedFlakes</string>
+			<key>relativePath</key>
+			<string>./PriceFrostedFlakes.imageset</string>
+			<key>swiftSymbol</key>
+			<string>priceFrostedFlakes</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePriceJordan</string>
+			<key>relativePath</key>
+			<string>./PriceJordan.imageset</string>
+			<key>swiftSymbol</key>
+			<string>priceJordan</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePriceLamp</string>
+			<key>relativePath</key>
+			<string>./PriceLamp.imageset</string>
+			<key>swiftSymbol</key>
+			<string>priceLamp</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNamePriceMetsCap</string>
+			<key>relativePath</key>
+			<string>./PriceMetsCap.imageset</string>
+			<key>swiftSymbol</key>
+			<string>priceMetsCap</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameScratchAPCHero</string>
+			<key>relativePath</key>
+			<string>./ScratchAPCHero.imageset</string>
+			<key>swiftSymbol</key>
+			<string>scratchAPCHero</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameScratchAPCLogo</string>
+			<key>relativePath</key>
+			<string>./ScratchAPCLogo.imageset</string>
+			<key>swiftSymbol</key>
+			<string>scratchAPCLogo</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameScratchAPCProduct1</string>
+			<key>relativePath</key>
+			<string>./ScratchAPCProduct1.imageset</string>
+			<key>swiftSymbol</key>
+			<string>scratchAPCProduct1</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameScratchAPCProduct2</string>
+			<key>relativePath</key>
+			<string>./ScratchAPCProduct2.imageset</string>
+			<key>swiftSymbol</key>
+			<string>scratchAPCProduct2</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameScratchAPCProduct3</string>
+			<key>relativePath</key>
+			<string>./ScratchAPCProduct3.imageset</string>
+			<key>swiftSymbol</key>
+			<string>scratchAPCProduct3</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameScratchAPCProduct4</string>
+			<key>relativePath</key>
+			<string>./ScratchAPCProduct4.imageset</string>
+			<key>swiftSymbol</key>
+			<string>scratchAPCProduct4</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameSearchIcon</string>
+			<key>relativePath</key>
+			<string>./SearchIcon.imageset</string>
+			<key>swiftSymbol</key>
+			<string>searchIcon</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameShoeSwipeBlack</string>
+			<key>relativePath</key>
+			<string>./ShoeSwipeBlack.imageset</string>
+			<key>swiftSymbol</key>
+			<string>shoeSwipeBlack</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameShoeSwipeGreen</string>
+			<key>relativePath</key>
+			<string>./ShoeSwipeGreen.imageset</string>
+			<key>swiftSymbol</key>
+			<string>shoeSwipeGreen</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameShoeSwipeKithLogo</string>
+			<key>relativePath</key>
+			<string>./ShoeSwipeKithLogo.imageset</string>
+			<key>swiftSymbol</key>
+			<string>shoeSwipeKithLogo</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameShoeSwipeWhiteRed</string>
+			<key>relativePath</key>
+			<string>./ShoeSwipeWhiteRed.imageset</string>
+			<key>swiftSymbol</key>
+			<string>shoeSwipeWhiteRed</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameShopLookAvatar01</string>
+			<key>relativePath</key>
+			<string>./ShopLookAvatar01.imageset</string>
+			<key>swiftSymbol</key>
+			<string>shopLookAvatar01</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameShopLookAvatar02</string>
+			<key>relativePath</key>
+			<string>./ShopLookAvatar02.imageset</string>
+			<key>swiftSymbol</key>
+			<string>shopLookAvatar02</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameShopLookAvatar03</string>
+			<key>relativePath</key>
+			<string>./ShopLookAvatar03.imageset</string>
+			<key>swiftSymbol</key>
+			<string>shopLookAvatar03</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameShopLookAvatar04</string>
+			<key>relativePath</key>
+			<string>./ShopLookAvatar04.imageset</string>
+			<key>swiftSymbol</key>
+			<string>shopLookAvatar04</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameShopLookAvatar05</string>
+			<key>relativePath</key>
+			<string>./ShopLookAvatar05.imageset</string>
+			<key>swiftSymbol</key>
+			<string>shopLookAvatar05</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameShopLookAvatar06</string>
+			<key>relativePath</key>
+			<string>./ShopLookAvatar06.imageset</string>
+			<key>swiftSymbol</key>
+			<string>shopLookAvatar06</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameShopLookAvatar07</string>
+			<key>relativePath</key>
+			<string>./ShopLookAvatar07.imageset</string>
+			<key>swiftSymbol</key>
+			<string>shopLookAvatar07</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameShopLookAvatar08</string>
+			<key>relativePath</key>
+			<string>./ShopLookAvatar08.imageset</string>
+			<key>swiftSymbol</key>
+			<string>shopLookAvatar08</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameShopLookAvatar09</string>
+			<key>relativePath</key>
+			<string>./ShopLookAvatar09.imageset</string>
+			<key>swiftSymbol</key>
+			<string>shopLookAvatar09</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameShopPromise</string>
+			<key>relativePath</key>
+			<string>./ShopPromise.imageset</string>
+			<key>swiftSymbol</key>
+			<string>shopPromise</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameShopTheLookPerson</string>
+			<key>relativePath</key>
+			<string>./ShopTheLookPerson.imageset</string>
+			<key>swiftSymbol</key>
+			<string>shopTheLookPerson</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameSilverShoe1</string>
+			<key>relativePath</key>
+			<string>./SilverShoe1.imageset</string>
+			<key>swiftSymbol</key>
+			<string>silverShoe1</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameSilverShoe2</string>
+			<key>relativePath</key>
+			<string>./SilverShoe2.imageset</string>
+			<key>swiftSymbol</key>
+			<string>silverShoe2</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameSilverShoe3</string>
+			<key>relativePath</key>
+			<string>./SilverShoe3.imageset</string>
+			<key>swiftSymbol</key>
+			<string>silverShoe3</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameSilverShoe4</string>
+			<key>relativePath</key>
+			<string>./SilverShoe4.imageset</string>
+			<key>swiftSymbol</key>
+			<string>silverShoe4</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameSilverShoe5</string>
+			<key>relativePath</key>
+			<string>./SilverShoe5.imageset</string>
+			<key>swiftSymbol</key>
+			<string>silverShoe5</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameSilverShoe6</string>
+			<key>relativePath</key>
+			<string>./SilverShoe6.imageset</string>
+			<key>swiftSymbol</key>
+			<string>silverShoe6</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameSimilarShoe1</string>
+			<key>relativePath</key>
+			<string>./SimilarShoe1.imageset</string>
+			<key>swiftSymbol</key>
+			<string>similarShoe1</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameSimilarShoe2</string>
+			<key>relativePath</key>
+			<string>./SimilarShoe2.imageset</string>
+			<key>swiftSymbol</key>
+			<string>similarShoe2</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameSimilarShoe3</string>
+			<key>relativePath</key>
+			<string>./SimilarShoe3.imageset</string>
+			<key>swiftSymbol</key>
+			<string>similarShoe3</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameSimilarShoe4</string>
+			<key>relativePath</key>
+			<string>./SimilarShoe4.imageset</string>
+			<key>swiftSymbol</key>
+			<string>similarShoe4</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameSimilarShoe5</string>
+			<key>relativePath</key>
+			<string>./SimilarShoe5.imageset</string>
+			<key>swiftSymbol</key>
+			<string>similarShoe5</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameSimilarShoe6</string>
+			<key>relativePath</key>
+			<string>./SimilarShoe6.imageset</string>
+			<key>swiftSymbol</key>
+			<string>similarShoe6</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameSimilarShoe7</string>
+			<key>relativePath</key>
+			<string>./SimilarShoe7.imageset</string>
+			<key>swiftSymbol</key>
+			<string>similarShoe7</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameSimilarShoe8</string>
+			<key>relativePath</key>
+			<string>./SimilarShoe8.imageset</string>
+			<key>swiftSymbol</key>
+			<string>similarShoe8</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameStarIcon</string>
+			<key>relativePath</key>
+			<string>./StarIcon.imageset</string>
+			<key>swiftSymbol</key>
+			<string>starIcon</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameTagIcon</string>
+			<key>relativePath</key>
+			<string>./TagIcon.imageset</string>
+			<key>swiftSymbol</key>
+			<string>tagIcon</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameVerifyIcon</string>
+			<key>relativePath</key>
+			<string>./VerifyIcon.imageset</string>
+			<key>swiftSymbol</key>
+			<string>verifyIcon</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameVoiceIcon</string>
+			<key>relativePath</key>
+			<string>./VoiceIcon.imageset</string>
+			<key>swiftSymbol</key>
+			<string>voiceIcon</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameWhiteShoe1</string>
+			<key>relativePath</key>
+			<string>./WhiteShoe1.imageset</string>
+			<key>swiftSymbol</key>
+			<string>whiteShoe1</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameWhiteShoe2</string>
+			<key>relativePath</key>
+			<string>./WhiteShoe2.imageset</string>
+			<key>swiftSymbol</key>
+			<string>whiteShoe2</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameWhiteShoe3</string>
+			<key>relativePath</key>
+			<string>./WhiteShoe3.imageset</string>
+			<key>swiftSymbol</key>
+			<string>whiteShoe3</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameWhiteShoe4</string>
+			<key>relativePath</key>
+			<string>./WhiteShoe4.imageset</string>
+			<key>swiftSymbol</key>
+			<string>whiteShoe4</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameWhiteShoe5</string>
+			<key>relativePath</key>
+			<string>./WhiteShoe5.imageset</string>
+			<key>swiftSymbol</key>
+			<string>whiteShoe5</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameWhiteShoe6</string>
+			<key>relativePath</key>
+			<string>./WhiteShoe6.imageset</string>
+			<key>swiftSymbol</key>
+			<string>whiteShoe6</string>
+		</dict>
+	</array>
+	<key>symbols</key>
+	<array/>
+</dict>
+</plist>

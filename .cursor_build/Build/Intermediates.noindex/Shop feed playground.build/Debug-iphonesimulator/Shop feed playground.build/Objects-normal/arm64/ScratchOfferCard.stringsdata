@@ -1,0 +1,40 @@
+{
+  "source": "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/ScratchOfferCard.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "A gift from",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 188
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scratch to claim",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 202
+        }
+      },
+      {
+        "comment": "",
+        "key": "Offer expired",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 473
+        }
+      },
+      {
+        "comment": "",
+        "key": "See more offers",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 479
+        }
+      }
+    ]
+  },
+  "version": 1
+}

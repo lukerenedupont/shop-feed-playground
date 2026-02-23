@@ -1,0 +1,24 @@
+{
+  "source": "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/CollectionPocketCard.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "The",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 305
+        }
+      },
+      {
+        "comment": "",
+        "key": "Edit",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 307
+        }
+      }
+    ]
+  },
+  "version": 1
+}

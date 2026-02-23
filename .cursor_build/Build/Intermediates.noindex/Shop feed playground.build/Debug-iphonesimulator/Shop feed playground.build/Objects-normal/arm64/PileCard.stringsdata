@@ -1,0 +1,16 @@
+{
+  "source": "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/PileCard.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Shop now",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 201
+        }
+      }
+    ]
+  },
+  "version": 1
+}

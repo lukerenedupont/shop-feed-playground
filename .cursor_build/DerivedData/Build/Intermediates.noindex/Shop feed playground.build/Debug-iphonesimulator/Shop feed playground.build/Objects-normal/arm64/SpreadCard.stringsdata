@@ -1,0 +1,24 @@
+{
+  "source": "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/SpreadCard.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "Drag to explore",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 77
+        }
+      }
+    ]
+  },
+  "version": 1
+}

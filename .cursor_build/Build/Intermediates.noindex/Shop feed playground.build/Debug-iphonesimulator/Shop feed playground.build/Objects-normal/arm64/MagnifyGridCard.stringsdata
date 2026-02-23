@@ -1,0 +1,24 @@
+{
+  "source": "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/MagnifyGridCard.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 78
+        }
+      },
+      {
+        "comment": "",
+        "key": "Touch and drag to explore",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 78
+        }
+      }
+    ]
+  },
+  "version": 1
+}

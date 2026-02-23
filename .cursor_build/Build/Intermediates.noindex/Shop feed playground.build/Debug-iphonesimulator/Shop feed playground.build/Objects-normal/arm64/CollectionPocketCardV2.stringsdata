@@ -1,0 +1,16 @@
+{
+  "source": "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/CollectionPocketCardV2.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Men",
+        "location": {
+          "startingColumn": 14,
+          "startingLine": 135
+        }
+      }
+    ]
+  },
+  "version": 1
+}

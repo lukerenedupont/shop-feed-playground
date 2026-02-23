@@ -10,6 +10,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 // MARK: - Layout
 
@@ -64,6 +65,7 @@ struct CollectionPocketCard: View {
     @State private var expandedIndex: Int?
     @State private var favorites: Set<String> = []
     @State private var showOverlays = false
+    @State private var backgroundImages: [String: UIImage] = [:]
     @Namespace private var hero
 
     private let collections = PocketCollection.defaults
@@ -86,7 +88,7 @@ struct CollectionPocketCard: View {
 
     var body: some View {
         ZStack {
-            GradientCardFill(color: bgColor)
+            backgroundLayer
             content
             glassLayer.simultaneousGesture(isExpanded ? nil : swipeGesture)
             logo
@@ -94,12 +96,74 @@ struct CollectionPocketCard: View {
         .frame(width: Tokens.cardWidth, height: Tokens.cardHeight)
         .clipShape(RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous))
         .animation(Layout.expandSpring, value: expandedIndex)
+        .onAppear {
+            loadBackgroundImagesIfNeeded()
+        }
     }
 }
 
 // MARK: - Content Switcher
 
 private extension CollectionPocketCard {
+    var backgroundLayer: some View {
+        ZStack {
+            GradientCardFill(color: bgColor)
+
+            if !backgroundImages.isEmpty {
+                ZStack {
+                    ForEach(collections.indices, id: \.self) { index in
+                        let collection = collections[index]
+                        if let image = backgroundImages[collection.id] {
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: Tokens.cardWidth, height: Tokens.cardHeight)
+                                .clipped()
+                                .opacity(backgroundImageOpacity(for: index))
+                        }
+                    }
+                }
+                .overlay(bgColor.opacity(0.22))
+                .overlay(
+                    LinearGradient(
+                        stops: [
+                            .init(color: .black.opacity(0.10), location: 0.0),
+                            .init(color: .black.opacity(0.26), location: 0.68),
+                            .init(color: .black.opacity(0.42), location: 1.0),
+                        ],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+            }
+        }
+        .clipShape(RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
+                .stroke(Color.white.opacity(0.06), lineWidth: 0.5)
+        )
+        .allowsHitTesting(false)
+    }
+
+    func backgroundImageOpacity(for index: Int) -> Double {
+        if let expandedIndex {
+            return expandedIndex == index ? 1 : 0
+        }
+        let distance = abs(CGFloat(index) - continuousPosition)
+        return Double(max(0, 1 - distance))
+    }
+
+    func loadBackgroundImagesIfNeeded() {
+        guard backgroundImages.isEmpty else { return }
+        var loadedImages: [String: UIImage] = [:]
+        for collection in collections {
+            guard let path = collection.backgroundImagePath else { continue }
+            guard let image = UIImage(contentsOfFile: path) else { continue }
+            loadedImages[collection.id] = image
+        }
+        backgroundImages = loadedImages
+    }
+
     @ViewBuilder var content: some View {
         if let idx = expandedIndex {
             expandedGrid(for: idx)
@@ -307,7 +371,7 @@ private extension CollectionPocketCard {
             Text("Edit")
         }
         .shopTextStyle(.heroBold)
-        .foregroundColor(.white)
+        .foregroundStyle(.white)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
         .padding(16)
         .opacity(morphed ? 0 : Double(peek))
@@ -316,7 +380,7 @@ private extension CollectionPocketCard {
     func glassCloseIcon(morphed: Bool) -> some View {
         Image(systemName: "xmark")
             .font(.system(size: 14, weight: .bold))
-            .foregroundColor(.white.opacity(0.8))
+            .foregroundStyle(.white.opacity(0.8))
             .opacity(morphed ? 1 : 0)
     }
 

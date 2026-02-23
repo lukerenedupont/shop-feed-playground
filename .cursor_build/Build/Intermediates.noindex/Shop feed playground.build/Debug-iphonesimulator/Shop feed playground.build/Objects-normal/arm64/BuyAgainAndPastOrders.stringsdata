@@ -1,0 +1,24 @@
+{
+  "source": "/Users/lukedupont/Desktop/Developer/Shop feed playground/Shop feed playground/BuyAgainAndPastOrders.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "PROLOG",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 135
+        }
+      },
+      {
+        "comment": "",
+        "key": " ・ %@ ・ %@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 187
+        }
+      }
+    ]
+  },
+  "version": 1
+}

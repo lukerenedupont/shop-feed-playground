@@ -1,0 +1,2 @@
+Target dependency graph (1 target)
+Target 'Shop feed playground' in project 'Shop feed playground' (no dependencies)
