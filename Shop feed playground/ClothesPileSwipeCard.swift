@@ -23,16 +23,16 @@ struct ClothesPileSwipeCard: View {
     @State private var logoIncomingIndex: Int?
     @State private var logoRollProgress: CGFloat = 0
     @State private var logoRollID: UUID = .init()
-    @State private var tiltRotation: CGSize = .zero
+    @State private var gyro = GyroscopeManager()
 
     private let slides: [ClothesPileSlide] = [
-        .init(imageName: "OutfitFloat01", logoImageName: "ClothesLogoGalleryDept", background: Color(hex: 0x2F3218)),
-        .init(imageName: "OutfitFloat02", logoImageName: "ClothesLogoJnco", background: Color(hex: 0x262525)),
-        .init(imageName: "OutfitFloat03", logoImageName: "ClothesLogoComfrt", background: Color(hex: 0x331515)),
-        .init(imageName: "OutfitFloat04", logoImageName: "ClothesLogoAffliction", background: Color(hex: 0x2D3740)),
-        .init(imageName: "OutfitFloat05", logoImageName: "ClothesLogoTrueClassic", background: Color(hex: 0x3B2F2A)),
-        .init(imageName: "OutfitFloat06", logoImageName: "ClothesLogoKicksCrew", background: Color(hex: 0x28323D)),
-        .init(imageName: "OutfitFloat07", logoImageName: "ClothesLogoYoungLA", background: Color(hex: 0x3A2E49)),
+        .init(imageName: "OutfitFloat01", depthImageName: "OutfitFloat01Depth", logoImageName: "ClothesLogoGalleryDept", background: Color(hex: 0x2F3218)),
+        .init(imageName: "OutfitFloat02", depthImageName: "OutfitFloat02Depth", logoImageName: "ClothesLogoJnco", background: Color(hex: 0x262525)),
+        .init(imageName: "OutfitFloat03", depthImageName: "OutfitFloat03Depth", logoImageName: "ClothesLogoComfrt", background: Color(hex: 0x331515)),
+        .init(imageName: "OutfitFloat04", depthImageName: "OutfitFloat04Depth", logoImageName: "ClothesLogoAffliction", background: Color(hex: 0x2D3740)),
+        .init(imageName: "OutfitFloat05", depthImageName: "OutfitFloat05Depth", logoImageName: "ClothesLogoTrueClassic", background: Color(hex: 0x3B2F2A)),
+        .init(imageName: "OutfitFloat06", depthImageName: "OutfitFloat06Depth", logoImageName: "ClothesLogoKicksCrew", background: Color(hex: 0x28323D)),
+        .init(imageName: "OutfitFloat07", depthImageName: "OutfitFloat07Depth", logoImageName: "ClothesLogoYoungLA", background: Color(hex: 0x3A2E49)),
     ]
 
     private let itemWidth: CGFloat = 336
@@ -41,7 +41,8 @@ struct ClothesPileSwipeCard: View {
     private let spreadMultiplier: CGFloat = 2.0
     private let tileSize: CGFloat = 242
     private let areaZoomScale: CGFloat = 1.30
-    private let tiltIntensity: CGFloat = 10
+    private let parallaxIntensity: CGFloat = 40
+    private let gyroRotationScale: CGFloat = 18
     private let tiltPerspective: CGFloat = 0.72
 
     private func hotspots(for imageName: String) -> [ClothesAreaHotspot] {
@@ -112,37 +113,6 @@ struct ClothesPileSwipeCard: View {
             width: min(max(x, -maxX), maxX),
             height: min(max(y, -maxY), maxY)
         )
-    }
-
-    private func tiltRotation(for location: CGPoint, in frameSize: CGSize) -> CGSize {
-        let width = max(frameSize.width, 1)
-        let height = max(frameSize.height, 1)
-
-        let x = lerp(
-            inMin: 0,
-            inMax: width,
-            outMin: -tiltIntensity,
-            outMax: tiltIntensity,
-            location.x
-        )
-        let y = lerp(
-            inMin: 0,
-            inMax: height,
-            outMin: tiltIntensity,
-            outMax: -tiltIntensity,
-            location.y
-        )
-
-        return CGSize(width: x, height: y)
-    }
-
-    private func resetTiltRotation(animated: Bool = true) {
-        let update = { tiltRotation = .zero }
-        if animated {
-            withAnimation(.spring(response: 0.42, dampingFraction: 0.82, blendDuration: 0.16), update)
-        } else {
-            update()
-        }
     }
 
     private func clearAreaFocus(animated: Bool = true) {
@@ -372,10 +342,13 @@ struct ClothesPileSwipeCard: View {
             logoDisplayedIndex = selectedIndex
             logoIncomingIndex = nil
             logoRollProgress = 0
+            gyro.start()
+        }
+        .onDisappear {
+            gyro.stop()
         }
         .onChange(of: selectedIndex) { _, _ in
             clearAreaFocus(animated: false)
-            resetTiltRotation(animated: false)
         }
         .onChange(of: selectedIndex) { _, newValue in
             rollLogo(to: newValue)
@@ -384,7 +357,6 @@ struct ClothesPileSwipeCard: View {
             if expanded {
                 clearAreaFocus(animated: false)
             }
-            resetTiltRotation(animated: false)
         }
         .simultaneousGesture(
             isExpanded ? nil :
@@ -457,7 +429,9 @@ struct ClothesPileSwipeCard: View {
             if distanceFromCenter <= 1.0 { return 2.0 }
             return 3.2
         }()
-        let liveTilt = (!isExpanded && isActive) ? tiltRotation : .zero
+        let useGyro = !isExpanded && isActive
+        let gyroX = useGyro ? gyro.tiltX * gyroRotationScale : 0
+        let gyroY = useGyro ? gyro.tiltY * gyroRotationScale : 0
         let zoomScale = (!isExpanded && isActive && isAreaFocused) ? areaZoomScale : 1.0
         let zoomOffset = (!isExpanded && isActive && isAreaFocused) ? areaFocusOffset : .zero
         let floatYOffset = isExpanded ? 0 : floatingYOffset(for: index, time: time, isActive: isActive)
@@ -469,16 +443,28 @@ struct ClothesPileSwipeCard: View {
                 width: frameSize.width,
                 height: frameSize.height
             )
+            .distortionEffect(
+                ShaderLibrary.depthParallax(
+                    .boundingRect,
+                    .image(Image(slides[index].depthImageName)),
+                    .float2(
+                        Float(useGyro ? gyro.tiltX : 0),
+                        Float(useGyro ? gyro.tiltY : 0)
+                    ),
+                    .float(Float(parallaxIntensity))
+                ),
+                maxSampleOffset: CGSize(width: parallaxIntensity, height: parallaxIntensity)
+            )
             .clipped()
             .rotationEffect(.degrees(expandedActive ? 90 : 0))
             .scaleEffect(expandedActive ? 1.0 : sideScale)
             .rotation3DEffect(
-                .degrees(Double(liveTilt.width)),
+                .degrees(gyroX),
                 axis: (x: 0, y: 1, z: 0),
                 perspective: tiltPerspective
             )
             .rotation3DEffect(
-                .degrees(Double(liveTilt.height)),
+                .degrees(gyroY),
                 axis: (x: 1, y: 0, z: 0),
                 perspective: tiltPerspective
             )
@@ -525,25 +511,10 @@ struct ClothesPileSwipeCard: View {
                     }
             )
             .simultaneousGesture(
-                DragGesture(minimumDistance: 0)
-                    .onChanged { value in
-                        guard isActive && !isExpanded else { return }
-                        let nextTilt = tiltRotation(for: value.location, in: frameSize)
-                        withAnimation(.interactiveSpring(response: 0.25, dampingFraction: 0.82, blendDuration: 0.1)) {
-                            tiltRotation = nextTilt
-                        }
-                    }
-                    .onEnded { _ in
-                        guard isActive && !isExpanded else { return }
-                        resetTiltRotation(animated: true)
-                    }
-            )
-            .simultaneousGesture(
                 TapGesture(count: 2)
                     .onEnded {
                         guard isActive && !isExpanded else { return }
                         clearAreaFocus(animated: true)
-                        resetTiltRotation(animated: true)
                         Haptics.selection()
                     }
             )
@@ -557,6 +528,7 @@ struct ClothesPileSwipeCard: View {
 
 private struct ClothesPileSlide {
     let imageName: String
+    let depthImageName: String
     let logoImageName: String
     let background: Color
 }

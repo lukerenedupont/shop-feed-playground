@@ -17,14 +17,14 @@ struct TopWorkbenchCard: View {
 
     private let spinDuration: Double = 4.4
     private let products: [WorkbenchWheelProduct] = [
-        .init(id: 0, imageName: "SimilarShoe1", discountPercent: 20),
-        .init(id: 1, imageName: "SimilarShoe2", discountPercent: 15),
-        .init(id: 2, imageName: "SimilarShoe3", discountPercent: 25),
-        .init(id: 3, imageName: "SimilarShoe4", discountPercent: 10),
-        .init(id: 4, imageName: "SimilarShoe5", discountPercent: 30),
-        .init(id: 5, imageName: "SimilarShoe6", discountPercent: 18),
-        .init(id: 6, imageName: "SimilarShoe7", discountPercent: 12),
-        .init(id: 7, imageName: "SimilarShoe8", discountPercent: 22),
+        .init(id: 0, imageName: "WheelShoe01", discountPercent: 20),
+        .init(id: 1, imageName: "WheelShoe02", discountPercent: 15),
+        .init(id: 2, imageName: "WheelShoe03", discountPercent: 25),
+        .init(id: 3, imageName: "WheelShoe04", discountPercent: 10),
+        .init(id: 4, imageName: "WheelShoe05", discountPercent: 30),
+        .init(id: 5, imageName: "WheelShoe06", discountPercent: 18),
+        .init(id: 6, imageName: "WheelShoe07", discountPercent: 12),
+        .init(id: 7, imageName: "WheelShoe08", discountPercent: 22),
     ]
 
     var body: some View {
@@ -32,14 +32,22 @@ struct TopWorkbenchCard: View {
             backgroundLayer
             wheelLayer
 
-            if isRevealed {
-                revealedOverlay
-            } else {
-                spinPromptOverlay
+            if isRevealed, let winningIndex {
+                let winner = products[winningIndex]
+                wheelProductCard(product: winner, size: CGSize(width: 240, height: 240))
+                    .matchedGeometryEffect(
+                        id: "workbench-wheel-\(winner.id)",
+                        in: wheelNamespace
+                    )
+                    .transition(.identity)
+                    .zIndex(120)
+                    .offset(y: -6)
             }
 
-            if hasSpunAtLeastOnce {
-                resetButton
+            if isRevealed {
+                revealedChrome
+            } else if !isSpinning {
+                spinPromptOverlay
             }
         }
         .frame(width: Tokens.cardWidth, height: Tokens.cardHeight)
@@ -73,7 +81,7 @@ private extension TopWorkbenchCard {
 
     var wheelLayer: some View {
         let ringRadius: CGFloat = 194
-        let cardSize: CGSize = CGSize(width: 92, height: 142)
+        let cardSize: CGSize = CGSize(width: 100, height: 100)
         let wheelCenter = CGPoint(x: Tokens.cardWidth / 2, y: Tokens.cardHeight / 2)
 
         return ZStack {
@@ -139,29 +147,16 @@ private extension TopWorkbenchCard {
     }
 
     @ViewBuilder
-    var revealedOverlay: some View {
+    var revealedChrome: some View {
         if let winningIndex {
             let winner = products[winningIndex]
 
             ZStack {
                 VStack(spacing: 8) {
                     merchantAvatar
-                    Text("GBNY")
-                        .shopTextStyle(.sectionTitle)
-                        .foregroundStyle(.white)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .padding(.top, 44)
-
-                wheelProductCard(product: winner, size: CGSize(width: 160, height: 246))
-                    .matchedGeometryEffect(
-                        id: "workbench-wheel-\(winner.id)",
-                        in: wheelNamespace
-                    )
-                    .rotationEffect(.degrees(0))
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .offset(y: -6)
-                    .zIndex(120)
 
                 VStack {
                     Spacer()
@@ -177,58 +172,34 @@ private extension TopWorkbenchCard {
                     Button {
                         Haptics.light()
                     } label: {
-                        HStack(spacing: 6) {
-                            Text("Start shopping")
-                                .shopTextStyle(.bodySmall)
-                            Image(systemName: "arrow.right")
-                                .font(.system(size: 12, weight: .semibold))
-                        }
-                        .foregroundStyle(.white.opacity(0.78))
+                        Text("Shop now")
+                            .font(.system(size: Tokens.bodySize, weight: .semibold))
+                            .tracking(Tokens.bodyTracking)
+                            .foregroundStyle(.black)
+                            .padding(.horizontal, 32)
+                            .padding(.vertical, 14)
+                            .background(Capsule(style: .continuous).fill(.white))
                     }
                     .buttonStyle(.plain)
                     .padding(.bottom, 38)
                 }
             }
+            .transition(.opacity)
         }
-    }
-
-    var resetButton: some View {
-        VStack {
-            Spacer()
-            HStack {
-                Spacer()
-                Button {
-                    resetInteraction()
-                } label: {
-                    Text("Reset")
-                        .shopTextStyle(.buttonMedium)
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 18)
-                        .frame(height: 36)
-                        .background(
-                            Capsule(style: .continuous)
-                                .fill(.black.opacity(0.55))
-                        )
-                }
-                .buttonStyle(.plain)
-                .disabled(isSpinning)
-                .opacity(isSpinning ? 0.65 : 1)
-            }
-        }
-        .padding(.trailing, 14)
-        .padding(.bottom, 14)
     }
 
     var merchantAvatar: some View {
-        RoundedRectangle(cornerRadius: 11, style: .continuous)
-            .fill(.white.opacity(0.92))
-            .frame(width: 52, height: 42)
-            .overlay {
-                Text("GBNY")
-                    .font(.system(size: 10, weight: .black))
-                    .tracking(-0.2)
-                    .foregroundStyle(.black.opacity(0.88))
+        Button {
+            if hasSpunAtLeastOnce {
+                resetInteraction()
             }
+        } label: {
+            Image("WheelMerchantLogo")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 28)
+        }
+        .buttonStyle(.plain)
     }
 }
 
@@ -311,18 +282,18 @@ private extension TopWorkbenchCard {
 
 private extension TopWorkbenchCard {
     func wheelProductCard(product: WorkbenchWheelProduct, size: CGSize) -> some View {
-        RoundedRectangle(cornerRadius: 12, style: .continuous)
+        RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
             .fill(Color(hex: 0xE6E6E8))
             .frame(width: size.width, height: size.height)
             .overlay {
                 Image(product.imageName)
                     .resizable()
-                    .scaledToFit()
-                    .padding(.horizontal, size.width * 0.08)
-                    .padding(.vertical, size.height * 0.12)
+                    .scaledToFill()
+                    .frame(width: size.width, height: size.height)
+                    .clipShape(RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous))
             }
             .overlay(
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                RoundedRectangle(cornerRadius: Tokens.radius20, style: .continuous)
                     .stroke(.white.opacity(0.2), lineWidth: 0.5)
             )
             .shadow(

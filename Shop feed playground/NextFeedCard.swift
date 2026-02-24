@@ -29,6 +29,14 @@ struct NextFeedCard: View {
         "BurgundyProductMug",
         "BurgundyProductBeanie",
     ]
+    private let oliveProductImages: [String] = [
+        "OliveProductSneaker",
+        "OliveProductSocks",
+        "OliveProductHoodie",
+        "OliveProductTshirt",
+        "OliveProductSunglasses",
+        "OliveProductCap",
+    ]
 
     private let colorChoices: [ColorChoice] = [
         .init(name: "Olive", swatch: Color(hex: 0x2A3B1E)),
@@ -42,7 +50,7 @@ struct NextFeedCard: View {
         ZStack(alignment: .bottom) {
             let selectedColor = colorChoices[selectedColorIndex]
             let activeProducts = productImages(for: selectedColor)
-            let shouldTintProducts = !usesBurgundyProducts(selectedColor)
+            let shouldTintProducts = !usesRealProducts(selectedColor)
 
             RoundedRectangle(cornerRadius: Tokens.radiusCard, style: .continuous)
                 .fill(selectedColor.swatch)
@@ -191,11 +199,15 @@ struct NextFeedCard: View {
     }
 
     private func productImages(for color: ColorChoice) -> [String] {
-        usesBurgundyProducts(color) ? burgundyProductImages : defaultProductImages
+        switch color.name {
+        case "Burgundy", "Merlot": burgundyProductImages
+        case "Olive": oliveProductImages
+        default: defaultProductImages
+        }
     }
 
-    private func usesBurgundyProducts(_ color: ColorChoice) -> Bool {
-        color.name == "Burgundy" || color.name == "Merlot"
+    private func usesRealProducts(_ color: ColorChoice) -> Bool {
+        color.name == "Burgundy" || color.name == "Merlot" || color.name == "Olive"
     }
 }
 
